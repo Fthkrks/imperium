@@ -5,6 +5,7 @@ import Blog from '@/components/Home/Blog'
 import Brands from '@/components/Home/Brands'
 import Contact from '@/components/Home/Contact'
 import Discount from '@/components/Home/Discount'
+import Faq from '@/components/Home/Faq'
 import Gallery from '@/components/Home/Gallery'
 import Hero from '@/components/Home/Hero'
 import Services from '@/components/Home/Services'
@@ -27,6 +28,7 @@ function Home() {
     <Blog/>
     <Gallery/>
     <Videos/>
+    <Faq/>
     <Brands/>
     <Contact/>
     </>

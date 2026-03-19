@@ -7,7 +7,8 @@
 		"category": "Refrigerator",
 		"readTime": "4 min read",
 		"publishedAt": "2026-03-08",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "A warm refrigerator is one of the most stressful kitchen emergencies. But before you panic and call a repair service, there are several things you can check yourself.\n\nFirst, verify the thermostat settings. It sounds simple, but dials often get bumped. Next, check the condenser coils at the back or bottom of the fridge. If they are covered in dust, the refrigerator can't cool efficiently.\n\n\"Regular maintenance is key to a long-lasting appliance.\"\n\nIf the coils are clean and the settings are correct, listen for the evaporator fan. If you don't hear it running, or if it's making a strange noise, it might be time to call a professional technician."
 	},
 	{
 		"id": 2,
@@ -17,7 +18,8 @@
 		"category": "Dryer",
 		"readTime": "5 min read",
 		"publishedAt": "2026-03-04",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "Waiting hours for a single load of laundry to dry is frustrating and wastes energy. A slow dryer is almost always a sign of restricted airflow.\n\nStart by cleaning the lint screen thoroughly. Then, inspect the exterior vent hood to ensure it opens freely when the dryer is running. You should also check the flexible transition hose behind the dryer for kinks or heavy lint buildup.\n\n\"A clogged dryer vent is not just inefficient; it's a serious fire hazard.\"\n\nIf the airflow is clear, the issue might be a faulty heating element or a cycling thermostat. In those cases, a certified technician can quickly diagnose and replace the broken parts."
 	},
 	{
 		"id": 3,
@@ -27,7 +29,8 @@
 		"category": "Dishwasher",
 		"readTime": "4 min read",
 		"publishedAt": "2026-02-27",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "Opening your dishwasher to find dirty, cloudy dishes defeats the purpose of having this appliance. Most cleaning issues stem from simple maintenance oversights.\n\nThe most common culprit is a clogged filter. Check the bottom of your tub and clean the filter assembly. Next, inspect the spray arms. Food particles can clog the small holes, preventing water from reaching your dishes.\n\n\"Hard water can cause mineral buildup, reducing your dishwasher's effectiveness.\"\n\nEnsure your water is hot enough (at least 120°F) and you're using a high-quality detergent. If the problem persists, the circulation pump or an inlet valve might be failing."
 	},
 	{
 		"id": 4,
@@ -37,7 +40,8 @@
 		"category": "Washer",
 		"readTime": "3 min read",
 		"publishedAt": "2026-02-18",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "A washing machine that sounds like it's taking off can be alarming and can damage both the machine and your floors.\n\nThe first step is checking if the machine is level. Use a bubble level and adjust the feet accordingly. Also, ensure you are not overloading the drum or washing a single heavy item without balancing the load.\n\n\"A balanced washer runs quieter and lasts significantly longer.\"\n\nIf the machine is level but still vibrates violently, the shock absorbers or suspension springs might be worn out. These parts degrade over time and require professional replacement to restore smooth operation."
 	},
 	{
 		"id": 5,
@@ -47,7 +51,8 @@
 		"category": "Oven",
 		"readTime": "6 min read",
 		"publishedAt": "2026-02-10",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "Uneven baking can ruin your favorite recipes. When half your cookies are burnt and the other half are raw, your oven needs attention.\n\nIf you have an electric oven, visibly inspect the bake element at the bottom. It should glow red evenly. If there are dark spots, it's likely failing. For gas ovens, check the igniter; a weak igniter won't open the gas valve correctly.\n\n\"Proper airflow is crucial for even heat distribution.\"\n\nOven temperature sensors can also drift over time. You can recalibrate the thermostat using an oven thermometer, but if the sensor is faulty, a replacement is the only way to ensure accurate cooking temperatures."
 	},
 	{
 		"id": 6,
@@ -57,6 +62,7 @@
 		"category": "Ice Machine",
 		"readTime": "4 min read",
 		"publishedAt": "2026-02-03",
-		"image": "/legacy/assets/rafixhero3.png"
+		"image": "/legacy/assets/rafixhero3.png",
+		"content": "A slow ice maker can put a damper on your summer parties. Ice production relies on steady water flow and freezing temperatures.\n\nVerify that your freezer is set to 0°F (-18°C) or colder. If the freezer is too warm, ice production slows down drastically. Next, check the water filter. A clogged filter reduces water flow to the ice maker.\n\n\"Change your refrigerator water filter every 6 months for optimal ice speed.\"\n\nIf the temperature and filter are fine, inspect the condenser coils and ensure the water inlet valve isn't restricted. For persistent issues, a technician can test the ice maker module itself."
 	}
 ]

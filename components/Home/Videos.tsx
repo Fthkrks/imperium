@@ -1,6 +1,22 @@
-import React from 'react'
+"use client";
+
+import { useEffect } from 'react'
 
 function Videos() {
+  useEffect(() => {
+    const lazyVideos = document.querySelectorAll<HTMLVideoElement>('.video-card video[data-src]');
+
+    lazyVideos.forEach(function (video) {
+      const dataSrc = video.getAttribute('data-src');
+      if (!dataSrc) return;
+
+      video.src = dataSrc;
+      video.removeAttribute('data-src');
+      video.load();
+      video.play().catch(function () {});
+    });
+  }, []);
+
   return (
     <>
           <section className="videos-section">

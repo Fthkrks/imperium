@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const socialLinks = [
@@ -48,10 +50,13 @@ const socialLinks = [
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/", label: "About Us" },
-  { href: "/", label: "Reviews" },
-  { href: "/", label: "Contact" },
+  { href: "/#residential", label: "Residential" },
+  { href: "/#commercial", label: "Commercial" },
+  { href: "/#brands", label: "Brands" },
+  { href: "/#why-us", label: "Why Us" },
+  { href: "/#reviews", label: "Reviews" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#service-areas", label: "Service Areas" },
 ] as const;
 
 function RatingStars() {
@@ -79,11 +84,11 @@ export function SiteFooter() {
       <footer {...scopeAttr} className="footer">
         <div {...scopeAttr} className="container">
           <div {...scopeAttr} className="footer-grid">
-            <div {...scopeAttr} className="footer-brand">
-              <a className="footer-logo" href="/">
-                <img alt="RAFIX Appliance Repair" src="/legacy/assets/rafixnewlogo.png" />
+            <div {...scopeAttr} className="footer-brand flex flex-col">
+              <a className="footer-logo " href="/">
+                <img alt="RAFIX Appliance Repair" src="/logo.png" />
               </a>
-              <p {...scopeAttr}>
+              <p {...scopeAttr} className="p-0 m-0">
                 Professional appliance repair services you can count on. Licensed, insured, and ready
                 to help.
               </p>
@@ -120,6 +125,14 @@ export function SiteFooter() {
                 </li>
               </ul>
             </div>
+            <div {...scopeAttr} className="footer-links">
+              <h3 {...scopeAttr}>Blogs</h3>
+              <ul {...scopeAttr}>
+                <li {...scopeAttr}>
+                  <a href="/blog">All Blogs</a>
+                </li>
+              </ul>
+            </div>
             <div {...scopeAttr} className="footer-contact">
               <h3 {...scopeAttr}>Contact Us</h3>
               <ul {...scopeAttr}>
@@ -143,7 +156,7 @@ export function SiteFooter() {
                   </svg>
                   <div {...scopeAttr}>
                     <p {...scopeAttr} className="phone-number">
-                      (346) 892-0910
+                      (347) 791-1731
                     </p>
                     <p {...scopeAttr} className="hours">
                       Mon-Fri: 8am - 8pm

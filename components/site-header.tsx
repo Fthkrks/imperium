@@ -3,11 +3,13 @@ import Image from "next/image";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const navigationItems = [
-  { href: "/", label: "Residential" },
-  { href: "/", label: "Commercial" },
-  { href: "/", label: "Brands" },
-  { href: "/", label: "Why Us" },
-  { href: "/", label: "Reviews" },
+  { href: "/#residential", label: "Residential" },
+  { href: "/#commercial", label: "Commercial" },
+  { href: "/#brands", label: "Brands" },
+  { href: "/#why-us", label: "Why Us" },
+  { href: "/#reviews", label: "Reviews" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#blog", label: "Blog" },
 ] as const;
 
 export function SiteHeader() {
@@ -47,7 +49,7 @@ export function SiteHeader() {
         <header {...scopeAttr} className="header">
           <div {...scopeAttr} className="container header-container">
             <a className="" href="/">
-              <Image width={170} height={170} alt="RAFIX Appliance Repair" src="/logo.png" />
+              <Image width={90} height={90} alt="RAFIX Appliance Repair" src="/logo.png" />
             </a>
             <nav {...scopeAttr} className="nav-desktop ">
               {navigationItems.map((item) => (
@@ -55,7 +57,7 @@ export function SiteHeader() {
                   {item.label}
                 </a>
               ))}
-              <a href="/">
+              <a href="/#service-areas">
                 <svg
                   {...scopeAttr}
                   fill="none"
@@ -121,7 +123,7 @@ export function SiteHeader() {
       <div {...scopeAttr} className="mobile-menu">
         <div {...scopeAttr} className="mobile-menu-logo">
           <a href="/">
-            <img alt="RAFIX Appliance Repair" src="/legacy/assets/rafixnewlogo.png" />
+            <Image width={90} height={90} alt="RAFIX Appliance Repair" src="/logo.png" />
           </a>
         </div>
         <div {...scopeAttr} className="mobile-menu-content">
@@ -130,7 +132,7 @@ export function SiteHeader() {
               {item.label}
             </a>
           ))}
-          <a href="/">Service Areas</a>
+          <a href="/#service-areas">Service Areas</a>
           <a {...scopeAttr} className="mobile-cta" href="tel:3468920910">
             <svg
               {...scopeAttr}

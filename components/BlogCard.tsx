@@ -9,6 +9,7 @@ export type BlogPost = {
   readTime: string;
   publishedAt: string;
   image: string;
+  content: string;
 };
 
 function formatDate(input: string) {

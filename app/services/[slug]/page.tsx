@@ -2,6 +2,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import serviceDetailsJson from "@/data/service-details.json";
+import TrustLogos from "@/components/Home/TrusthLogo";
+import Brands from "@/components/Home/Brands";
+import Resential from "@/components/Services/Resential";
+import Commercial from "@/components/Services/Commercial";
+import Contact from "@/components/Home/Contact";
 
 type DetailEntry = {
   title: string;
@@ -137,11 +142,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               </h1>
               <p className="detail-hero-description">{detail.description}</p>
               <div className="detail-hero-actions">
-                <a className="dhero-btn-primary open-form-trigger" href="#">
+                <a className="dhero-btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Book Repair
                 </a>
-                <a className="dhero-btn-secondary" href="tel:+18322024422">
-                  Call +1 (832) 202-4422
+                <a className="dhero-btn-secondary" href="tel:+13477911731">
+                  Call +1 (347) 791-1731
                 </a>
               </div>
             </div>
@@ -187,96 +192,14 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      <TrustLogos/>
+      <div className="container">
+        <Resential/>
+      <Commercial/>
+      </div>
 
-      <section className="detail-problems">
-        <div className="container">
-          <h2>Common {serviceName} Problems We Fix</h2>
-          <div className="problems-grid" style={{ marginTop: "1.5rem" }}>
-            {commonProblems.map((problem) => (
-              <article key={problem.title} className="problem-card">
-                <h3>{problem.title}</h3>
-                <p>{problem.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="detail-brands">
-        <div className="container">
-          <h2>Brands We Service</h2>
-          <div className="detail-brands-grid" style={{ marginTop: "1.5rem" }}>
-            {supportedBrands.map((brand) => (
-              <div key={brand} className="detail-brand-card">
-                <span className="detail-brand-name">{brand}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="detail-process">
-        <div className="container">
-          <h2>How Our Repair Process Works</h2>
-          <div className="detail-steps" style={{ marginTop: "2rem" }}>
-            {serviceSteps.map((step, index) => (
-              <div key={step.title}>
-                <div className="detail-step">
-                  <div className="detail-step-number">{index + 1}</div>
-                  <div className="detail-step-content">
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                  </div>
-                </div>
-                {index < serviceSteps.length - 1 && <div className="detail-step-divider" />}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="detail-faq">
-        <div className="container">
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq-list" style={{ marginTop: "1.5rem" }}>
-            {faqItems.map((item) => (
-              <article key={item.question} className="faq-item open">
-                <div className="faq-question">{item.question}</div>
-                <div className="faq-answer" style={{ maxHeight: "300px" }}>
-                  <p>{item.answer}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="detail-cta">
-        <div className="container">
-          <div className="detail-cta-card">
-            <div className="detail-cta-content">
-              <h2>Need {serviceName} Repair Today?</h2>
-              <p>
-                Book now for fast, professional service from RAFIX Appliance Repair. We are ready to help
-                with urgent and routine repairs.
-              </p>
-              <div className="detail-cta-badges">
-                <span className="detail-cta-badge">Same-Day Service</span>
-                <span className="detail-cta-badge">90-Day Warranty</span>
-                <span className="detail-cta-badge">Licensed Team</span>
-              </div>
-              <div className="detail-cta-buttons">
-                <a className="detail-cta-primary open-form-trigger" href="#">
-                  Schedule Service
-                </a>
-                <a className="detail-cta-secondary" href="tel:+18322024422">
-                  Call Now
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Brands/>
+      <Contact/>
     </SiteShell>
   );
 }

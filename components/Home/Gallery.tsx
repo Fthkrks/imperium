@@ -1,6 +1,103 @@
-import React from 'react'
+"use client";
+
+import { useEffect, useRef } from 'react'
+
+type SwiperLike = {
+  realIndex: number;
+  on: (event: string, handler: () => void) => void;
+  destroy?: (deleteInstance?: boolean, cleanStyles?: boolean) => void;
+  update?: () => void;
+};
+
+type SwiperConstructor = new (
+  el: Element,
+  options: Record<string, unknown>
+) => SwiperLike;
 
 function Gallery() {
+  const swiperRef = useRef<SwiperLike | null>(null);
+
+  useEffect(() => {
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const initSwiper = () => {
+      const galleryEl = document.querySelector('.gallery-swiper');
+      const galleryCurrent = document.querySelector('.gallery-current');
+
+      if (!galleryEl) return;
+
+      const existingSwiper = (galleryEl as Element & { swiper?: SwiperLike }).swiper;
+      if (existingSwiper) {
+        swiperRef.current = existingSwiper;
+        if (galleryCurrent) {
+          galleryCurrent.textContent = String(existingSwiper.realIndex + 1);
+        }
+        existingSwiper.update?.();
+        return;
+      }
+
+      const maybeWindow = window as Window & { Swiper?: SwiperConstructor };
+      if (!maybeWindow.Swiper) {
+        if (attempts < 20) {
+          attempts += 1;
+          timer = setTimeout(initSwiper, 100);
+        }
+        return;
+      }
+
+      const swiper = new maybeWindow.Swiper(galleryEl, {
+        slidesPerView: 1,
+        spaceBetween: 16,
+        centeredSlides: true,
+        loop: true,
+        speed: 500,
+        grabCursor: true,
+        observer: true,
+        observeParents: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+        },
+        navigation: {
+          prevEl: '.gallery-prev',
+          nextEl: '.gallery-next',
+        },
+      });
+
+      swiperRef.current = swiper;
+
+      if (galleryCurrent) {
+        galleryCurrent.textContent = String(swiper.realIndex + 1);
+      }
+
+      swiper.on('slideChange', function () {
+        if (galleryCurrent) {
+          galleryCurrent.textContent = String(swiper.realIndex + 1);
+        }
+      });
+    };
+
+    initSwiper();
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      if (swiperRef.current) {
+        swiperRef.current.destroy?.(true, true);
+        swiperRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <>
           <section className="gallery">
