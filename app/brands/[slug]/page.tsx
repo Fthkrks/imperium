@@ -11,6 +11,7 @@ import Contact from "@/components/Home/Contact";
 type DetailEntry = {
   title: string;
   description: string;
+  image?: string;
 };
 
 const brandDetails = brandDetailsJson as Record<string, DetailEntry>;
