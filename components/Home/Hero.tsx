@@ -30,15 +30,15 @@ function Hero() {
                 100% satisfaction guarantee.
               </p>
               <div className="hero-buttons">
-                <a className="btn-primary open-form-trigger" href="#">
+                <a className="btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Book Now
                   <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg">
                     <line x1={5} x2={19} y1={12} y2={12} />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </a>
-                <a className="btn-secondary" href="tel:3468920910">
-                  Call (346) 892-0910
+                <a className="btn-secondary" href="tel:3477911731">
+                  Call (347) 791-1731
                 </a>
               </div>
               <div className="trust-badges">

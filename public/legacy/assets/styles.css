@@ -6,7 +6,7 @@
 :root {
   --brand-blue: #2B5A9B;
   --brand-darkBlue: #1A3A66;
-  --brand-orange: #E85D25;
+  --brand-orange: #70B5ED;
   --brand-lightOrange: #FF8A5C;
   --brand-gray: #8B9AAB;
   --brand-lightGray: #F3F6F9;
@@ -156,12 +156,11 @@ input, textarea {
 .header {
   background: white;
   transition: padding 0.3s, box-shadow 0.3s;
-  padding: 1.25rem 0;
 }
 
 .header.scrolled {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  padding: 0.75rem 0;
+  padding: 0.25rem 0;
 }
 
 .header-container {
@@ -171,7 +170,7 @@ input, textarea {
 }
 
 .logo img {
-  height: 2.5rem;
+  height: .5rem;
   width: auto;
 }
 

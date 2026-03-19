@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"slug": "why-refrigerator-not-cooling",
+		"title": "Why Is My Refrigerator Not Cooling Properly?",
+		"excerpt": "Learn the most common causes behind warm fridge sections and what you can safely check before calling a technician.",
+		"category": "Refrigerator",
+		"readTime": "4 min read",
+		"publishedAt": "2026-03-08",
+		"image": "/legacy/assets/rafixhero3.png"
+	},
+	{
+		"id": 2,
+		"slug": "dryer-taking-too-long",
+		"title": "Dryer Taking Too Long? 6 Fast Things to Inspect",
+		"excerpt": "From clogged vents to overloaded drums, these checks can improve drying performance and reduce energy bills.",
+		"category": "Dryer",
+		"readTime": "5 min read",
+		"publishedAt": "2026-03-04",
+		"image": "/legacy/assets/rafixhero3.png"
+	},
+	{
+		"id": 3,
+		"slug": "dishwasher-not-cleaning",
+		"title": "Dishwasher Not Cleaning Dishes? Start Here",
+		"excerpt": "A practical checklist for spray arms, filters, detergent use, and water temperature to fix poor cleaning results.",
+		"category": "Dishwasher",
+		"readTime": "4 min read",
+		"publishedAt": "2026-02-27",
+		"image": "/legacy/assets/rafixhero3.png"
+	},
+	{
+		"id": 4,
+		"slug": "washer-vibration-fix",
+		"title": "How to Stop Washer Vibration and Noise",
+		"excerpt": "Simple leveling and load balancing tips that prevent excessive shaking and protect your machine from damage.",
+		"category": "Washer",
+		"readTime": "3 min read",
+		"publishedAt": "2026-02-18",
+		"image": "/legacy/assets/rafixhero3.png"
+	},
+	{
+		"id": 5,
+		"slug": "oven-not-heating-evenly",
+		"title": "Oven Not Heating Evenly? Common Causes",
+		"excerpt": "Find out when uneven cooking is caused by sensors, heating elements, or airflow and when professional repair is needed.",
+		"category": "Oven",
+		"readTime": "6 min read",
+		"publishedAt": "2026-02-10",
+		"image": "/legacy/assets/rafixhero3.png"
+	},
+	{
+		"id": 6,
+		"slug": "ice-machine-low-output",
+		"title": "Ice Machine Producing Too Little Ice?",
+		"excerpt": "Check water supply, filters, condenser cleanliness, and temperature settings to restore ice production speed.",
+		"category": "Ice Machine",
+		"readTime": "4 min read",
+		"publishedAt": "2026-02-03",
+		"image": "/legacy/assets/rafixhero3.png"
+	}
+]

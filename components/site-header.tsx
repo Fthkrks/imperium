@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const navigationItems = [
@@ -32,11 +34,11 @@ export function SiteHeader() {
                   d="M12 3l1.912 5.813a2 2 0 001.276 1.276L21 12l-5.813 1.912a2 2 0 00-1.276 1.276L12 21l-1.912-5.813a2 2 0 00-1.276-1.276L3 12l5.813-1.912a2 2 0 001.276-1.276L12 3z"
                 />
               </svg>
-              <span {...scopeAttr} className="bold">
+              <span {...scopeAttr} className="bold text-[#70B5ED]! ">
                 LIMITED OFFER:
               </span>
               <span {...scopeAttr}>Get $25 OFF your first repair!</span>
-              <a {...scopeAttr} className="underline open-form-trigger" href="#">
+              <a {...scopeAttr} className="underline open-form-trigger text-[#70B5ED]!" href="#">
                 Book Now →
               </a>
             </div>
@@ -44,10 +46,10 @@ export function SiteHeader() {
         </div>
         <header {...scopeAttr} className="header">
           <div {...scopeAttr} className="container header-container">
-            <a className="logo" href="/">
-              <img alt="RAFIX Appliance Repair" src="/legacy/assets/rafixnewlogo.png" />
+            <a className="" href="/">
+              <Image width={170} height={170} alt="RAFIX Appliance Repair" src="/logo.png" />
             </a>
-            <nav {...scopeAttr} className="nav-desktop">
+            <nav {...scopeAttr} className="nav-desktop ">
               {navigationItems.map((item) => (
                 <a key={item.label} href={item.href}>
                   {item.label}
@@ -73,7 +75,7 @@ export function SiteHeader() {
               </a>
             </nav>
             <div {...scopeAttr} className="header-cta">
-              <a {...scopeAttr} href="tel:3468920910">
+              <a {...scopeAttr} href="tel:3477911731">
                 <svg
                   {...scopeAttr}
                   fill="none"
@@ -91,7 +93,7 @@ export function SiteHeader() {
                     d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
                   />
                 </svg>
-                <span {...scopeAttr}>(346) 892-0910</span>
+                <span {...scopeAttr}>(347) 791-1731</span>
               </a>
             </div>
             <button aria-label="Toggle menu" {...scopeAttr} className="mobile-menu-btn">

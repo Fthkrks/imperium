@@ -17,7 +17,7 @@ function Discount() {
               </div>
               <h3>Military Members</h3>
               <p>Thank you for your service — enjoy <strong>$25 OFF</strong> your repair.</p>
-              <a className="discount-btn open-form-trigger" href="#">Book Repair Service Now</a>
+              <a className="discount-btn open-form-trigger hover:bg-[#11528E]!" href="#">Book Repair Service Now</a>
             </div>
             <div className="discount-card">
               <div className="discount-icon">
@@ -25,7 +25,7 @@ function Discount() {
               </div>
               <h3>Senior Citizens</h3>
               <p>We value your trust — receive <strong>$25 OFF</strong> any appliance service.</p>
-              <a className="discount-btn open-form-trigger" href="#">Book Repair Service Now</a>
+              <a className="discount-btn open-form-trigger hover:bg-[#11528E]!" href="#">Book Repair Service Now</a>
             </div>
             <div className="discount-card">
               <div className="discount-icon">
@@ -33,7 +33,7 @@ function Discount() {
               </div>
               <h3>First-Time Customers</h3>
               <p>Welcome to RAFIX! Get <strong>$25 OFF</strong> your first repair with us.</p>
-              <a className="discount-btn open-form-trigger" href="#">Book Repair Service Now</a>
+              <a className="discount-btn open-form-trigger hover:bg-[#11528E]!" href="#">Book Repair Service Now</a>
             </div>
           </div>
           <p className="discounts-note">Please note: Discounts apply toward repair costs, not the initial service call fee.</p>
