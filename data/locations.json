@@ -1,0 +1,218 @@
+{
+  "houston": {
+    "name": "Houston",
+    "slug": "houston",
+    "region": "Houston, TX",
+    "description": "Professional appliance repair services in Houston, TX. RAFIX provides same-day and next-day appliance repair across the Houston metro area with licensed technicians and 90-day warranty.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d443088.1302985258!2d-95.6834015!3d29.8168824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Downtown Houston", "Midtown", "The Heights", "Montrose", "River Oaks", "Memorial", "Galleria", "Energy Corridor", "Bellaire", "West University Place", "Museum District", "Rice Village"]
+  },
+  "tomball": {
+    "name": "Tomball",
+    "slug": "tomball",
+    "region": "Houston, TX",
+    "description": "Expert appliance repair services in Tomball, TX. Fast, reliable repairs for all major brands with same-day availability and transparent pricing.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55348.97!2d-95.64!3d30.097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640d2bca9a8a8a1%3A0x3e3e3e3e3e3e3e3e!2sTomball%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Tomball Town Center", "Lakewood Forest", "Spring Creek Oaks", "Northpointe", "Creekside Park", "Decker Prairie"]
+  },
+  "spring": {
+    "name": "Spring",
+    "slug": "spring",
+    "region": "Houston, TX",
+    "description": "Trusted appliance repair in Spring, TX. RAFIX technicians serve all neighborhoods in Spring with professional, same-day service and 90-day warranty on all repairs.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.42!3d30.08!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640d68ab0b01c3f%3A0x4e4e4e4e4e4e4e4e!2sSpring%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Old Town Spring", "Spring Trails", "Gleannloch Farms", "Klein", "Louetta", "Champion Forest"]
+  },
+  "katy": {
+    "name": "Katy",
+    "slug": "katy",
+    "region": "Houston, TX",
+    "description": "Professional appliance repair services in Katy, TX. Quick response times, licensed technicians, and affordable pricing for all major appliance brands.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55400!2d-95.82!3d29.79!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640dca739cb56e1%3A0x5a5a5a5a5a5a5a5a!2sKaty%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Cinco Ranch", "Firethorne", "Cross Creek Ranch", "Elyson", "Grand Lakes", "Seven Meadows", "Cane Island"]
+  },
+  "humble": {
+    "name": "Humble",
+    "slug": "humble",
+    "region": "Houston, TX",
+    "description": "Reliable appliance repair services in Humble, TX. Our certified technicians provide fast, quality repairs with transparent pricing and warranty coverage.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.26!3d29.99!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b02a0aa5edcf%3A0x6a6a6a6a6a6a6a6a!2sHumble%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Kingwood", "Fall Creek", "Eagle Springs", "Lakeshore", "Summerwood", "Atascocita"]
+  },
+  "atascocita": {
+    "name": "Atascocita",
+    "slug": "atascocita",
+    "region": "Houston, TX",
+    "description": "Quality appliance repair in Atascocita, TX. RAFIX offers same-day repair service for all major appliance brands with expert technicians.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.18!3d29.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b4f38e6da5c5%3A0x7a7a7a7a7a7a7a7a!2sAtascocita%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Shadow Creek", "Pinehurst", "Walden", "Lakeshore", "Kings River", "Woodland Hills"]
+  },
+  "woodlands": {
+    "name": "Woodlands",
+    "slug": "woodlands",
+    "region": "Houston, TX",
+    "description": "Premium appliance repair services in The Woodlands, TX. Licensed technicians, same-day appointments, and 90-day warranty on all repairs.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-95.51!3d30.17!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8647330fd9a76b85%3A0x8a8a8a8a8a8a8a8a!2sThe%20Woodlands%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Creekside Park", "Alden Bridge", "Cochrans Crossing", "Grogan's Mill", "Indian Springs", "Panther Creek", "Sterling Ridge"]
+  },
+  "klein": {
+    "name": "Klein",
+    "slug": "klein",
+    "region": "Houston, TX",
+    "description": "Reliable appliance repair in Klein, TX. Expert service for refrigerators, washers, dryers, dishwashers, and more with fast response times.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.55!3d30.00!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640d3d2a0a9a9a9%3A0x9a9a9a9a9a9a9a9a!2sKlein%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Klein Forest", "Klein Oak", "Champions", "Willowbrook", "Vintage Park", "Champions Forest"]
+  },
+  "new-caney": {
+    "name": "New Caney",
+    "slug": "new-caney",
+    "region": "Houston, TX",
+    "description": "Professional appliance repair in New Caney, TX. Quick, affordable repairs for all major brands with certified technicians.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.23!3d30.15!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864735aaa1a1a1a1%3A0xaaaaaaaaaaaaaaaa!2sNew%20Caney%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["River Plantation", "Valley Ranch", "Tavola", "Kings Manor", "Roman Forest"]
+  },
+  "magnolia": {
+    "name": "Magnolia",
+    "slug": "magnolia",
+    "region": "Houston, TX",
+    "description": "Trusted appliance repair in Magnolia, TX. RAFIX provides expert repairs for all major brands with same-day service availability.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-95.75!3d30.21!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864738b1b1b1b1b1%3A0xbbbbbbbbbbbbbbbb!2sMagnolia%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Mostyn Manor", "High Meadow Ranch", "Magnolia Ridge", "Dobbin", "Todd Mission"]
+  },
+  "grangerland": {
+    "name": "Grangerland",
+    "slug": "grangerland",
+    "region": "Houston, TX",
+    "description": "Dependable appliance repair services in Grangerland, TX. Licensed technicians with same-day availability and quality-guaranteed repairs.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-95.49!3d30.34!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864739c1c1c1c1c1%3A0xcccccccccccccccc!2sGrangerland%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Grangerland Village", "Cedar Point", "Pine Shadows", "White Oak Estates"]
+  },
+  "conroe": {
+    "name": "Conroe",
+    "slug": "conroe",
+    "region": "Houston, TX",
+    "description": "Expert appliance repair in Conroe, TX. RAFIX delivers fast, professional repairs for refrigerators, washers, dryers, ovens, and more.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55200!2d-95.46!3d30.31!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86473a0d0d0d0d0d%3A0xdddddddddddddddd!2sConroe%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Grand Central Park", "April Sound", "Lake Conroe", "River Plantation", "Conroe Town Center"]
+  },
+  "montgomery": {
+    "name": "Montgomery",
+    "slug": "montgomery",
+    "region": "Houston, TX",
+    "description": "Quality appliance repair services in Montgomery, TX. Transparent pricing, certified technicians, and comprehensive warranty coverage.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55200!2d-95.69!3d30.39!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86473be1e1e1e1e1%3A0xeeeeeeeeeeeeeeee!2sMontgomery%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Bentwater", "Walden on Lake Conroe", "La Torretta", "Legends Trail", "Montgomery Town Center"]
+  },
+  "austin": {
+    "name": "Austin",
+    "slug": "austin",
+    "region": "Austin, TX",
+    "description": "Professional appliance repair services in Austin, TX. RAFIX provides same-day and next-day repairs across the Austin metro area with licensed technicians.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d441400.7551391056!2d-97.9222068!3d30.3074624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b599a0cc032f%3A0x5d9b464bd469d57a!2sAustin%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Downtown Austin", "South Congress", "East Austin", "Zilker", "Barton Hills", "Hyde Park", "Mueller", "Domain", "Westlake Hills", "Tarrytown"]
+  },
+  "bee-cave": {
+    "name": "Bee Cave",
+    "slug": "bee-cave",
+    "region": "Austin, TX",
+    "description": "Expert appliance repair in Bee Cave, TX. Fast, reliable service for all major brands with same-day availability and transparent pricing.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.95!3d30.31!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b4a0f0f0f0f0f%3A0xf0f0f0f0f0f0f0f0!2sBee%20Cave%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Falconhead", "Lake Pointe", "Spanish Oaks", "Homestead", "Shops at the Galleria"]
+  },
+  "briarcliff": {
+    "name": "Briarcliff",
+    "slug": "briarcliff",
+    "region": "Austin, TX",
+    "description": "Dependable appliance repair in Briarcliff, TX. Professional technicians providing quality repairs for all major appliance brands.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.89!3d30.40!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b4b1a1a1a1a1a%3A0xa1a1a1a1a1a1a1a1!2sBriarcliff%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Briarcliff Marina", "Lago Vista Highlands", "Lake Travis Estates"]
+  },
+  "brushy-creek": {
+    "name": "Brushy Creek",
+    "slug": "brushy-creek",
+    "region": "Austin, TX",
+    "description": "Trusted appliance repair in Brushy Creek, TX. RAFIX delivers same-day repairs with certified technicians and 90-day warranty.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.73!3d30.51!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b2c2b2b2b2b2b%3A0xb2b2b2b2b2b2b2b2!2sBrushy%20Creek%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Brushy Creek Village", "Sendero Springs", "Ranch at Brushy Creek", "Fern Bluff"]
+  },
+  "cedar-park": {
+    "name": "Cedar Park",
+    "slug": "cedar-park",
+    "region": "Austin, TX",
+    "description": "Professional appliance repair services in Cedar Park, TX. Fast response times, expert technicians, and affordable pricing for all major brands.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.82!3d30.51!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b2d3c3c3c3c3c%3A0xc3c3c3c3c3c3c3c3!2sCedar%20Park%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Twin Creeks", "Buttercup Creek", "Carriage Hills", "Anderson Mill", "Cypress Canyon", "Ranch at Brushy Creek"]
+  },
+  "georgetown": {
+    "name": "Georgetown",
+    "slug": "georgetown",
+    "region": "Austin, TX",
+    "description": "Expert appliance repair in Georgetown, TX. RAFIX provides fast, reliable repairs for all major brands across Georgetown and surrounding neighborhoods.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55150!2d-97.68!3d30.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644d7e0c0c0c0c1%3A0xd4d4d4d4d4d4d4d4!2sGeorgetown%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Sun City Texas", "Wolf Ranch", "Rancho Sienna", "Berry Creek", "Teravista", "Parkside at Mayfield Ranch", "The Oaks at San Gabriel", "Cimarron Hills", "MorningStar", "La Conterra", "Estates of Westlake", "Old Town / Historic Downtown Georgetown", "Reata Trails", "Serenada", "Georgetown Village"]
+  },
+  "hudson-bend": {
+    "name": "Hudson Bend",
+    "slug": "hudson-bend",
+    "region": "Austin, TX",
+    "description": "Reliable appliance repair in Hudson Bend, TX. Quality repairs for all major appliance brands with licensed technicians.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.92!3d30.39!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b4e5e5e5e5e5e%3A0xe5e5e5e5e5e5e5e5!2sHudson%20Bend%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Steiner Ranch", "River Place", "Lake Travis Estates", "Comanche Trail"]
+  },
+  "hutto": {
+    "name": "Hutto",
+    "slug": "hutto",
+    "region": "Austin, TX",
+    "description": "Professional appliance repair in Hutto, TX. Same-day service, transparent pricing, and certified technicians for all major brands.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-97.55!3d30.54!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644d16f6f6f6f6f%3A0xf6f6f6f6f6f6f6f6!2sHutto%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Star Ranch", "Riverwalk", "Emory Farms", "Hutto Town Center", "Creek Bend"]
+  },
+  "jonestown": {
+    "name": "Jonestown",
+    "slug": "jonestown",
+    "region": "Austin, TX",
+    "description": "Trusted appliance repair in Jonestown, TX. RAFIX provides fast, affordable repairs with expert technicians and warranty coverage.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-97.92!3d30.49!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b3a7a7a7a7a7a%3A0xa7a7a7a7a7a7a7a7!2sJonestown%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Jones Brothers Park", "Lago Vista Area", "Shady Hollow", "North Shore"]
+  },
+  "lago-vista": {
+    "name": "Lago Vista",
+    "slug": "lago-vista",
+    "region": "Austin, TX",
+    "description": "Quality appliance repair in Lago Vista, TX. Professional service for all major appliance brands with same-day availability.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-97.98!3d30.46!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b3b8b8b8b8b8b%3A0xb8b8b8b8b8b8b8b8!2sLago%20Vista%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Highland Lake Estates", "Bar K Ranches", "Balcones Canyonlands", "Point Venture"]
+  },
+  "lakeway": {
+    "name": "Lakeway",
+    "slug": "lakeway",
+    "region": "Austin, TX",
+    "description": "Premium appliance repair in Lakeway, TX. Expert technicians, fast service, and transparent pricing for all appliance brands.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.97!3d30.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b4c9c9c9c9c9c%3A0xc9c9c9c9c9c9c9c9!2sLakeway%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Lakeway Highlands", "Rough Hollow", "The Hills", "Flintrock Falls", "Serene Hills"]
+  },
+  "leander": {
+    "name": "Leander",
+    "slug": "leander",
+    "region": "Austin, TX",
+    "description": "Reliable appliance repair in Leander, TX. RAFIX delivers same-day service with licensed technicians and quality-guaranteed repairs.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-97.85!3d30.58!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b2adadadadada%3A0xdadadadadadadada!2sLeander%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Crystal Falls", "Travisso", "Mason Hills", "Cold Springs", "Sarita Valley", "Bryson"]
+  },
+  "pflugerville": {
+    "name": "Pflugerville",
+    "slug": "pflugerville",
+    "region": "Austin, TX",
+    "description": "Expert appliance repair in Pflugerville, TX. Fast, affordable repairs for refrigerators, washers, dryers, and more with certified technicians.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55300!2d-97.62!3d30.44!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644c8ebebebebeb%3A0xebebebebebebebeb!2sPflugerville%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Blackhawk", "Falcon Pointe", "Highland Park", "Meadows of Blackhawk", "Avalon", "Stone Hill Town Center"]
+  },
+  "point-venture": {
+    "name": "Point Venture",
+    "slug": "point-venture",
+    "region": "Austin, TX",
+    "description": "Trusted appliance repair in Point Venture, TX. Professional service with transparent pricing and 90-day warranty on all repairs.",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55250!2d-97.95!3d30.41!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b3cfcfcfcfcfc%3A0xfcfcfcfcfcfcfcfc!2sPoint%20Venture%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "subAreas": ["Point Venture Lakefront", "Lago Vista Shores", "North Lake Travis"]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "features": [
+    {
+      "title": "Same-Day Service",
+      "description": "We arrive when you need us, often within hours.",
+      "icon": "<svg fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"10\" /><polyline points=\"12 6 12 12 16 14\" /></svg>"
+    },
+    {
+      "title": "Certified Technicians",
+      "description": "Factory-trained experts for all major brands.",
+      "icon": "<svg fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"8\" r=\"7\" /><polyline points=\"8.21 13.89 7 23 12 20 17 23 15.79 13.88\" /></svg>"
+    },
+    {
+      "title": "Upfront Pricing",
+      "description": "Flat-rate pricing. No surprises on your bill.",
+      "icon": "<svg fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"12\" x2=\"12\" y1=\"1\" y2=\"23\" /><path d=\"M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6\" /></svg>"
+    },
+    {
+      "title": "90-Day Warranty",
+      "description": "We stand behind our parts and labor.",
+      "icon": "<svg fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\" /><path d=\"m9 12 2 2 4-4\" /></svg>"
+    }
+  ],
+  "stats": [
+    [
+      {
+        "value": "15+",
+        "label": "Years Experience",
+        "isGoogle": false
+      },
+      {
+        "value": "10k+",
+        "label": "Repairs Completed",
+        "isGoogle": false
+      }
+    ],
+    [
+      {
+        "value": "4.9",
+        "label": "Average Rating",
+        "isGoogle": true
+      },
+      {
+        "value": "100%",
+        "label": "Satisfaction Guarantee",
+        "isGoogle": false
+      }
+    ]
+  ]
+}

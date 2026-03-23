@@ -1,0 +1,20 @@
+{
+  "phone": "(347) 791-1731",
+  "phoneHref": "tel:3477911731",
+  "email": "rafixappliancerepair@gmail.com",
+  "location": "Austin TX & Houston TX",
+  "socialMedia": [
+    {
+      "platform": "Instagram",
+      "href": "https://instagram.com/rafixapplianceservice"
+    },
+    {
+      "platform": "YouTube",
+      "href": "https://www.youtube.com/@RafixApplianceRepair"
+    }
+  ],
+  "reviews": {
+    "count": "217",
+    "average": "4.9"
+  }
+}

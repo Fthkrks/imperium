@@ -24,6 +24,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/legacy/assets/styles.css" />
         <link rel="stylesheet" href="/legacy/assets/refrigerator.css" />
         <link rel="stylesheet" href="/legacy/assets/brand.css" />
+        <link rel="stylesheet" href="/legacy/assets/location.css" />
       </head>
       <body>
         {children}

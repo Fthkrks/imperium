@@ -9,10 +9,12 @@ function initRafixScripts() {
   const header = document.querySelector('.header');
 
   window.addEventListener('scroll', function() {
-    if (window.scrollY > 20) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+    if (header) {
+      if (window.scrollY > 20) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     }
   });
 
@@ -22,44 +24,51 @@ function initRafixScripts() {
   const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
   const mobileMenu = document.querySelector('.mobile-menu');
   const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-  const mobileMenuIcon = mobileMenuBtn.querySelector('svg');
-  let isMobileMenuOpen = false;
 
-  function openMobileMenu() {
-    isMobileMenuOpen = true;
-    mobileMenu.classList.add('open');
-    mobileMenuOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    mobileMenuIcon.innerHTML = `
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    `;
+  if (mobileMenuBtn && mobileMenu && mobileMenuOverlay) {
+    const mobileMenuIcon = mobileMenuBtn.querySelector('svg');
+    let isMobileMenuOpen = false;
+
+    function openMobileMenu() {
+      isMobileMenuOpen = true;
+      mobileMenu.classList.add('open');
+      mobileMenuOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (mobileMenuIcon) {
+        mobileMenuIcon.innerHTML = `
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        `;
+      }
+    }
+
+    function closeMobileMenu() {
+      isMobileMenuOpen = false;
+      mobileMenu.classList.remove('open');
+      mobileMenuOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      if (mobileMenuIcon) {
+        mobileMenuIcon.innerHTML = `
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        `;
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', function() {
+      if (isMobileMenuOpen) closeMobileMenu();
+      else openMobileMenu();
+    });
+
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+    // Close mobile menu when clicking a link
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
   }
-
-  function closeMobileMenu() {
-    isMobileMenuOpen = false;
-    mobileMenu.classList.remove('open');
-    mobileMenuOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-    mobileMenuIcon.innerHTML = `
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    `;
-  }
-
-  mobileMenuBtn.addEventListener('click', function() {
-    if (isMobileMenuOpen) closeMobileMenu();
-    else openMobileMenu();
-  });
-
-  mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-  // Close mobile menu when clicking a link
-  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-  mobileMenuLinks.forEach(link => {
-    link.addEventListener('click', closeMobileMenu);
-  });
 
   // ========================================
   // Discount Banner Click → open form modal

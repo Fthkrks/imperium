@@ -1,52 +1,44 @@
 import Image from "next/image";
-
+import contactData from "@/data/contact.json";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
-const socialLinks = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com/rafixapplianceservice",
-    icon: (
-      <svg
-        {...scopeAttr}
-        fill="none"
-        height="20"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width="20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect {...scopeAttr} height="20" rx="5" ry="5" width="20" x="2" y="2" />
-        <path {...scopeAttr} d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line {...scopeAttr} x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@RafixApplianceRepair",
-    icon: (
-      <svg
-        {...scopeAttr}
-        fill="none"
-        height="20"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width="20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path {...scopeAttr} d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-        <polygon {...scopeAttr} points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-      </svg>
-    ),
-  },
-] as const;
+const socialIcons: Record<string, React.ReactNode> = {
+  Instagram: (
+    <svg
+      {...scopeAttr}
+      fill="none"
+      height="20"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect {...scopeAttr} height="20" rx="5" ry="5" width="20" x="2" y="2" />
+      <path {...scopeAttr} d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line {...scopeAttr} x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  ),
+  YouTube: (
+    <svg
+      {...scopeAttr}
+      fill="none"
+      height="20"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path {...scopeAttr} d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+      <polygon {...scopeAttr} points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+    </svg>
+  )
+};
 
 const quickLinks = [
   { href: "/", label: "Home" },
@@ -57,6 +49,14 @@ const quickLinks = [
   { href: "/#reviews", label: "Reviews" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#service-areas", label: "Service Areas" },
+] as const;
+
+const premiumBrands = [
+  { href: "/brands/sub-zero", label: "Sub-Zero" },
+  { href: "/brands/thermador", label: "Thermador" },
+  { href: "/brands/viking", label: "Viking" },
+  { href: "/brands/wolf", label: "Wolf" },
+  { href: "/brands/monogram", label: "Monogram" },
 ] as const;
 
 function RatingStars() {
@@ -93,16 +93,16 @@ export function SiteFooter() {
                 to help.
               </p>
               <div {...scopeAttr} className="social-links">
-                {socialLinks.map((item) => (
+                {contactData.socialMedia.map((item) => (
                   <a
                     {...scopeAttr}
-                    aria-label={item.label}
+                    aria-label={item.platform}
                     href={item.href}
-                    key={item.label}
+                    key={item.platform}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    {item.icon}
+                    {socialIcons[item.platform]}
                   </a>
                 ))}
               </div>
@@ -133,6 +133,16 @@ export function SiteFooter() {
                 </li>
               </ul>
             </div>
+            <div {...scopeAttr} className="footer-links">
+              <h3 {...scopeAttr}>Premium Brands</h3>
+              <ul {...scopeAttr}>
+                {premiumBrands.map((item) => (
+                  <li {...scopeAttr} key={item.label}>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div {...scopeAttr} className="footer-contact">
               <h3 {...scopeAttr}>Contact Us</h3>
               <ul {...scopeAttr}>
@@ -156,7 +166,7 @@ export function SiteFooter() {
                   </svg>
                   <div {...scopeAttr}>
                     <p {...scopeAttr} className="phone-number">
-                      (347) 791-1731
+                      {contactData.phone}
                     </p>
                     <p {...scopeAttr} className="hours">
                       Mon-Fri: 8am - 8pm
@@ -182,8 +192,8 @@ export function SiteFooter() {
                     <path {...scopeAttr} d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline {...scopeAttr} points="22,6 12,13 2,6" />
                   </svg>
-                  <a {...scopeAttr} href="mailto:rafixappliancerepair@gmail.com">
-                    rafixappliancerepair@gmail.com
+                  <a {...scopeAttr} href={`mailto:${contactData.email}`}>
+                    {contactData.email}
                   </a>
                 </li>
                 <li {...scopeAttr}>
@@ -202,7 +212,7 @@ export function SiteFooter() {
                     <path {...scopeAttr} d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
                     <circle {...scopeAttr} cx="12" cy="10" r="3" />
                   </svg>
-                  <p {...scopeAttr}>Austin TX Houston TX</p>
+                  <p {...scopeAttr}>{contactData.location}</p>
                 </li>
               </ul>
             </div>
@@ -244,18 +254,18 @@ export function SiteFooter() {
           </div>
           <p {...scopeAttr} className="fixed-rating-text">
             <span {...scopeAttr} className="fixed-rating-number">
-              4.9
+              {contactData.reviews.average}
             </span>{" "}
             <span {...scopeAttr} className="fixed-rating-divider">
               |
             </span>{" "}
             <span {...scopeAttr} className="fixed-rating-reviews">
-              217 reviews
+              {contactData.reviews.count} reviews
             </span>
           </p>
         </div>
       </div>
-      <a aria-label="Call Now" {...scopeAttr} className="mobile-fixed-call" href="tel:3468920910">
+      <a aria-label="Call Now" {...scopeAttr} className="mobile-fixed-call" href={contactData.phoneHref}>
         <svg
           {...scopeAttr}
           fill="none"

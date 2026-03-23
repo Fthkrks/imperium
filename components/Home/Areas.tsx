@@ -1,6 +1,97 @@
+"use client";
 import React from 'react'
+import Link from 'next/link'
+import areasData from '@/data/areas.json'
+/* slug helper: "New Caney" → "new-caney", "Georgetown " → "georgetown" */
+function toSlug(name: string) {
+  return name.trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+/* Reusable checkmark icon */
+const CheckIcon = () => (
+  <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+);
+
+/* Area item component */
+function AreaItem({ name }: { name: string }) {
+  return (
+    <Link href={`/location/${toSlug(name)}`} className="area-item area-item-link">
+      <CheckIcon />
+      <span>{name}</span>
+    </Link>
+  );
+}
+
+/* Area slider component */
+function AreaSlider({ pages }: { pages: React.ReactNode[][] }) {
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const totalPages = pages.length;
+
+  React.useEffect(() => {
+    if (totalPages <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentPage((prev) => (prev + 1) % totalPages);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [totalPages]);
+
+  const [touchStart, setTouchStart] = React.useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentPage < totalPages - 1) {
+        setCurrentPage(currentPage + 1);
+      } else if (diff < 0 && currentPage > 0) {
+        setCurrentPage(currentPage - 1);
+      }
+    }
+  };
+
+  return (
+    <div className="areas-slider">
+      <div className="areas-slider-viewport">
+        <div 
+          className="areas-slider-track" 
+          style={{ transform: `translateX(-${currentPage * 100}%)`, transition: 'transform 0.3s ease' }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {pages.map((items, idx) => (
+            <div key={idx} className="areas-slider-page">
+              {items}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="areas-slider-dots">
+        {pages.map((_, idx) => (
+          <button 
+            key={idx} 
+            className={idx === currentPage ? 'active' : ''} 
+            onClick={() => setCurrentPage(idx)}
+            aria-label={`Page ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function Areas() {
+  const houstonPages = areasData.houston.map((page, pageIdx) => 
+    page.map((area, idx) => <AreaItem key={`h-${pageIdx}-${idx}`} name={area} />)
+  );
+
+  const austinPages = areasData.austin.map((page, pageIdx) => 
+    page.map((area, idx) => <AreaItem key={`a-${pageIdx}-${idx}`} name={area} />)
+  );
+
   return (
     <>
           <section className="service-areas" id="service-areas">
@@ -19,69 +110,7 @@ function Areas() {
                 <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx={12} cy={10} r={3} /></svg>
                 <span>Houston, TX</span>
               </div>
-              <div className="areas-slider" data-areas-slider>
-                <div className="areas-slider-viewport">
-                  <div className="areas-slider-track">
-                    <div className="areas-slider-page">
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Houston</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Tomball</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Spring</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Katy</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Humble</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Atascocita</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Woodlands</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Klein</span>
-                      </div>
-                    </div>
-                    <div className="areas-slider-page">
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>New Caney</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Magnolia</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Grangerland</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Conroe</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Montgomery</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="areas-slider-dots" />
-              </div>
+              <AreaSlider pages={houstonPages} />
             </div>
             <div className="areas-map-card">
               <div className="areas-map-wrapper">
@@ -91,73 +120,7 @@ function Areas() {
                 <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx={12} cy={10} r={3} /></svg>
                 <span>Austin, TX</span>
               </div>
-              <div className="areas-slider" data-areas-slider>
-                <div className="areas-slider-viewport">
-                  <div className="areas-slider-track">
-                    <div className="areas-slider-page">
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Austin</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Bee Cave</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Briarcliff</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Brushy Creek</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Cedar Park</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Georgetown </span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Hudson Bend</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Hutto</span>
-                      </div>
-                    </div>
-                    <div className="areas-slider-page">
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Jonestown</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Lago Vista</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Lakeway</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Leander</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Pflugerville</span>
-                      </div>
-                      <div className="area-item">
-                        <svg fill="none" height={22} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width={22} xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                        <span>Point Venture</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="areas-slider-dots" />
-              </div>
+              <AreaSlider pages={austinPages} />
             </div>
           </div>
           <div className="areas-callout">

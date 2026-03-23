@@ -1,0 +1,41 @@
+{
+  "houston": [
+    [
+      "Houston",
+      "Tomball",
+      "Spring",
+      "Katy",
+      "Humble",
+      "Atascocita",
+      "Woodlands",
+      "Klein"
+    ],
+    [
+      "New Caney",
+      "Magnolia",
+      "Grangerland",
+      "Conroe",
+      "Montgomery"
+    ]
+  ],
+  "austin": [
+    [
+      "Austin",
+      "Bee Cave",
+      "Briarcliff",
+      "Brushy Creek",
+      "Cedar Park",
+      "Georgetown",
+      "Hudson Bend",
+      "Hutto"
+    ],
+    [
+      "Jonestown",
+      "Lago Vista",
+      "Lakeway",
+      "Leander",
+      "Pflugerville",
+      "Point Venture"
+    ]
+  ]
+}

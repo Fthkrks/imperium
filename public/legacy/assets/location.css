@@ -1,0 +1,350 @@
+/* ─── Area Item Link (Homepage) ─── */
+a.area-item-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  border-radius: 8px;
+}
+a.area-item-link:hover {
+  background: rgba(26, 58, 102, 0.06);
+  transform: translateX(2px);
+}
+
+/* ─── Location Page Styles ─── */
+
+/* Hero */
+.loc-hero {
+  position: relative;
+  background: linear-gradient(135deg, #0b2a4a 0%, #143d6b 40%, #1a508c 100%);
+  padding: 5rem 0 4rem;
+  overflow: hidden;
+  min-height: 340px;
+}
+.loc-hero-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.loc-hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+.loc-hero-glow-1 {
+  width: 500px;
+  height: 500px;
+  background: rgba(112, 181, 237, 0.12);
+  top: -150px;
+  right: -100px;
+}
+.loc-hero-glow-2 {
+  width: 400px;
+  height: 400px;
+  background: rgba(236, 144, 52, 0.08);
+  bottom: -120px;
+  left: -80px;
+}
+.loc-hero-content {
+  position: relative;
+  z-index: 1;
+}
+.loc-hero-text {
+  max-width: 720px;
+}
+.loc-hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(112, 181, 237, 0.15);
+  color: #70b5ed;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+.loc-hero h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+.loc-hero-highlight {
+  color: #ec9034;
+}
+.loc-hero-description {
+  color: rgba(255,255,255,.75);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  max-width: 600px;
+}
+.loc-hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.loc-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ec9034;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+  border: none;
+}
+.loc-btn-primary:hover {
+  background: #d47e28;
+  transform: translateY(-2px);
+}
+.loc-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.2);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.loc-btn-secondary:hover {
+  background: rgba(255,255,255,.18);
+  transform: translateY(-2px);
+}
+
+/* Map Section */
+.loc-map-section {
+  padding: 0;
+}
+.loc-map-container {
+  position: relative;
+  width: 100%;
+  min-height: 560px;
+}
+.loc-map-iframe {
+  width: 100%;
+  height: 560px;
+  border: none;
+  display: block;
+}
+.loc-areas-card {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0,0,0,.15);
+  padding: 1.5rem;
+  width: 340px;
+  max-height: calc(100% - 48px);
+  overflow-y: auto;
+  z-index: 2;
+}
+.loc-areas-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  color: #0e3c66;
+}
+.loc-areas-card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0e3c66;
+}
+.loc-sub-areas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.loc-sub-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: #f0f6fd;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.82rem;
+  color: #1a3a66;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+.loc-sub-area:hover {
+  background: #dbeaf8;
+}
+.loc-sub-area svg {
+  color: #3b82f6;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.loc-areas-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fff8f0;
+  border-radius: 10px;
+  border: 1px solid #fde5c8;
+  font-size: 0.8rem;
+  color: #92631b;
+  line-height: 1.4;
+}
+.loc-areas-note svg {
+  flex-shrink: 0;
+  color: #ec9034;
+  margin-top: 1px;
+}
+
+/* Stats Bar */
+.loc-stats {
+  background: #f8fafd;
+  padding: 2.5rem 0;
+  border-top: 1px solid rgba(26,58,102,.08);
+  border-bottom: 1px solid rgba(26,58,102,.08);
+}
+.loc-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.loc-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.loc-stat svg {
+  color: #1a508c;
+  flex-shrink: 0;
+}
+.loc-stat > div {
+  display: flex;
+  flex-direction: column;
+}
+.loc-stat-number {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0e3c66;
+}
+.loc-stat-label {
+  font-size: 0.82rem;
+  color: #6b7b8d;
+}
+.loc-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(26,58,102,.12);
+}
+
+/* Why Choose Us Section */
+.loc-why {
+  padding: 4rem 0;
+}
+.loc-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.loc-why-card {
+  background: #fff;
+  border: 1px solid rgba(26,58,102,.1);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.loc-why-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(26,58,102,.1);
+}
+.loc-why-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f2fc, #d4e8f9);
+  border-radius: 14px;
+  margin-bottom: 1.25rem;
+  color: #1a508c;
+}
+.loc-why-card h3 {
+  color: #0e3c66;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+.loc-why-card p {
+  color: #4b5563;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── Location Page Responsive ─── */
+@media (max-width: 1024px) {
+  .loc-areas-card {
+    position: static;
+    width: 100%;
+    max-height: none;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  }
+  .loc-map-container {
+    min-height: auto;
+  }
+  .loc-map-iframe {
+    height: 350px;
+  }
+  .loc-why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .loc-hero {
+    padding: 3rem 0 2.5rem;
+  }
+  .loc-hero h1 {
+    font-size: 1.75rem;
+  }
+  .loc-hero-description {
+    font-size: 0.95rem;
+  }
+  .loc-hero-actions {
+    flex-direction: column;
+  }
+  .loc-btn-primary,
+  .loc-btn-secondary {
+    justify-content: center;
+    width: 100%;
+  }
+  .loc-sub-areas-grid {
+    grid-template-columns: 1fr;
+  }
+  .loc-stats-bar {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .loc-stat-divider {
+    display: none;
+  }
+}

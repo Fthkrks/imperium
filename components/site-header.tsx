@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import contactData from "@/data/contact.json";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const navigationItems = [
@@ -77,7 +77,7 @@ export function SiteHeader() {
               </a>
             </nav>
             <div {...scopeAttr} className="header-cta">
-              <a {...scopeAttr} href="tel:3477911731">
+              <a {...scopeAttr} href={contactData.phoneHref}>
                 <svg
                   {...scopeAttr}
                   fill="none"
@@ -95,7 +95,7 @@ export function SiteHeader() {
                     d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
                   />
                 </svg>
-                <span {...scopeAttr}>(347) 791-1731</span>
+                <span {...scopeAttr}>{contactData.phone}</span>
               </a>
             </div>
             <button aria-label="Toggle menu" {...scopeAttr} className="mobile-menu-btn">
@@ -133,7 +133,7 @@ export function SiteHeader() {
             </a>
           ))}
           <a href="/#service-areas">Service Areas</a>
-          <a {...scopeAttr} className="mobile-cta" href="tel:3468920910">
+          <a {...scopeAttr} className="mobile-cta" href={contactData.phoneHref}>
             <svg
               {...scopeAttr}
               fill="none"

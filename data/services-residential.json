@@ -1,0 +1,80 @@
+[
+  {
+    "title": "Refrigerator",
+    "description": "Cooling issues, leaks & compressor repairs",
+    "href": "/services/2",
+    "icon": "/legacy/assets/20260217235424768_e2f99286-ed0b-4bb7-a681-9955bc2734d1.svg"
+  },
+  {
+    "title": "Washer",
+    "description": "Won't spin, drain issues & excessive vibration",
+    "href": "/services/3",
+    "icon": "/legacy/assets/20260218183711838_2b0e132c-01eb-4d5a-9167-6a28eb05b8ed.svg"
+  },
+  {
+    "title": "Ice Machine",
+    "description": "Low ice production, leaks & freezing malfunctions",
+    "href": "/services/4",
+    "icon": "/legacy/assets/20260220111650311_bd1ad6a3-f10b-40a9-b579-db8b48cc1a94.png"
+  },
+  {
+    "title": "Dryer",
+    "description": "No heat, long drying times & unusual noises",
+    "href": "/services/5",
+    "icon": "/legacy/assets/20260220112112571_743fa510-8bc4-4e43-bf1d-b77fd7cb7124.svg"
+  },
+  {
+    "title": "Dishwasher",
+    "description": "Not cleaning properly, water leaks & drainage problems",
+    "href": "/services/6",
+    "icon": "/legacy/assets/20260220112239961_9ed80573-d0ff-4960-b932-02e80c6b9ff0.svg"
+  },
+  {
+    "title": "Oven",
+    "description": "Uneven heating, temperature fluctuations & ignition failures",
+    "href": "/services/7",
+    "icon": "/legacy/assets/20260220112353698_d8c1e3c4-ff25-49dc-b4ec-8318c91da6ab.svg"
+  },
+  {
+    "title": "Cooktop",
+    "description": "Burners not lighting, inconsistent flame & cracked surfaces",
+    "href": "/services/8",
+    "icon": "/legacy/assets/20260220112440166_6ac4f480-8182-49fa-84f1-a17b2b5a465e.svg"
+  },
+  {
+    "title": "Microwave",
+    "description": "Not heating, sparking & turntable malfunctions",
+    "href": "/services/9",
+    "icon": "/legacy/assets/20260220112527026_0ea73a83-9144-47b7-bf0b-30324ed5b36d.svg"
+  },
+  {
+    "title": "Wine Cooler",
+    "description": "Temperature inconsistencies, compressor noise & condensation buildup",
+    "href": "/services/10",
+    "icon": "/legacy/assets/20260220112634038_e15d7135-1cc2-40d7-9cb6-4df3610b5242.png"
+  },
+  {
+    "title": "Freezer",
+    "description": "Not freezing, frost buildup & unusual noises",
+    "href": "/services/11",
+    "icon": "/legacy/assets/20260220112732827_57e14d9f-c6de-4834-89f4-6ffee6843183.svg"
+  },
+  {
+    "title": "Garbage Disposal",
+    "description": "Jammed blades, leaks & motor humming without grinding",
+    "href": "/services/12",
+    "icon": "/legacy/assets/20260220112851535_484a35c5-afeb-409e-831c-e0b7b2b980c6.png"
+  },
+  {
+    "title": "Stove",
+    "description": "Burners not heating, gas smell & faulty temperature control",
+    "href": "/services/13",
+    "icon": "/legacy/assets/20260220113048023_fe8d955f-557c-438e-9c85-4f6136fece33.png"
+  },
+  {
+    "title": "Range",
+    "description": "Uneven cooking, burner failures & self-clean malfunctions",
+    "href": "/services/14",
+    "icon": "/legacy/assets/20260220113241155_1f5d686e-b6c7-4040-8968-c26484fade0c.svg"
+  }
+]

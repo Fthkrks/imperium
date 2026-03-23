@@ -1,9 +1,90 @@
-import React from 'react'
+"use client";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+import testimonialsData from "@/data/testimonials.json";
+
+interface Testimonial {
+  initials?: string;
+  avatar?: string;
+  name: string;
+  location: string;
+  text: string;
+}
+
+const TESTIMONIALS = testimonialsData as Testimonial[];
 
 function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
+  const [cardWidth, setCardWidth] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setCardsPerView(3);
+      else if (window.innerWidth >= 768) setCardsPerView(2);
+      else setCardsPerView(1);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (trackRef.current && trackRef.current.children[0]) {
+        const fw = (trackRef.current.children[0] as HTMLElement).offsetWidth;
+        setCardWidth(fw);
+      }
+    };
+    updateWidth();
+    setTimeout(updateWidth, 100);
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, [cardsPerView]);
+
+  const maxIndex = Math.max(0, TESTIMONIALS.length - cardsPerView);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  }, [maxIndex]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [nextSlide, isPaused]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+    setIsPaused(true);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
+    setIsPaused(false);
+  };
+
+  const offset = currentIndex * (cardWidth + 20); // 20px is the CSS gap
+
+  // Generate pagination dots
+  const totalPages = maxIndex + 1;
+  const dots = Array.from({ length: totalPages }, (_, i) => i);
+
   return (
     <>
-          <section className="testimonials" id="reviews">
+      <section className="testimonials" id="reviews">
         <div className="container">
           <div className="section-header">
             <span className="label">Testimonials</span>
@@ -11,274 +92,83 @@ function Testimonials() {
             <div className="rating-display">
               <img alt="Google" className="rating-google-icon" src="/legacy/assets/google-icon.png" />
               <div className="stars">
-                <svg height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                <svg height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                <svg height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                <svg height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                <svg height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                {[1, 2, 3, 4, 5].map(i => (
+                  <svg key={i} height={20} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
               </div>
               <span>4.9/5 Average Rating</span>
             </div>
           </div>
-          <div className="testimonials-carousel">
-            <div className="testimonials-track">
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+          <div 
+            className="testimonials-carousel"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <div 
+              className="testimonials-track" 
+              ref={trackRef}
+              style={{ transform: `translateX(-${offset}px)`, transition: 'transform 0.5s ease-out' }}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              {TESTIMONIALS.map((testimonial, idx) => (
+                <div key={idx} className="testimonial-card">
+                  <div className="review-header">
+                    <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
+                    <div className="review-stars">
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <svg key={i} height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="review-text">{testimonial.text}</p>
+                  <div className="reviewer">
+                    <div className="avatar">
+                      {testimonial.avatar ? (
+                        <img alt={testimonial.name} src={testimonial.avatar} />
+                      ) : (
+                        <span>{testimonial.initials}</span>
+                      )}
+                    </div>
+                    <div>
+                      <p className="name">{testimonial.name}</p>
+                      <p className="location">{testimonial.location}</p>
+                    </div>
                   </div>
                 </div>
-                <p className="review-text">"Very good service and completely honest recommendations with transparent fair pricing. Definitely recommend this company for your appliance repair needs."</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>KK</span>
-                  </div>
-                  <div>
-                    <p className="name">Kat</p>
-                    <p className="location">Austin</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"I was having a problem with my refrigerator cooling and Roma fixed it!!! He was on time, fast and had great customer service... I highly recommend Rafix Appliance Repair!!"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>LH</span>
-                  </div>
-                  <div>
-                    <p className="name">Lashawn Henderson</p>
-                    <p className="location">Austin</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Excellent work! Honest. On time. Friendly. Got my washer working again!"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>RR</span>
-                  </div>
-                  <div>
-                    <p className="name">Rick Roemer</p>
-                    <p className="location">Houston</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Repaired my dryer very quickly and effectively! Was able to come the very next day so I appreciate that and even cleaned up the laundry closet which was totally unnecessary. Highly recommend!"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>DL</span>
-                  </div>
-                  <div>
-                    <p className="name">Daniel Luque</p>
-                    <p className="location">Austin</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Excellent experience! He responded quickly, showed up on time, and repaired our microwave efficiently. He explained everything clearly and was very professional. I would definitely use him again."</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>JB</span>
-                  </div>
-                  <div>
-                    <p className="name">Jessica Buchanan</p>
-                    <p className="location">Austin</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Great service!  Came early and fixed stove. Explaining everything,  highly recommended!!"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>KA</span>
-                  </div>
-                  <div>
-                    <p className="name">Karen Anderson</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Roma doesn’t did an excellent job! He fixed my dryer quickly and explained everything in detail! The price was fair and let me know the cost before he started! Definitely Recommend!!"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>RL</span>
-                  </div>
-                  <div>
-                    <p className="name">Robbye Lewis</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"Roma was awesome, came by quotes a price and was able to order replacement part and fix in less than a week, also was very thorough and identified another part that also needed replacing. Would highly recommend."</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>VM</span>
-                  </div>
-                  <div>
-                    <p className="name">Vanessa M</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"They responded to my call quickly, arrived on time and the guy for sure knew his stuff and was very professional. They ordered the broken part and just like that I was back cooking. Overall I highly recommend them"</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>oo</span>
-                  </div>
-                  <div>
-                    <p className="name">osas obaseki</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"The technician was very thorough and explained things and the price was reasonable. When we ordered the part didn’t take long for him to come back to install. I would recommend this company."</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <span>MM</span>
-                  </div>
-                  <div>
-                    <p className="name">Melinda Myers</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="review-header">
-                  <img alt="Google" className="review-google-icon" src="/legacy/assets/google-icon.png" />
-                  <div className="review-stars">
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                    <svg height={16} viewBox="0 0 24 24" width={16} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                </div>
-                <p className="review-text">"very satisfied with the work and timing. he came in assessed the problem, ordered parts quickly, and returned to finish the job. even took the time to make sure the water came out clean and the filter was working."</p>
-                <div className="reviewer">
-                  <div className="avatar">
-                    <img alt="Treasure Dimalanta" src="/legacy/assets/20260219154000673_691e71e2-e918-4cea-804d-9a1cd3e8c0be.png" />
-                  </div>
-                  <div>
-                    <p className="name">Treasure Dimalanta</p>
-                    <p className="location">Houston, TX</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="carousel-controls">
-            <button aria-label="Previous review" className="carousel-nav prev">
-              <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6" /></svg>
+            <button aria-label="Previous review" className="carousel-nav prev" onClick={prevSlide} disabled={currentIndex <= 0}>
+              <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
             </button>
-            <div className="carousel-dots" />
-            <button aria-label="Next review" className="carousel-nav next">
-              <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6" /></svg>
+            <div className="carousel-dots">
+              {dots.map(idx => (
+                <button
+                  key={idx}
+                  className={`dot ${idx === currentIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentIndex(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+            <button aria-label="Next review" className="carousel-nav next" onClick={nextSlide} disabled={currentIndex >= maxIndex}>
+              <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </button>
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default Testimonials
+export default Testimonials;
