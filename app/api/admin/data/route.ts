@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { Redis } from '@upstash/redis';
+
+const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const redis = redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null;
 
 // Allowed files for security
 const ALLOWED_FILES = [
@@ -54,8 +59,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Invalid file requested' }, { status: 400 });
     }
 
-    const filePath = path.join(process.cwd(), 'data', file);
-    const fileContents = await fs.readFile(filePath, 'utf8');
+    let fileContents: string | null = null;
+    if (redis) {
+      try {
+        const cachedData = await redis.get(`data:${file}`);
+        if (cachedData) {
+          fileContents = typeof cachedData === 'string' ? cachedData : JSON.stringify(cachedData);
+        }
+      } catch (e) {
+        console.error('Redis GET Error:', e);
+      }
+    }
+
+    if (!fileContents) {
+      const filePath = path.join(process.cwd(), 'data', file);
+      fileContents = await fs.readFile(filePath, 'utf8');
+      
+      if (redis && fileContents) {
+        try { await redis.set(`data:${file}`, fileContents); } catch (e) {}
+      }
+    }
 
     return NextResponse.json({ data: fileContents });
   } catch (error) {
@@ -87,21 +110,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON format' }, { status: 400 });
     }
 
-    const filePath = path.join(process.cwd(), 'data', file);
-    await fs.writeFile(filePath, content, 'utf8');
+    if (redis) {
+      await redis.set(`data:${file}`, content);
+    } else {
+      const filePath = path.join(process.cwd(), 'data', file);
+      await fs.writeFile(filePath, content, 'utf8');
+    }
 
     let locationsAdded = 0;
     let locationsRemoved = 0;
 
     if (file === 'areas.json') {
-      const locationsPath = path.join(process.cwd(), 'data', 'locations.json');
-
       let locationsData: Record<string, any> = {};
       try {
-        const rawLocations = await fs.readFile(locationsPath, 'utf8');
-        const parsedLocations = JSON.parse(rawLocations);
-        if (parsedLocations && typeof parsedLocations === 'object' && !Array.isArray(parsedLocations)) {
-          locationsData = parsedLocations;
+        let rawLocations: string | null = null;
+        if (redis) {
+          const cachedLocs = await redis.get('data:locations.json');
+          if (cachedLocs) rawLocations = typeof cachedLocs === 'string' ? cachedLocs : JSON.stringify(cachedLocs);
+        }
+        
+        if (!rawLocations) {
+          const locationsPath = path.join(process.cwd(), 'data', 'locations.json');
+          rawLocations = await fs.readFile(locationsPath, 'utf8');
+        }
+        
+        if (rawLocations) {
+          const parsedLocations = JSON.parse(rawLocations);
+          if (parsedLocations && typeof parsedLocations === 'object' && !Array.isArray(parsedLocations)) {
+            locationsData = parsedLocations;
+          }
         }
       } catch {
         locationsData = {};
@@ -133,7 +170,13 @@ export async function POST(request: Request) {
       }
 
       if (locationsAdded > 0 || locationsRemoved > 0) {
-        await fs.writeFile(locationsPath, `${JSON.stringify(locationsData, null, 2)}\n`, 'utf8');
+        const newLocationsContent = `${JSON.stringify(locationsData, null, 2)}\n`;
+        if (redis) {
+          await redis.set('data:locations.json', newLocationsContent);
+        } else {
+          const locationsPath = path.join(process.cwd(), 'data', 'locations.json');
+          await fs.writeFile(locationsPath, newLocationsContent, 'utf8');
+        }
       }
     }
 
