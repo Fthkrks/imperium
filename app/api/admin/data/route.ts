@@ -1,4 +1,7 @@
+export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { Redis } from '@upstash/redis';
@@ -178,6 +181,14 @@ export async function POST(request: Request) {
           await fs.writeFile(locationsPath, newLocationsContent, 'utf8');
         }
       }
+    }
+
+    // Clear cache so changes appear immediately on admin and main site
+    try {
+      revalidatePath('/admin');
+      revalidatePath('/', 'layout');
+    } catch (err) {
+      console.error('Failed to revalidate path:', err);
     }
 
     return NextResponse.json({ success: true, locationsAdded, locationsRemoved });

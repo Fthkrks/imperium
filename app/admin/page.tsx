@@ -26,7 +26,7 @@ function AdminPageContent() {
       setIsLoading(true);
       setMessage({ type: '', text: '' });
       try {
-        const res = await fetch(`/api/admin/data?file=${file}`);
+        const res = await fetch(`/api/admin/data?file=${file}`, { cache: 'no-store' });
         const data = await res.json();
         
         if (res.ok) {
