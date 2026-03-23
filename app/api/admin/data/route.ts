@@ -14,6 +14,7 @@ const ALLOWED_FILES = [
   'locations.json',
   'faq.json',
   'brands.json',
+  'metadata.json',
 ];
 
 function slugifyAreaName(name: string): string {
@@ -58,7 +59,8 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ data: fileContents });
   } catch (error) {
-    return NextResponse.json({ error: 'File not found or unreadable' }, { status: 500 });
+    console.error('GET Error in /api/admin/data:', error);
+    return NextResponse.json({ error: 'File not found or unreadable', details: String(error) }, { status: 500 });
   }
 }
 
@@ -137,6 +139,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, locationsAdded, locationsRemoved });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to save file' }, { status: 500 });
+    console.error('POST Error in /api/admin/data:', error);
+    return NextResponse.json({ error: 'Failed to save file', details: String(error) }, { status: 500 });
   }
 }

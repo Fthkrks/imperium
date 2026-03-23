@@ -332,6 +332,31 @@ function AdminPageContent() {
           padding: 1.5rem;
           padding-bottom: 3rem;
         }
+
+        @media (max-width: 768px) {
+          .admin-page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+          }
+          
+          .admin-header-actions {
+            width: 100%;
+            display: flex;
+            gap: 0.5rem;
+          }
+          
+          .admin-btn {
+            flex: 1;
+            justify-content: center;
+          }
+          
+          .admin-scroll-area {
+            padding: 1rem;
+            padding-bottom: 3rem;
+          }
+        }
       `}</style>
     </div>
   );

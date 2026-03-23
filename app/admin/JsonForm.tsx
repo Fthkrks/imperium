@@ -198,6 +198,28 @@ export default function JsonForm({ data, onChange, pathKey, level = 0, fileName 
         color: #ef4444;
         background-color: #fef2f2;
       }
+
+      @media (max-width: 768px) {
+        .json-array-item {
+          padding: 0.75rem;
+        }
+        .json-array-container.nested {
+          margin-left: 0.5rem;
+          padding-left: 0.5rem;
+        }
+        .json-object-grid.nested {
+          margin-left: 0;
+        }
+        .json-field-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.25rem;
+        }
+        .json-remove-key-btn {
+          align-self: flex-end;
+          padding: 0;
+        }
+      }
     `}</style>
   ) : null;
 

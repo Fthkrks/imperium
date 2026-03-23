@@ -15,6 +15,7 @@ const MENU_ITEMS = [
   { name: 'Locations', file: 'locations.json', icon: <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18"><path d="M12 21s-6-5.33-6-10a6 6 0 1 1 12 0c0 4.67-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg> },
   { name: 'FAQ', file: 'faq.json', icon: <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> },
   { name: 'Brands', file: 'brands.json', icon: <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> },
+  { name: 'Site Metadata', file: 'metadata.json', icon: <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> },
 ];
 
 function SidebarLinks() {
@@ -47,6 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [authError, setAuthError] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -236,18 +238,45 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="admin-dashboard-layout">
+      {/* Mobile Header */}
+      <div className="admin-mobile-header">
+        <button 
+          className="admin-mobile-menu-btn"
+          onClick={() => setIsMobileMenuOpen(true)}
+        >
+          <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+        </button>
+        <span className="admin-mobile-title">Dashboard</span>
+      </div>
+
+      {/* Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="admin-sidebar-overlay" 
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-header">
-          <Link href="/admin" className="admin-logo-link">
+          <Link href="/admin" className="admin-logo-link" onClick={() => setIsMobileMenuOpen(false)}>
             <div className="admin-logo-icon">
               <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" width="18"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <span className="admin-logo-text">Dashboard</span>
           </Link>
+          <button 
+            className="admin-mobile-close-btn"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <svg fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          </button>
         </div>
         
-        <nav className="admin-nav-menu">
+        <nav className="admin-nav-menu" onClick={() => {
+          if (window.innerWidth <= 768) setIsMobileMenuOpen(false);
+        }}>
           <Suspense fallback={<div className="admin-nav-loading">Loading menu...</div>}>
             <SidebarLinks />
           </Suspense>
@@ -428,6 +457,96 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           flex-direction: column;
           overflow: hidden;
           background-color: #ffffff;
+        }
+
+        .admin-mobile-header {
+          display: none;
+        }
+        
+        .admin-mobile-close-btn {
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          .admin-dashboard-layout {
+            flex-direction: column;
+          }
+          
+          .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            transform: translateX(-100%);
+            z-index: 50;
+            transition: transform 0.3s ease;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+          }
+          
+          .admin-sidebar.open {
+            transform: translateX(0);
+          }
+          
+          .admin-sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          
+          .admin-mobile-close-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+          }
+          
+          .admin-mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background-color: #0f172a;
+            color: white;
+            z-index: 40;
+            position: sticky;
+            top: 0;
+          }
+          
+          .admin-mobile-menu-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+          }
+          
+          .admin-mobile-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+          }
+          
+          .admin-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 45;
+          }
+          
+          .admin-main-content {
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+          }
         }
 
         /* Generic Scroller */

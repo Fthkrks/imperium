@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { promises as fs } from 'fs';
+import path from 'path';
 
-export const metadata: Metadata = {
-  title: "RAFIX Appliance Repair",
-  description:
-    "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const filePath = path.join(process.cwd(), 'data', 'metadata.json');
+    const fileContents = await fs.readFile(filePath, 'utf8');
+    const metadataJson = JSON.parse(fileContents);
+    return {
+      title: metadataJson.title || "RAFIX Appliance Repair",
+      description: metadataJson.description || "Professional appliance repair services.",
+      keywords: metadataJson.keywords || "",
+    };
+  } catch (error) {
+    return {
+      title: "RAFIX Appliance Repair",
+      description: "Professional appliance repair services.",
+    };
+  }
+}
 
 export default function RootLayout({
   children,
