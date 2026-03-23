@@ -1,6 +1,8 @@
 import React from 'react'
-import residentialServices from "@/data/services-residential.json";
+import { useSiteData } from "@/components/SiteDataContext";
+
 function Resential() {
+  const { servicesResidential } = useSiteData();
   return (
     <section className="services-section">
                 <div className="services-category">
@@ -22,7 +24,7 @@ function Resential() {
               Residential
             </h3>
             <div className="services-grid">
-              {residentialServices.map((service, index) => (
+              {(servicesResidential || []).map((service: any, index: number) => (
                 <a key={index} className="service-card" href={service.href}>
                   <div className="icon-wrapper">
                     <img

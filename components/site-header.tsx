@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import contactData from "@/data/contact.json";
+import { useSiteData } from "@/components/SiteDataContext";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const navigationItems = [
@@ -13,6 +15,7 @@ const navigationItems = [
 ] as const;
 
 export function SiteHeader() {
+  const { contact: contactData } = useSiteData();
   return (
     <>
       <div {...scopeAttr} className="sticky-top">

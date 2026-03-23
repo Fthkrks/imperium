@@ -1,6 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import contactData from "@/data/contact.json";
-import brandsDataJson from "@/data/brands.json";
+import { useSiteData } from "@/components/SiteDataContext";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 type BrandData = {
@@ -10,36 +11,14 @@ type BrandData = {
 
 const socialIcons: Record<string, React.ReactNode> = {
   Instagram: (
-    <svg
-      {...scopeAttr}
-      fill="none"
-      height="20"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-      width="20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...scopeAttr} fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
       <rect {...scopeAttr} height="20" rx="5" ry="5" width="20" x="2" y="2" />
       <path {...scopeAttr} d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line {...scopeAttr} x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
     </svg>
   ),
   YouTube: (
-    <svg
-      {...scopeAttr}
-      fill="none"
-      height="20"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-      width="20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...scopeAttr} fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
       <path {...scopeAttr} d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
       <polygon {...scopeAttr} points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
     </svg>
@@ -57,8 +36,6 @@ const quickLinks = [
   { href: "/#service-areas", label: "Service Areas" },
 ] as const;
 
-const brandsData = brandsDataJson as Record<string, BrandData>;
-
 function getBrandLabel(slug: string, title?: string) {
   if (!title) {
     return slug
@@ -73,25 +50,11 @@ function getBrandLabel(slug: string, title?: string) {
     .trim();
 }
 
-const premiumBrands = Object.entries(brandsData)
-  .filter(([, item]) => Boolean(item?.premium))
-  .map(([slug, item]) => ({
-    href: `/brands/${slug}`,
-    label: getBrandLabel(slug, item?.title),
-  }));
-
 function RatingStars() {
   return (
     <>
       {Array.from({ length: 5 }).map((_, index) => (
-        <svg
-          {...scopeAttr}
-          key={index}
-          height="14"
-          viewBox="0 0 24 24"
-          width="14"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg {...scopeAttr} key={index} height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg">
           <polygon {...scopeAttr} points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ))}
@@ -100,6 +63,16 @@ function RatingStars() {
 }
 
 export function SiteFooter() {
+  const { contact: contactData, brands: brandsDataJson } = useSiteData();
+  const brandsData = (brandsDataJson || {}) as Record<string, BrandData>;
+
+  const premiumBrands = Object.entries(brandsData)
+    .filter(([, item]) => Boolean(item?.premium))
+    .map(([slug, item]) => ({
+      href: `/brands/${slug}`,
+      label: getBrandLabel(slug, item?.title),
+    }));
+
   return (
     <>
       <footer {...scopeAttr} className="footer">
@@ -114,15 +87,8 @@ export function SiteFooter() {
                 to help.
               </p>
               <div {...scopeAttr} className="social-links">
-                {contactData.socialMedia.map((item) => (
-                  <a
-                    {...scopeAttr}
-                    aria-label={item.platform}
-                    href={item.href}
-                    key={item.platform}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
+                {(contactData?.socialMedia || []).map((item: any) => (
+                  <a {...scopeAttr} aria-label={item.platform} href={item.href} key={item.platform} rel="noopener noreferrer" target="_blank">
                     {socialIcons[item.platform]}
                   </a>
                 ))}
@@ -173,72 +139,32 @@ export function SiteFooter() {
               <h3 {...scopeAttr}>Contact Us</h3>
               <ul {...scopeAttr}>
                 <li {...scopeAttr}>
-                  <svg
-                    {...scopeAttr}
-                    fill="none"
-                    height="20"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      {...scopeAttr}
-                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
-                    />
+                  <svg {...scopeAttr} fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path {...scopeAttr} d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
                   </svg>
                   <div {...scopeAttr}>
                     <p {...scopeAttr} className="phone-number">
-                      {contactData.phone}
+                      {contactData?.phone}
                     </p>
-                    <p {...scopeAttr} className="hours">
-                      Mon-Fri: 8am - 8pm
-                    </p>
-                    <p {...scopeAttr} className="hours">
-                      Sat-Sun: 8am - 8pm
-                    </p>
+                    <p {...scopeAttr} className="hours">Mon-Fri: 8am - 8pm</p>
+                    <p {...scopeAttr} className="hours">Sat-Sun: 8am - 8pm</p>
                   </div>
                 </li>
                 <li {...scopeAttr}>
-                  <svg
-                    {...scopeAttr}
-                    fill="none"
-                    height="20"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  <svg {...scopeAttr} fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
                     <path {...scopeAttr} d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline {...scopeAttr} points="22,6 12,13 2,6" />
                   </svg>
-                  <a {...scopeAttr} href={`mailto:${contactData.email}`}>
-                    {contactData.email}
+                  <a {...scopeAttr} href={`mailto:${contactData?.email}`}>
+                    {contactData?.email}
                   </a>
                 </li>
                 <li {...scopeAttr}>
-                  <svg
-                    {...scopeAttr}
-                    fill="none"
-                    height="20"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  <svg {...scopeAttr} fill="none" height="20" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
                     <path {...scopeAttr} d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
                     <circle {...scopeAttr} cx="12" cy="10" r="3" />
                   </svg>
-                  <p {...scopeAttr}>{contactData.location}</p>
+                  <p {...scopeAttr}>{contactData?.location}</p>
                 </li>
               </ul>
             </div>
@@ -251,18 +177,7 @@ export function SiteFooter() {
       <div {...scopeAttr} className="form-modal-overlay" id="form-modal">
         <div {...scopeAttr} className="form-modal">
           <button aria-label="Close" {...scopeAttr} className="form-modal-close" id="close-form-modal">
-            <svg
-              {...scopeAttr}
-              fill="none"
-              height="24"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg {...scopeAttr} fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
               <line {...scopeAttr} x1="18" x2="6" y1="6" y2="18" />
               <line {...scopeAttr} x1="6" x2="18" y1="6" y2="18" />
             </svg>
@@ -280,34 +195,18 @@ export function SiteFooter() {
           </div>
           <p {...scopeAttr} className="fixed-rating-text">
             <span {...scopeAttr} className="fixed-rating-number">
-              {contactData.reviews.average}
+              {contactData?.reviews?.average}
             </span>{" "}
-            <span {...scopeAttr} className="fixed-rating-divider">
-              |
-            </span>{" "}
+            <span {...scopeAttr} className="fixed-rating-divider">|</span>{" "}
             <span {...scopeAttr} className="fixed-rating-reviews">
-              {contactData.reviews.count} reviews
+              {contactData?.reviews?.count} reviews
             </span>
           </p>
         </div>
       </div>
-      <a aria-label="Call Now" {...scopeAttr} className="mobile-fixed-call" href={contactData.phoneHref}>
-        <svg
-          {...scopeAttr}
-          fill="none"
-          height="22"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          width="22"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            {...scopeAttr}
-            d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
-          />
+      <a aria-label="Call Now" {...scopeAttr} className="mobile-fixed-call" href={contactData?.phoneHref}>
+        <svg {...scopeAttr} fill="none" height="22" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path {...scopeAttr} d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
         </svg>
       </a>
     </>

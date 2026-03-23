@@ -1,6 +1,8 @@
-import React from 'react'
-import commercialServices from "@/data/services-commercial.json";
+import React from 'react';
+import { useSiteData } from "@/components/SiteDataContext";
+
 function Commercial() {
+  const { servicesCommercial } = useSiteData();
   return (
     <section className="commercial-section my-10!">
                 <div className="services-category">
@@ -22,7 +24,7 @@ function Commercial() {
               Commercial
             </h3>
             <div className="services-grid">
-              {commercialServices.map((service, index) => (
+              {(servicesCommercial || []).map((service: any, index: number) => (
                 <a key={index} className="service-card" href={service.href}>
                   <div className="icon-wrapper">
                     <img

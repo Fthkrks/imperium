@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import faqItems from "@/data/faq.json";
+import { useSiteData } from "@/components/SiteDataContext";
 
 type FaqItem = {
 	question: string;
@@ -10,7 +10,8 @@ type FaqItem = {
 
 function Faq() {
 	const [openIndex, setOpenIndex] = useState<number>(0);
-	const items = faqItems as FaqItem[];
+	const { faq } = useSiteData();
+	const items = faq as FaqItem[];
 
 	return (
 		<section className="faq" id="faq">

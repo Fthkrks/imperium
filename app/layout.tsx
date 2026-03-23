@@ -3,6 +3,8 @@ import Script from "next/script";
 import "./globals.css";
 import { promises as fs } from 'fs';
 import path from 'path';
+import { getAllSiteData } from '@/lib/redis-fetch';
+import { SiteDataProvider } from '@/components/SiteDataContext';
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
@@ -22,11 +24,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteData = await getAllSiteData();
+
   return (
     <html lang="en">
       <head>
@@ -41,10 +45,12 @@ export default function RootLayout({
         <link rel="stylesheet" href="/legacy/assets/location.css" />
       </head>
       <body>
-        {children}
-        <Script src="/legacy/assets/swiper-bundle.min.js" strategy="afterInteractive" />
-        <Script src="/legacy/assets/aos.js" strategy="afterInteractive" />
-        <Script src="/legacy/assets/script.js" strategy="afterInteractive" />
+        <SiteDataProvider data={siteData}>
+          {children}
+          <Script src="/legacy/assets/swiper-bundle.min.js" strategy="afterInteractive" />
+          <Script src="/legacy/assets/aos.js" strategy="afterInteractive" />
+          <Script src="/legacy/assets/script.js" strategy="afterInteractive" />
+        </SiteDataProvider>
       </body>
     </html>
   );
