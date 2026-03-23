@@ -47,6 +47,8 @@ export default async function LocationDetailPage({ params }: PageProps) {
 
   if (!location) notFound();
 
+  const hasMapEmbed = Boolean(location.mapEmbedUrl?.trim());
+
   return (
     <SiteShell>
       {/* Hero Section */}
@@ -92,14 +94,20 @@ export default async function LocationDetailPage({ params }: PageProps) {
       {/* Map + Service Areas Section */}
       <section className="loc-map-section">
         <div className="loc-map-container">
-          <iframe
-            allowFullScreen
-            className="loc-map-iframe"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            src={location.mapEmbedUrl}
-            title={`Map of ${location.name}, TX service area`}
-          />
+          {hasMapEmbed ? (
+            <iframe
+              allowFullScreen
+              className="loc-map-iframe"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src={location.mapEmbedUrl}
+              title={`Map of ${location.name}, TX service area`}
+            />
+          ) : (
+            <div className="loc-map-iframe" aria-live="polite" style={{ display: "grid", placeItems: "center", color: "#64748b", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+              Map will appear here after adding a Google Maps embed URL in admin.
+            </div>
+          )}
           <div className="loc-areas-card">
             <div className="loc-areas-card-header">
               <svg fill="none" height={24} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg">
