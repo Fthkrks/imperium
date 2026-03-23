@@ -5,6 +5,7 @@ import path from 'path';
 // Allowed files for security
 const ALLOWED_FILES = [
   'contact.json',
+  'blog.json',
   'services-residential.json',
   'services-commercial.json',
   'testimonials.json',
@@ -12,7 +13,7 @@ const ALLOWED_FILES = [
   'areas.json',
   'locations.json',
   'faq.json',
-  'brand-details.json',
+  'brands.json',
 ];
 
 function slugifyAreaName(name: string): string {

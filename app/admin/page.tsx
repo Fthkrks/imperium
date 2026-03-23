@@ -148,7 +148,7 @@ function AdminPageContent() {
           </div>
         ) : content !== '' ? (
           <div className="admin-scroll-area">
-            <JsonForm data={content} onChange={setContent} />
+            <JsonForm data={content} onChange={setContent} fileName={file || undefined} />
           </div>
         ) : null}
       </div>

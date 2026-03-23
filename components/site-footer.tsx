@@ -1,6 +1,12 @@
 import Image from "next/image";
 import contactData from "@/data/contact.json";
+import brandsDataJson from "@/data/brands.json";
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
+
+type BrandData = {
+  title: string;
+  premium?: boolean;
+};
 
 const socialIcons: Record<string, React.ReactNode> = {
   Instagram: (
@@ -51,13 +57,28 @@ const quickLinks = [
   { href: "/#service-areas", label: "Service Areas" },
 ] as const;
 
-const premiumBrands = [
-  { href: "/brands/sub-zero", label: "Sub-Zero" },
-  { href: "/brands/thermador", label: "Thermador" },
-  { href: "/brands/viking", label: "Viking" },
-  { href: "/brands/wolf", label: "Wolf" },
-  { href: "/brands/monogram", label: "Monogram" },
-] as const;
+const brandsData = brandsDataJson as Record<string, BrandData>;
+
+function getBrandLabel(slug: string, title?: string) {
+  if (!title) {
+    return slug
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  return title
+    .replace(" Appliance Repair - RAFIX Appliance Repair", "")
+    .replace(" - RAFIX Appliance Repair", "")
+    .trim();
+}
+
+const premiumBrands = Object.entries(brandsData)
+  .filter(([, item]) => Boolean(item?.premium))
+  .map(([slug, item]) => ({
+    href: `/brands/${slug}`,
+    label: getBrandLabel(slug, item?.title),
+  }));
 
 function RatingStars() {
   return (
@@ -141,6 +162,11 @@ export function SiteFooter() {
                     <a href={item.href}>{item.label}</a>
                   </li>
                 ))}
+                {premiumBrands.length === 0 ? (
+                  <li {...scopeAttr}>
+                    <span>No premium brands selected yet.</span>
+                  </li>
+                ) : null}
               </ul>
             </div>
             <div {...scopeAttr} className="footer-contact">

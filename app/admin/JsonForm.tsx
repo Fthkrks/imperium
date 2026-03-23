@@ -21,9 +21,12 @@ interface JsonFormProps {
   onChange: (newData: any) => void;
   pathKey?: string | number;
   level?: number;
+  fileName?: string;
 }
 
-export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFormProps) {
+export default function JsonForm({ data, onChange, pathKey, level = 0, fileName }: JsonFormProps) {
+  const [lastAddedBrandKey, setLastAddedBrandKey] = React.useState<string | null>(null);
+
   // Styles are injected only once if we place them globally, but placing them in the admin page or layout is better. 
   // However, for self-containment as requested, we can put `<style>` block at level 0.
   const styleBlock = level === 0 ? (
@@ -158,6 +161,12 @@ export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFor
         display: flex;
         flex-direction: column;
       }
+      .json-field-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
       .json-field-label {
         display: block;
         font-size: 0.75rem;
@@ -172,6 +181,22 @@ export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFor
       }
       .json-field-content.nested-obj {
         margin-top: 0.5rem;
+      }
+      .json-remove-key-btn {
+        color: #94a3b8;
+        background: transparent;
+        border: none;
+        padding: 0.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .json-remove-key-btn:hover {
+        color: #ef4444;
+        background-color: #fef2f2;
       }
     `}</style>
   ) : null;
@@ -279,6 +304,7 @@ export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFor
               </div>
               <JsonForm
                 data={item}
+                fileName={fileName}
                 level={level + 1}
                 onChange={(newItemVal) => {
                   const newData = [...data];
@@ -300,6 +326,84 @@ export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFor
 
   // --- OBJECT ---
   if (typeof data === 'object') {
+    const isRootBrandsObject = fileName === 'brands.json' && level === 0;
+
+    const handleRemoveKey = (keyToRemove: string) => {
+      if (!confirm(`Delete key \"${keyToRemove}\"?`)) return;
+
+      const nextData = { ...data };
+      delete nextData[keyToRemove];
+      onChange(nextData);
+    };
+
+    const handleAddBrandItem = () => {
+      const values = Object.values(data);
+      const firstValue = values.length > 0 ? values[0] : {
+        title: '',
+        description: '',
+        image: '',
+        premium: false,
+      };
+      const templateValue = getBlankTemplate(firstValue);
+
+      const numericKeys = Object.keys(data)
+        .map((key) => Number(key))
+        .filter((value) => Number.isFinite(value));
+      const nextNumericKey = numericKeys.length > 0 ? Math.max(...numericKeys) + 1 : 1;
+      const nextKey = String(nextNumericKey);
+
+      setLastAddedBrandKey(nextKey);
+      onChange({ ...data, [nextKey]: templateValue });
+    };
+
+    if (isRootBrandsObject) {
+      const brandEntries = Object.entries(data);
+      const orderedBrandEntries = !lastAddedBrandKey
+        ? brandEntries
+        : brandEntries.sort(([a], [b]) => {
+            if (a === lastAddedBrandKey) return 1;
+            if (b === lastAddedBrandKey) return -1;
+            return 0;
+          });
+
+      return (
+        <>
+          {styleBlock}
+          <div className="json-array-container">
+            {orderedBrandEntries.map(([key, val], index) => (
+              <div key={key} className="json-array-item">
+                <div className="json-array-header">
+                  <span className="json-array-title">Item #{index + 1} ({key})</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveKey(key)}
+                    className="json-remove-btn"
+                    title="Remove Item"
+                  >
+                    <svg fill="none" height="16" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="16"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
+                  </button>
+                </div>
+                <JsonForm
+                  data={val}
+                  fileName={fileName}
+                  pathKey={key}
+                  level={level + 1}
+                  onChange={(newVal) => {
+                    onChange({ ...data, [key]: newVal });
+                  }}
+                />
+              </div>
+            ))}
+
+            <button type="button" onClick={handleAddBrandItem} className="json-add-btn">
+              <svg fill="none" height="16" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="16"><line x1="12" x2="12" y1="5" y2="19" /><line x1="5" x2="19" y1="12" y2="12" /></svg>
+              Add New Array Item
+            </button>
+          </div>
+        </>
+      );
+    }
+
     return (
       <>
         {styleBlock}
@@ -308,12 +412,23 @@ export default function JsonForm({ data, onChange, pathKey, level = 0 }: JsonFor
             const isObj = typeof val === 'object' && val !== null;
             return (
               <div key={key} className="json-field-group">
-                <label className="json-field-label">
-                  {key.replace(/([A-Z])/g, ' $1').trim()}
-                </label>
+                <div className="json-field-header">
+                  <label className="json-field-label">
+                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                  </label>
+                  <button
+                    type="button"
+                    className="json-remove-key-btn"
+                    onClick={() => handleRemoveKey(key)}
+                    title="Remove Key"
+                  >
+                    <svg fill="none" height="14" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="14"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+                  </button>
+                </div>
                 <div className={`json-field-content ${isObj ? 'nested-obj' : ''}`}>
                   <JsonForm
                     data={val}
+                    fileName={fileName}
                     pathKey={key}
                     level={level + 1}
                     onChange={(newVal) => {

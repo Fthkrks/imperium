@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import brandDetailsJson from "@/data/brand-details.json";
+import brandDetailsJson from "@/data/brands.json";
 import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
 import Resential from "@/components/Services/Resential";
@@ -12,6 +12,7 @@ type DetailEntry = {
   title: string;
   description: string;
   image?: string;
+  premium?: boolean;
 };
 
 const brandDetails = brandDetailsJson as Record<string, DetailEntry>;
