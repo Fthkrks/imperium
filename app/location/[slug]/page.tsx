@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import locationsJson from "@/data/locations.json";
+import { getSiteData } from "@/lib/redis-fetch";
 import TrustLogos from "@/components/Home/TrusthLogo";
 import Contact from "@/components/Home/Contact";
 
@@ -14,17 +14,17 @@ type LocationEntry = {
   subAreas: string[];
 };
 
-const locations = locationsJson as Record<string, LocationEntry>;
-
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const locations = await getSiteData("locations.json") || {};
   return Object.keys(locations).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const locations = await getSiteData("locations.json") || {};
   const { slug } = await params;
   const location = locations[slug];
 
@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function LocationDetailPage({ params }: PageProps) {
+  const locations = await getSiteData("locations.json") || {};
   const { slug } = await params;
   const location = locations[slug];
 

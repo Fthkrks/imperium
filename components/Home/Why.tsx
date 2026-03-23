@@ -1,6 +1,9 @@
-import React from 'react'
-import whyData from "@/data/why.json";
+import React from 'react';
+import { useSiteData } from "@/components/SiteDataContext";
+
 function Why() {
+  const { why } = useSiteData();
+  const whyData = why || { features: [], stats: [] };
   return (
     <>
           <section className="why-us" id="why-us">

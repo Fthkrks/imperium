@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import blogPosts from "@/data/blog.json";
+import { getSiteData } from "@/lib/redis-fetch";
 import { BlogCard, type BlogPost } from "@/components/BlogCard";
 import { BlogContent } from "@/components/blog/BlogContent";
-
-const posts = blogPosts as BlogPost[];
 
 export const metadata: Metadata = {
   title: "Blog - RAFIX Appliance Repair",
@@ -12,7 +10,8 @@ export const metadata: Metadata = {
     "Read practical maintenance tips and appliance repair insights from RAFIX technicians.",
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = (await getSiteData("blog.json")) as BlogPost[] || [];
   return (
     <SiteShell>
       {/* Hero Section */}

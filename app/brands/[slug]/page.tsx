@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import brandDetailsJson from "@/data/brands.json";
+import { getSiteData } from "@/lib/redis-fetch";
 import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
 import Resential from "@/components/Services/Resential";
@@ -15,17 +15,17 @@ type DetailEntry = {
   premium?: boolean;
 };
 
-const brandDetails = brandDetailsJson as Record<string, DetailEntry>;
-
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const brandDetails = await getSiteData("brands.json") || {};
   return Object.keys(brandDetails).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const brandDetails = await getSiteData("brands.json") || {};
   const { slug } = await params;
   const detail = brandDetails[slug];
 
@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
+  const brandDetails = await getSiteData("brands.json") || {};
   const { slug } = await params;
   const detail = brandDetails[slug];
 

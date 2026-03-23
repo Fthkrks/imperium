@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import Link from 'next/link'
-import areasData from '@/data/areas.json'
+import { useSiteData } from "@/components/SiteDataContext";
 /* slug helper: "New Caney" → "new-caney", "Georgetown " → "georgetown" */
 function toSlug(name: string) {
   return name.trim().toLowerCase().replace(/\s+/g, '-');
@@ -84,12 +84,14 @@ function AreaSlider({ pages }: { pages: React.ReactNode[][] }) {
 }
 
 function Areas() {
-  const houstonPages = areasData.houston.map((page, pageIdx) => 
-    page.map((area, idx) => <AreaItem key={`h-${pageIdx}-${idx}`} name={area} />)
+  const { areas: areasData } = useSiteData();
+  
+  const houstonPages = (areasData?.houston || []).map((page: any, pageIdx: number) => 
+    page.map((area: string, idx: number) => <AreaItem key={`h-${pageIdx}-${idx}`} name={area} />)
   );
 
-  const austinPages = areasData.austin.map((page, pageIdx) => 
-    page.map((area, idx) => <AreaItem key={`a-${pageIdx}-${idx}`} name={area} />)
+  const austinPages = (areasData?.austin || []).map((page: any, pageIdx: number) => 
+    page.map((area: string, idx: number) => <AreaItem key={`a-${pageIdx}-${idx}`} name={area} />)
   );
 
   return (

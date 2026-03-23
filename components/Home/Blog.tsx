@@ -1,10 +1,12 @@
+"use client";
+
 import Link from "next/link";
-import blogPosts from "@/data/blog.json";
+import { useSiteData } from "@/components/SiteDataContext";
 import { BlogCard, type BlogPost } from "@/components/BlogCard";
 
-const homepagePosts = (blogPosts as BlogPost[]).slice(0, 3);
-
 export default function Blog() {
+  const { blog: blogPosts } = useSiteData();
+  const homepagePosts = ((blogPosts || []) as BlogPost[]).slice(0, 3);
   return (
     <section className="py-24 bg-gradient-to-b from-[#ffffff] to-[#f2f8ff] relative overflow-hidden" id="blog">
       {/* Abstract Design Element */}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-import testimonialsData from "@/data/testimonials.json";
+import { useSiteData } from "@/components/SiteDataContext";
 
 interface Testimonial {
   initials?: string;
@@ -11,9 +11,10 @@ interface Testimonial {
   text: string;
 }
 
-const TESTIMONIALS = testimonialsData as Testimonial[];
-
 function Testimonials() {
+  const { testimonials: testimonialsData } = useSiteData();
+  const TESTIMONIALS = (testimonialsData || []) as Testimonial[];
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [cardWidth, setCardWidth] = useState(0);

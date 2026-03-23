@@ -1,21 +1,21 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import blogPosts from "@/data/blog.json";
+import { getSiteData } from "@/lib/redis-fetch";
 import { type BlogPost } from "@/components/BlogCard";
 import { BlogPostClient } from "./BlogPostClient";
-
-const posts = blogPosts as BlogPost[];
 
 type PageProps = {
 	params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+	const posts = (await getSiteData("blog.json")) as BlogPost[] || [];
 	return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+	const posts = (await getSiteData("blog.json")) as BlogPost[] || [];
 	const { slug } = await params;
 	const post = posts.find((entry) => entry.slug === slug);
 
@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
+	const posts = (await getSiteData("blog.json")) as BlogPost[] || [];
 	const { slug } = await params;
 	const post = posts.find((entry) => entry.slug === slug);
 

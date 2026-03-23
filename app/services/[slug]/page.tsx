@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import serviceDetailsJson from "@/data/service-details.json";
+import { getSiteData } from "@/lib/redis-fetch";
 import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
 import Resential from "@/components/Services/Resential";
@@ -12,8 +12,6 @@ type DetailEntry = {
   title: string;
   description: string;
 };
-
-const serviceDetails = serviceDetailsJson as Record<string, DetailEntry>;
 
 const commonProblems = [
   {
@@ -95,11 +93,13 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const serviceDetails = await getSiteData("service-details.json") || {};
   return Object.keys(serviceDetails).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const serviceDetails = await getSiteData("service-details.json") || {};
   const { slug } = await params;
   const detail = serviceDetails[slug];
 
@@ -117,6 +117,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
+  const serviceDetails = await getSiteData("service-details.json") || {};
   const { slug } = await params;
   const detail = serviceDetails[slug];
 

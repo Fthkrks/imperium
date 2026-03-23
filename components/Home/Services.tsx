@@ -1,6 +1,8 @@
 import React from "react";
-import residentialServices from "@/data/services-residential.json";
-import commercialServices from "@/data/services-commercial.json";function Services() {
+import { useSiteData } from "@/components/SiteDataContext";
+
+function Services() {
+  const { servicesResidential = [], servicesCommercial = [] } = useSiteData();
   return (
     <>
       <section className="services" id="services">
@@ -32,7 +34,7 @@ import commercialServices from "@/data/services-commercial.json";function Servic
               Residential
             </h3>
             <div className="services-grid">
-              {residentialServices.map((service, index) => (
+              {servicesResidential.map((service: any, index: number) => (
                 <a key={index} className="service-card" href={service.href}>
                   <div className="icon-wrapper">
                     <img
@@ -66,7 +68,7 @@ import commercialServices from "@/data/services-commercial.json";function Servic
               Commercial
             </h3>
             <div className="services-grid">
-              {commercialServices.map((service, index) => (
+              {servicesCommercial.map((service: any, index: number) => (
                 <a key={index} className="service-card" href={service.href}>
                   <div className="icon-wrapper">
                     <img
