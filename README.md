@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Imperium (Next.js + Supabase)
 
-## Getting Started
+Bu proje admin panelinden düzenlenen site verilerini Supabase tablolarında tutar.
 
-First, run the development server:
+## 1) Kurulum
+
+```bash
+npm install
+```
+
+`.env.example` dosyasını temel alıp `.env.local` oluşturun ve değerleri girin:
+
+- `ADMIN_PASSWORD`
+- `ADMIN_SEED_SECRET`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+## 2) Supabase tablo şemasını oluşturma
+
+Supabase SQL Editor'da aşağıdaki dosyayı çalıştırın:
+
+- `supabase/schema.sql`
+
+Bu script aşağıdaki JSON kaynakları için ayrı tablo oluşturur ve içeriği `content (jsonb)` alanında birebir saklar:
+
+- `contact.json` -> `contact_json`
+- `blog.json` -> `blog_json`
+- `services-residential.json` -> `services_residential_json`
+- `services-commercial.json` -> `services_commercial_json`
+- `service-details.json` -> `service_details_json`
+- `testimonials.json` -> `testimonials_json`
+- `why.json` -> `why_json`
+- `areas.json` -> `areas_json`
+- `locations.json` -> `locations_json`
+- `faq.json` -> `faq_json`
+- `brands.json` -> `brands_json`
+- `metadata.json` -> `metadata_json`
+
+## 3) JSON verilerini Supabase'e seed etme
+
+Uygulama çalışırken seed endpoint'ini çağırın:
+
+```bash
+http://localhost:3000/api/admin/seed?secret=YOUR_ADMIN_SEED_SECRET
+```
+
+Bu endpoint `data/*.json` dosyalarını okuyup ilgili Supabase tablolarına yazar.
+
+## 4) Geliştirme
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Site: `http://localhost:3000`
+Admin: `http://localhost:3000/admin`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Veri Akışı
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Admin panel kaydı: `app/api/admin/data/route.ts`
+- Site okuma katmanı: `lib/redis-fetch.ts`
+- Supabase JSON<->row dönüşümü: `lib/site-data-store.ts`
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Admin panelden yapılan değişiklikler ilgili Supabase tablosuna yazılır ve revalidate ile siteye yansır.

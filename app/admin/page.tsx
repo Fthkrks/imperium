@@ -3,19 +3,20 @@
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 import JsonForm from './JsonForm';
+import { getFileForTable, isAllowedTable } from '@/lib/site-data-config';
 
 function AdminPageContent() {
   const searchParams = useSearchParams();
-  const file = searchParams.get('file');
+  const table = searchParams.get('table');
 
-  const [content, setContent] = useState<any>('');
+  const [content, setContent] = useState<unknown>('');
   const [originalContent, setOriginalContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
-    if (!file) {
+    if (!table || !isAllowedTable(table)) {
       setContent('');
       setOriginalContent('');
       setMessage({ type: '', text: '' });
@@ -26,7 +27,7 @@ function AdminPageContent() {
       setIsLoading(true);
       setMessage({ type: '', text: '' });
       try {
-        const res = await fetch(`/api/admin/data?file=${file}`, { cache: 'no-store' });
+        const res = await fetch(`/api/admin/data?table=${table}`, { cache: 'no-store' });
         const data = await res.json();
         
         if (res.ok) {
@@ -34,26 +35,26 @@ function AdminPageContent() {
           setContent(parsedData);
           setOriginalContent(JSON.stringify(parsedData));
         } else {
-          setMessage({ type: 'error', text: data.error || 'Failed to load file.' });
+          setMessage({ type: 'error', text: data.error || 'Failed to load table.' });
         }
-      } catch (err) {
-        setMessage({ type: 'error', text: 'Network error loading file.' });
+      } catch {
+        setMessage({ type: 'error', text: 'Network error loading table.' });
       } finally {
         setIsLoading(false);
       }
     };
 
     loadData();
-  }, [file]);
+  }, [table]);
 
   const handleSave = async () => {
-    if (!file) return;
+    if (!table || !isAllowedTable(table)) return;
 
     setIsSaving(true);
     setMessage({ type: 'info', text: 'Saving...' });
 
     try {
-      const res = await fetch(`/api/admin/data?file=${file}`, {
+      const res = await fetch(`/api/admin/data?table=${table}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: JSON.stringify(content, null, 2) }),
@@ -63,13 +64,13 @@ function AdminPageContent() {
 
       if (res.ok) {
         setOriginalContent(JSON.stringify(content));
-        setMessage({ type: 'success', text: 'File saved successfully!' });
+        setMessage({ type: 'success', text: 'Table data saved successfully!' });
         setTimeout(() => setMessage({ type: '', text: '' }), 3000);
       } else {
         setMessage({ type: 'error', text: data.error || 'Failed to save.' });
       }
-    } catch (err) {
-      setMessage({ type: 'error', text: 'Network error saving file.' });
+    } catch {
+      setMessage({ type: 'error', text: 'Network error saving table.' });
     } finally {
       setIsSaving(false);
     }
@@ -80,7 +81,7 @@ function AdminPageContent() {
     setMessage({ type: '', text: '' });
   };
 
-  if (!file) {
+  if (!table) {
     return (
       <div className="admin-welcome-container">
         <svg fill="none" height="64" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" viewBox="0 0 24 24" width="64" xmlns="http://www.w3.org/2000/svg" className="admin-welcome-icon">
@@ -91,10 +92,13 @@ function AdminPageContent() {
           <polyline points="10 9 9 9 8 9" />
         </svg>
         <h2 className="admin-welcome-title">Welcome to the Dashboard</h2>
-        <p className="admin-welcome-desc">Select a JSON file from the sidebar to edit its content.</p>
+        <p className="admin-welcome-desc">Select a table from the sidebar to edit its content.</p>
       </div>
     );
   }
+
+  const tableName = isAllowedTable(table || '') ? table : '';
+  const resourceKey = tableName ? getFileForTable(tableName) : '';
 
   const hasUnsavedChanges = JSON.stringify(content) !== originalContent;
 
@@ -104,7 +108,7 @@ function AdminPageContent() {
       <div className="admin-page-header">
         <div className="admin-header-title-box">
           <h1 className="admin-page-title">
-            Editing <span className="admin-file-badge">{file}</span>
+            Editing <span className="admin-file-badge">{tableName}</span>
           </h1>
           {hasUnsavedChanges && (
             <span className="admin-unsaved-badge">Unsaved changes</span>
@@ -148,7 +152,7 @@ function AdminPageContent() {
           </div>
         ) : content !== '' ? (
           <div className="admin-scroll-area">
-            <JsonForm data={content} onChange={setContent} fileName={file || undefined} />
+            <JsonForm data={content} onChange={setContent} fileName={resourceKey || undefined} />
           </div>
         ) : null}
       </div>

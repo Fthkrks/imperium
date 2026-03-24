@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { promises as fs } from 'fs';
-import path from 'path';
-import { getAllSiteData } from '@/lib/redis-fetch';
+import { getAllSiteData, getSiteData } from '@/lib/redis-fetch';
 import { SiteDataProvider } from '@/components/SiteDataContext';
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'metadata.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const metadataJson = JSON.parse(fileContents);
+    const metadataJson = await getSiteData('metadata.json');
     return {
-      title: metadataJson.title || "RAFIX Appliance Repair",
-      description: metadataJson.description || "Professional appliance repair services.",
-      keywords: metadataJson.keywords || "",
+      title: metadataJson?.title || "RAFIX Appliance Repair",
+      description: metadataJson?.description || "Professional appliance repair services.",
+      keywords: metadataJson?.keywords || "",
     };
-  } catch (error) {
+  } catch {
     return {
       title: "RAFIX Appliance Repair",
       description: "Professional appliance repair services.",
@@ -29,7 +25,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteData = await getAllSiteData();
+  let siteData: Record<string, unknown> = {
+    contact: {},
+    blog: [],
+    servicesResidential: [],
+    servicesCommercial: [],
+    testimonials: [],
+    why: {},
+    areas: {},
+    locations: {},
+    faq: [],
+    brands: {},
+    metadata: {},
+  };
+
+  try {
+    siteData = await getAllSiteData();
+  } catch (error) {
+    console.error('Failed to load site data from Supabase:', error);
+  }
 
   return (
     <html lang="en">

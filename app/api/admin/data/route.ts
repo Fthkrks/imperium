@@ -2,28 +2,13 @@ export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { Redis } from '@upstash/redis';
-
-const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-const redis = redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null;
-
-// Allowed files for security
-const ALLOWED_FILES = [
-  'contact.json',
-  'blog.json',
-  'services-residential.json',
-  'services-commercial.json',
-  'testimonials.json',
-  'why.json',
-  'areas.json',
-  'locations.json',
-  'faq.json',
-  'brands.json',
-  'metadata.json',
-];
+import {
+  AllowedTable,
+  getFileForTable,
+  isAllowedTable,
+} from '@/lib/site-data-config';
+import { isSupabaseConfigured } from '@/lib/supabase-client';
+import { readSiteDataFromSupabase, writeSiteDataToSupabase } from '@/lib/site-data-store';
 
 function slugifyAreaName(name: string): string {
   return name
@@ -53,59 +38,68 @@ function collectAreaNames(value: unknown, names = new Set<string>()): Set<string
   return names;
 }
 
+async function readLocationsData(): Promise<Record<string, unknown>> {
+  const locations = await readSiteDataFromSupabase('locations.json');
+  if (locations && typeof locations === 'object' && !Array.isArray(locations)) {
+    return locations as Record<string, unknown>;
+  }
+  return {};
+}
+
+async function writeLocationsData(locationsData: Record<string, unknown>): Promise<void> {
+  await writeSiteDataToSupabase('locations.json', locationsData);
+}
+
+function parseTableParam(url: string): AllowedTable | null {
+  const { searchParams } = new URL(url);
+  const table = searchParams.get('table');
+  if (!table || !isAllowedTable(table)) {
+    return null;
+  }
+  return table;
+}
+
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const file = searchParams.get('file');
-
-    if (!file || !ALLOWED_FILES.includes(file)) {
-      return NextResponse.json({ error: 'Invalid file requested' }, { status: 400 });
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({ error: 'Supabase is not configured' }, { status: 500 });
     }
 
-    let fileContents: string | null = null;
-    if (redis) {
-      try {
-        const cachedData = await redis.get(`data:${file}`);
-        if (cachedData) {
-          fileContents = typeof cachedData === 'string' ? cachedData : JSON.stringify(cachedData);
-        }
-      } catch (e) {
-        console.error('Redis GET Error:', e);
-      }
+    const table = parseTableParam(request.url);
+    if (!table) {
+      return NextResponse.json({ error: 'Invalid table requested' }, { status: 400 });
     }
 
-    if (!fileContents) {
-      const filePath = path.join(process.cwd(), 'data', file);
-      fileContents = await fs.readFile(filePath, 'utf8');
-      
-      if (redis && fileContents) {
-        try { await redis.set(`data:${file}`, fileContents); } catch (e) {}
-      }
+    const file = getFileForTable(table);
+    const supabaseData = await readSiteDataFromSupabase(file);
+
+    if (supabaseData === null) {
+      return NextResponse.json({ error: 'Table data not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ data: fileContents });
+    return NextResponse.json({ data: `${JSON.stringify(supabaseData, null, 2)}\n` });
   } catch (error) {
     console.error('GET Error in /api/admin/data:', error);
-    return NextResponse.json({ error: 'File not found or unreadable', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to read table data', details: String(error) }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const file = searchParams.get('file');
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({ error: 'Supabase is not configured' }, { status: 500 });
+    }
 
-    if (!file || !ALLOWED_FILES.includes(file)) {
-      return NextResponse.json({ error: 'Invalid file requested' }, { status: 400 });
+    const table = parseTableParam(request.url);
+    if (!table) {
+      return NextResponse.json({ error: 'Invalid table requested' }, { status: 400 });
     }
 
     const { content } = await request.json();
-
-    if (!content) {
+    if (typeof content !== 'string') {
       return NextResponse.json({ error: 'No content provided' }, { status: 400 });
     }
 
-    // Verify it's valid JSON before saving
     let parsedContent: unknown;
     try {
       parsedContent = JSON.parse(content);
@@ -113,46 +107,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON format' }, { status: 400 });
     }
 
-    if (redis) {
-      await redis.set(`data:${file}`, content);
-    } else {
-      const filePath = path.join(process.cwd(), 'data', file);
-      await fs.writeFile(filePath, content, 'utf8');
-    }
+    const file = getFileForTable(table);
+    await writeSiteDataToSupabase(file, parsedContent);
 
     let locationsAdded = 0;
     let locationsRemoved = 0;
 
-    if (file === 'areas.json') {
-      let locationsData: Record<string, any> = {};
-      try {
-        let rawLocations: string | null = null;
-        if (redis) {
-          const cachedLocs = await redis.get('data:locations.json');
-          if (cachedLocs) rawLocations = typeof cachedLocs === 'string' ? cachedLocs : JSON.stringify(cachedLocs);
-        }
-        
-        if (!rawLocations) {
-          const locationsPath = path.join(process.cwd(), 'data', 'locations.json');
-          rawLocations = await fs.readFile(locationsPath, 'utf8');
-        }
-        
-        if (rawLocations) {
-          const parsedLocations = JSON.parse(rawLocations);
-          if (parsedLocations && typeof parsedLocations === 'object' && !Array.isArray(parsedLocations)) {
-            locationsData = parsedLocations;
-          }
-        }
-      } catch {
-        locationsData = {};
-      }
-
+    if (table === 'areas') {
+      const locationsData = await readLocationsData();
       const areaNames = [...collectAreaNames(parsedContent)];
       const areaSlugs = new Set(areaNames.map((areaName) => slugifyAreaName(areaName)).filter(Boolean));
 
       for (const areaName of areaNames) {
         const slug = slugifyAreaName(areaName);
-        if (!slug || locationsData[slug]) continue;
+        if (!slug || locationsData[slug]) {
+          continue;
+        }
 
         locationsData[slug] = {
           name: areaName,
@@ -173,27 +143,20 @@ export async function POST(request: Request) {
       }
 
       if (locationsAdded > 0 || locationsRemoved > 0) {
-        const newLocationsContent = `${JSON.stringify(locationsData, null, 2)}\n`;
-        if (redis) {
-          await redis.set('data:locations.json', newLocationsContent);
-        } else {
-          const locationsPath = path.join(process.cwd(), 'data', 'locations.json');
-          await fs.writeFile(locationsPath, newLocationsContent, 'utf8');
-        }
+        await writeLocationsData(locationsData);
       }
     }
 
-    // Clear cache so changes appear immediately on admin and main site
     try {
       revalidatePath('/admin');
       revalidatePath('/', 'layout');
-    } catch (err) {
-      console.error('Failed to revalidate path:', err);
+    } catch (error) {
+      console.error('Failed to revalidate path:', error);
     }
 
     return NextResponse.json({ success: true, locationsAdded, locationsRemoved });
   } catch (error) {
     console.error('POST Error in /api/admin/data:', error);
-    return NextResponse.json({ error: 'Failed to save file', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to save table data', details: String(error) }, { status: 500 });
   }
 }

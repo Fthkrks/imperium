@@ -1,29 +1,24 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-import { Redis } from '@upstash/redis';
-
-const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-const redis = redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null;
+import { isAllowedFile } from '@/lib/site-data-config';
+import { isSupabaseConfigured } from '@/lib/supabase-client';
+import { readSiteDataFromSupabase } from '@/lib/site-data-store';
 
 export async function getSiteData(file: string) {
-  if (redis) {
-    try {
-      const cachedData = await redis.get(`data:${file}`);
-      if (cachedData) {
-        return typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
-      }
-    } catch (e) {
-      console.error('Redis GET Error in fetching data:', e);
-    }
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase is not configured. Site data source is Supabase-only.');
+  }
+
+  if (!isAllowedFile(file)) {
+    throw new Error(`Unsupported site data key: ${file}`);
   }
 
   try {
-    const filePath = path.join(process.cwd(), 'data', file);
-    const content = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(content);
-  } catch (e) {
-    console.error(`Local file read Error for ${file}:`, e);
+    const supabaseData = await readSiteDataFromSupabase(file);
+    if (supabaseData !== null) {
+      return supabaseData;
+    }
+    return null;
+  } catch (error) {
+    console.error(`Supabase read Error for ${file}:`, error);
     return null;
   }
 }
