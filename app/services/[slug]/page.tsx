@@ -93,13 +93,21 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+async function getServiceDetailsMap(): Promise<Record<string, DetailEntry>> {
+  const data = await getSiteData("service-details.json");
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return {};
+  }
+  return data as Record<string, DetailEntry>;
+}
+
 export async function generateStaticParams() {
-  const serviceDetails = await getSiteData("service-details.json") || {};
+  const serviceDetails = await getServiceDetailsMap();
   return Object.keys(serviceDetails).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const serviceDetails = await getSiteData("service-details.json") || {};
+  const serviceDetails = await getServiceDetailsMap();
   const { slug } = await params;
   const detail = serviceDetails[slug];
 
@@ -117,7 +125,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
-  const serviceDetails = await getSiteData("service-details.json") || {};
+  const serviceDetails = await getServiceDetailsMap();
   const { slug } = await params;
   const detail = serviceDetails[slug];
 

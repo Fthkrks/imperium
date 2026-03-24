@@ -18,13 +18,21 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+async function getLocationsMap(): Promise<Record<string, LocationEntry>> {
+  const data = await getSiteData("locations.json");
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return {};
+  }
+  return data as Record<string, LocationEntry>;
+}
+
 export async function generateStaticParams() {
-  const locations = await getSiteData("locations.json") || {};
+  const locations = await getLocationsMap();
   return Object.keys(locations).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const locations = await getSiteData("locations.json") || {};
+  const locations = await getLocationsMap();
   const { slug } = await params;
   const location = locations[slug];
 
@@ -42,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function LocationDetailPage({ params }: PageProps) {
-  const locations = await getSiteData("locations.json") || {};
+  const locations = await getLocationsMap();
   const { slug } = await params;
   const location = locations[slug];
 

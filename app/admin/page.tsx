@@ -97,8 +97,9 @@ function AdminPageContent() {
     );
   }
 
-  const tableName = isAllowedTable(table || '') ? table : '';
-  const resourceKey = tableName ? getFileForTable(tableName) : '';
+  const allowedTable = table && isAllowedTable(table) ? table : null;
+  const tableName = allowedTable ?? '';
+  const resourceKey = allowedTable ? getFileForTable(allowedTable) : '';
 
   const hasUnsavedChanges = JSON.stringify(content) !== originalContent;
 

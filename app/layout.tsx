@@ -4,13 +4,24 @@ import "./globals.css";
 import { getAllSiteData, getSiteData } from '@/lib/redis-fetch';
 import { SiteDataProvider } from '@/components/SiteDataContext';
 
+type SiteMetadata = {
+  title?: string;
+  description?: string;
+  keywords?: string;
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const metadataJson = await getSiteData('metadata.json');
+    const rawMetadata = await getSiteData('metadata.json');
+    const metadataJson: SiteMetadata =
+      rawMetadata && typeof rawMetadata === 'object' && !Array.isArray(rawMetadata)
+        ? (rawMetadata as SiteMetadata)
+        : {};
+
     return {
-      title: metadataJson?.title || "RAFIX Appliance Repair",
-      description: metadataJson?.description || "Professional appliance repair services.",
-      keywords: metadataJson?.keywords || "",
+      title: metadataJson.title || "RAFIX Appliance Repair",
+      description: metadataJson.description || "Professional appliance repair services.",
+      keywords: metadataJson.keywords || "",
     };
   } catch {
     return {

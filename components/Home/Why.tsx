@@ -1,9 +1,25 @@
+"use client";
+
 import React from 'react';
 import { useSiteData } from "@/components/SiteDataContext";
+
+type WhyFeature = {
+  title?: string;
+  description?: string;
+  icon?: string;
+};
+
+type WhyStat = {
+  value?: string;
+  label?: string;
+  isGoogle?: boolean;
+};
 
 function Why() {
   const { why } = useSiteData();
   const whyData = why || { features: [], stats: [] };
+  const features = Array.isArray(whyData.features) ? (whyData.features as WhyFeature[]) : [];
+  const stats = Array.isArray(whyData.stats) ? (whyData.stats as WhyStat[][]) : [];
   return (
     <>
           <section className="why-us" id="why-us">
@@ -15,15 +31,15 @@ function Why() {
               <h2>The Repair Service <br />Homeowners Trust</h2>
               <p>We combine technical expertise with old-fashioned customer service. No hidden fees, no waiting around, just honest work.</p>
               <div className="features-list">
-                {whyData.features.map((feature, idx) => (
+                {features.map((feature, idx) => (
                   <div key={idx} className="feature-item">
                     <div 
                       className="feature-icon" 
-                      dangerouslySetInnerHTML={{ __html: feature.icon }} 
+                      dangerouslySetInnerHTML={{ __html: feature.icon ?? '' }} 
                     />
                     <div>
-                      <h3>{feature.title}</h3>
-                      <p>{feature.description}</p>
+                      <h3>{feature.title ?? ''}</h3>
+                      <p>{feature.description ?? ''}</p>
                     </div>
                   </div>
                 ))}
@@ -31,7 +47,7 @@ function Why() {
             </div>
             <div className="why-us-right">
               <div className="stats-grid">
-                {whyData.stats.map((col, colIdx) => (
+                {stats.map((col, colIdx) => (
                   <div key={colIdx} className="stat-col">
                     {col.map((stat, statIdx) => (
                       <div 
@@ -42,7 +58,7 @@ function Why() {
                           <>
                             <div className="stat-number-row">
                               <img alt="Google" className="stat-google-icon" src="/legacy/assets/google-icon.png" />
-                              <div className="stat-number" data-digits>{stat.value}</div>
+                              <div className="stat-number" data-digits>{stat.value ?? ''}</div>
                             </div>
                             <div className="stars">
                               {[...Array(5)].map((_, i) => (
@@ -53,9 +69,9 @@ function Why() {
                             </div>
                           </>
                         ) : (
-                          <div className="stat-number" data-digits>{stat.value}</div>
+                          <div className="stat-number" data-digits>{stat.value ?? ''}</div>
                         )}
-                        <div className="stat-label">{stat.label}</div>
+                        <div className="stat-label">{stat.label ?? ''}</div>
                       </div>
                     ))}
                   </div>

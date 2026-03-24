@@ -19,13 +19,21 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+async function getBrandDetailsMap(): Promise<Record<string, DetailEntry>> {
+  const data = await getSiteData("brands.json");
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return {};
+  }
+  return data as Record<string, DetailEntry>;
+}
+
 export async function generateStaticParams() {
-  const brandDetails = await getSiteData("brands.json") || {};
+  const brandDetails = await getBrandDetailsMap();
   return Object.keys(brandDetails).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const brandDetails = await getSiteData("brands.json") || {};
+  const brandDetails = await getBrandDetailsMap();
   const { slug } = await params;
   const detail = brandDetails[slug];
 
@@ -43,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
-  const brandDetails = await getSiteData("brands.json") || {};
+  const brandDetails = await getBrandDetailsMap();
   const { slug } = await params;
   const detail = brandDetails[slug];
 
