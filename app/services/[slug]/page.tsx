@@ -13,81 +13,12 @@ type DetailEntry = {
   description: string;
 };
 
-const commonProblems = [
-  {
-    title: "Not Starting",
-    description: "Appliance does not power on or requires repeated attempts to start.",
-  },
-  {
-    title: "Strange Noises",
-    description: "Grinding, buzzing, rattling, or unusual vibrations during operation.",
-  },
-  {
-    title: "Poor Performance",
-    description: "Inconsistent temperature, weak cycles, or reduced cleaning and drying quality.",
-  },
-  {
-    title: "Leaks & Odors",
-    description: "Water leaks, bad smells, and moisture build-up that can damage nearby areas.",
-  },
-];
+type ContactData = {
+  phone?: string;
+  phoneHref?: string;
+};
 
-const supportedBrands = [
-  "Whirlpool",
-  "GE",
-  "Samsung",
-  "LG",
-  "Bosch",
-  "Maytag",
-  "KitchenAid",
-  "Frigidaire",
-  "Electrolux",
-  "Kenmore",
-  "Miele",
-  "Viking",
-];
 
-const serviceSteps = [
-  {
-    title: "Fast Scheduling",
-    description: "Book online or by phone and get same-day or next-day availability in most areas.",
-  },
-  {
-    title: "Accurate Diagnosis",
-    description: "A licensed technician identifies the root cause and explains your options clearly.",
-  },
-  {
-    title: "On-Site Repair",
-    description: "We complete repairs with quality parts and proven methods during the same visit when possible.",
-  },
-  {
-    title: "Warranty Support",
-    description: "Every completed repair is backed by our 90-day workmanship warranty.",
-  },
-];
-
-const faqItems = [
-  {
-    question: "How quickly can you come out?",
-    answer:
-      "Most appointments are available the same day or next day depending on technician coverage and parts availability.",
-  },
-  {
-    question: "Do you offer warranty on repairs?",
-    answer:
-      "Yes. We provide a 90-day workmanship warranty so you can book with confidence.",
-  },
-  {
-    question: "What brands do you service?",
-    answer:
-      "We repair most major home appliance brands and carry common replacement parts for faster turnaround.",
-  },
-  {
-    question: "Are your technicians licensed?",
-    answer:
-      "Yes. Our technicians are licensed, experienced, and trained to handle both residential and commercial repair jobs.",
-  },
-];
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -128,6 +59,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const serviceDetails = await getServiceDetailsMap();
   const { slug } = await params;
   const detail = serviceDetails[slug];
+  const rawContact = await getSiteData("contact.json");
+  const contactData: ContactData =
+    rawContact && typeof rawContact === "object" && !Array.isArray(rawContact)
+      ? (rawContact as ContactData)
+      : {};
+  
 
   if (!detail) notFound();
 
@@ -154,8 +91,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <a className="dhero-btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Book Repair
                 </a>
-                <a className="dhero-btn-secondary" href="tel:+13477911731">
-                  Call +1 (347) 791-1731
+                <a className="dhero-btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                  Call {contactData?.phone}
                 </a>
               </div>
             </div>

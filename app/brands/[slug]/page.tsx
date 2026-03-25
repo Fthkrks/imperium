@@ -15,11 +15,18 @@ type DetailEntry = {
   premium?: boolean;
 };
 
+type ContactData = {
+  phone?: string;
+  phoneHref?: string;
+};
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
 async function getBrandDetailsMap(): Promise<Record<string, DetailEntry>> {
+    const rawContact = await getSiteData("contact.json");
+
   const data = await getSiteData("brands.json");
   if (!data || typeof data !== "object" || Array.isArray(data)) {
     return {};
@@ -51,6 +58,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
+    const rawContact = await getSiteData("contact.json");
+        const contactData: ContactData =
+      rawContact && typeof rawContact === "object" && !Array.isArray(rawContact)
+        ? (rawContact as ContactData)
+        : {};
   const brandDetails = await getBrandDetailsMap();
   const { slug } = await params;
   const detail = brandDetails[slug];
@@ -80,8 +92,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
                 <a className="dhero-btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Schedule Repair
                 </a>
-                <a className="dhero-btn-secondary" href="tel:+13477911731">
-                  Call +1 (347) 791-1731
+                <a className="dhero-btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                  Call {contactData?.phone}
                 </a>
               </div>
             </div>

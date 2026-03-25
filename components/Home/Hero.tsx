@@ -28,9 +28,7 @@ function Hero() {
                 You Can Trust
               </h1>
               <p className="hero-description">
-                Don't let a broken appliance disrupt your day. Our licensed
-                technicians provide expert repairs for all major brands with a
-                100% satisfaction guarantee.
+                Imperium Appliance Repair is your trusted choice for high-quality appliance repair services. We focus on fast, accurate diagnostics and dependable repairs for all major appliances, with professional technicians, same-day service, and honest pricing you can rely on.
               </p>
               <div className="hero-buttons">
                 <a className="btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
