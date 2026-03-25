@@ -1,9 +1,12 @@
 import React from 'react'
+import { useSiteData } from '../SiteDataContext';
 
 function Hero() {
+  const { contact: contactData, brands: brandsDataJson } = useSiteData();
+
   return (
     <>
-          <section className="hero" id="hero">
+      <section className="hero" id="hero">
         <div className="hero-bg">
           <div className="grid-pattern" />
           <div className="diagonal-blue" />
@@ -37,8 +40,8 @@ function Hero() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </a>
-                <a className="btn-secondary" href="tel:3477911731">
-                  Call (347) 791-1731
+                <a className="btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                  Call {contactData?.phone}
                 </a>
               </div>
               <div className="trust-badges">
