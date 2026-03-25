@@ -101,7 +101,7 @@ function Areas() {
           <div className="section-header">
             <span className="label">Service Areas</span>
             <h2>Serving the Greater Houston &amp; Austin Areas</h2>
-            <p>When you need expert appliance repair service, RAFIX is the right choice. We proudly provide same-day and next-day appliance repair service across Houston and Austin areas.</p>
+            <p>When you need expert appliance repair service, mperium Appliance is the right choice. We proudly provide same-day and next-day appliance repair service across Houston and Austin areas.</p>
           </div>
           <div className="areas-maps-grid">
             <div className="areas-map-card">

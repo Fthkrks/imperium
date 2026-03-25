@@ -34,7 +34,7 @@ const areas = readJson('areas.json');
 
 const lines = [];
 
-lines.push('-- Supabase Schema for RAFIX Appliance Repair');
+lines.push('-- Supabase Schema for mperium Appliance');
 lines.push('-- Auto-generated from data/*.json');
 lines.push('');
 lines.push('-- 1) blog.json -> blog');

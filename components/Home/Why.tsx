@@ -27,7 +27,7 @@ function Why() {
         <div className="container why-us-content">
           <div className="why-us-grid">
             <div className="why-us-left">
-              <span className="label">Why Choose RAFIX</span>
+              <span className="label">Why Choose mperium Appliance</span>
               <h2>The Repair Service <br />Homeowners Trust</h2>
               <p>We combine technical expertise with old-fashioned customer service. No hidden fees, no waiting around, just honest work.</p>
               <div className="features-list">

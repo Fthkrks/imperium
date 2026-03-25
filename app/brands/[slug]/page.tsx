@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!detail) {
     return {
-      title: "Brand Not Found - RAFIX Appliance Repair",
+      title: "Brand Not Found - mperium Appliance",
       description: "Requested brand could not be found.",
     };
   }
@@ -70,8 +70,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   const brandName = detail.title
-    .replace(" Appliance Repair - RAFIX Appliance Repair", "")
-    .replace(" - RAFIX Appliance Repair", "")
+    .replace(" Appliance Repair - mperium Appliance", "")
+    .replace(" - mperium Appliance", "")
     .trim();
 
   return (

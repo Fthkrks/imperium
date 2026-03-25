@@ -19,13 +19,13 @@ export async function generateMetadata(): Promise<Metadata> {
         : {};
 
     return {
-      title: metadataJson.title || "RAFIX Appliance Repair",
+      title: metadataJson.title || "mperium Appliance",
       description: metadataJson.description || "Professional appliance repair services.",
       keywords: metadataJson.keywords || "",
     };
   } catch {
     return {
-      title: "RAFIX Appliance Repair",
+      title: "mperium Appliance",
       description: "Professional appliance repair services.",
     };
   }

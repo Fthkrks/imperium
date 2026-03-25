@@ -1,5 +1,5 @@
 /* ========================================
-   RAFIX Appliance Repair - JavaScript
+   mperium Appliance - JavaScript
    ======================================== */
 
 function initRafixScripts() {

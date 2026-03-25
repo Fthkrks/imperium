@@ -38,13 +38,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!location) {
     return {
-      title: "Location Not Found - RAFIX Appliance Repair",
+      title: "Location Not Found - Imperium Appliance Repair",
       description: "Requested location could not be found.",
     };
   }
 
   return {
-    title: `Appliance Repair in ${location.name}, TX - RAFIX Appliance Repair`,
+    title: `Appliance Repair in ${location.name}, TX - Imperium Appliance Repair`,
     description: location.description,
   };
 }

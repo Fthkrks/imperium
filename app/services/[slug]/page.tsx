@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!detail) {
     return {
-      title: "Service Not Found - RAFIX Appliance Repair",
+      title: "Service Not Found - mperium Appliance",
       description: "Requested service could not be found.",
     };
   }
@@ -69,7 +69,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   const serviceName = detail.title
-    .replace(" - RAFIX Appliance Repair", "")
+    .replace(" - mperium Appliance", "")
     .replace(" Services", "")
     .trim();
 

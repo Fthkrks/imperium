@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 
 const pageMeta = {
-  title: "Our Services - RAFIX Appliance Repair",
+  title: "Our Services - mperium Appliance",
   description:
     "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
 } as const;

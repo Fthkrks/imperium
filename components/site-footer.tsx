@@ -45,8 +45,8 @@ function getBrandLabel(slug: string, title?: string) {
   }
 
   return title
-    .replace(" Appliance Repair - RAFIX Appliance Repair", "")
-    .replace(" - RAFIX Appliance Repair", "")
+    .replace(" Appliance Repair - mperium Appliance", "")
+    .replace(" - mperium Appliance", "")
     .trim();
 }
 
@@ -80,7 +80,7 @@ export function SiteFooter() {
           <div {...scopeAttr} className="footer-grid">
             <div {...scopeAttr} className="footer-brand flex flex-col">
               <a className="footer-logo " href="/">
-                <img alt="RAFIX Appliance Repair" src="/logo.png" />
+                <img alt="mperium Appliance" src="/logo.png" />
               </a>
               <p {...scopeAttr} className="p-0 m-0">
                 Professional appliance repair services you can count on. Licensed, insured, and ready
@@ -170,7 +170,7 @@ export function SiteFooter() {
             </div>
           </div>
           <div {...scopeAttr} className="footer-bottom">
-            <p {...scopeAttr}>© 2026 RAFIX Appliance Repair. All rights reserved.</p>
+            <p {...scopeAttr}>© 2026 mperium Appliance. All rights reserved.</p>
           </div>
         </div>
       </footer>

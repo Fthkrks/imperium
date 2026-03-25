@@ -21,13 +21,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 	if (!post) {
 		return {
-			title: "Post Not Found - RAFIX Appliance Repair",
+			title: "Post Not Found - mperium Appliance",
 			description: "Requested blog article could not be found.",
 		};
 	}
 
 	return {
-		title: `${post.title} - RAFIX Appliance Repair`,
+		title: `${post.title} - mperium Appliance`,
 		description: post.excerpt,
 	};
 }

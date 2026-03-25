@@ -5,9 +5,9 @@ import { BlogCard, type BlogPost } from "@/components/BlogCard";
 import { BlogContent } from "@/components/blog/BlogContent";
 
 export const metadata: Metadata = {
-  title: "Blog - RAFIX Appliance Repair",
+  title: "Blog - mperium Appliance",
   description:
-    "Read practical maintenance tips and appliance repair insights from RAFIX technicians.",
+    "Read practical maintenance tips and appliance repair insights from mperium Appliance technicians.",
 };
 
 export default async function BlogPage() {

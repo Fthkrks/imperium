@@ -1,84 +1,84 @@
 {
     "1":  {
-              "title":  "Bosch Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Bosch Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260218002904533_dccd50a9-08d4-48aa-a8b9-15dab143dc7d.jpg",
               "premium":  false
           },
     "2":  {
-              "title":  "Whirlpool Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Whirlpool Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113540085_de85eb0c-b81b-426a-ad28-fdeafc9a761f.png",
               "premium":  false
           },
     "3":  {
-              "title":  "Kenmore Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Kenmore Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113609200_2fb035c7-a746-4168-99b2-b8275f503788.webp",
               "premium":  false
           },
     "4":  {
-              "title":  "Maytag Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Maytag Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113629379_567a4459-7ea4-4510-8882-19c199113e62.webp",
               "premium":  false
           },
     "5":  {
-              "title":  "Frigidaire Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Frigidaire Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113639417_4c98e2c0-9bdf-44df-a77c-ba1c1b925c6b.webp",
               "premium":  false
           },
     "6":  {
-              "title":  "Electrolux Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Electrolux Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113650949_9117c0ba-17db-4b9b-8db3-e60ab7419862.png",
               "premium":  false
           },
     "7":  {
-              "title":  "Miele Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Miele Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113703127_85f7e5f4-33f5-4202-b179-a3d4ae8e58fb.webp",
               "premium":  false
           },
     "8":  {
-              "title":  "Samsung Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Samsung Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113709840_b4e05997-39c8-4407-9e17-06e779d9818f.png",
               "premium":  false
           },
     "9":  {
-              "title":  "Viking Appliance Repair - RAFIX Appliance Repair",
+              "title":  "Viking Appliance Repair - mperium Appliance",
               "description":  "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
               "image":  "/legacy/assets/20260219113717309_1b986d9c-1744-4a54-ae9b-7ee0400b3172.webp",
               "premium":  false
           },
     "sub-zero":  {
-                     "title":  "Sub-Zero Appliance Repair - RAFIX Appliance Repair",
+                     "title":  "Sub-Zero Appliance Repair - mperium Appliance",
                      "description":  "Expert repair services for Sub-Zero luxury appliances. Same-day service, licensed technicians.",
                      "image":  "/legacy/assets/20260218002904533_dccd50a9-08d4-48aa-a8b9-15dab143dc7d.jpg",
                      "premium":  true
                  },
     "thermador":  {
-                      "title":  "Thermador Appliance Repair - RAFIX Appliance Repair",
+                      "title":  "Thermador Appliance Repair - mperium Appliance",
                       "description":  "Expert repair services for Thermador luxury appliances. Same-day service, licensed technicians.",
                       "image":  "/legacy/assets/20260219113540085_de85eb0c-b81b-426a-ad28-fdeafc9a761f.png",
                       "premium":  true
                   },
     "viking":  {
-                   "title":  "Viking Premium Appliance Repair - RAFIX Appliance Repair",
+                   "title":  "Viking Premium Appliance Repair - mperium Appliance",
                    "description":  "Professional repair services for Viking premium appliances. Same-day service, licensed technicians.",
                    "image":  "/legacy/assets/20260219113717309_1b986d9c-1744-4a54-ae9b-7ee0400b3172.webp",
                    "premium":  true
                },
     "wolf":  {
-                 "title":  "Wolf Appliance Repair - RAFIX Appliance Repair",
+                 "title":  "Wolf Appliance Repair - mperium Appliance",
                  "description":  "Expert repair services for Wolf luxury appliances. Same-day service, licensed technicians.",
                  "image":  "/legacy/assets/20260219113609200_2fb035c7-a746-4168-99b2-b8275f503788.webp",
                  "premium":  true
              },
     "monogram":  {
-                     "title":  "Monogram Appliance Repair - RAFIX Appliance Repair",
+                     "title":  "Monogram Appliance Repair - mperium Appliance",
                      "description":  "Professional repair services for Monogram luxury appliances. Same-day service, licensed technicians.",
                      "image":  "/legacy/assets/20260219113629379_567a4459-7ea4-4510-8882-19c199113e62.webp",
                      "premium":  true

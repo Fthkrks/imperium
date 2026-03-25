@@ -52,7 +52,7 @@ export function SiteHeader() {
         <header {...scopeAttr} className="header">
           <div {...scopeAttr} className="container header-container">
             <a className="" href="/">
-              <Image width={90} height={90} alt="RAFIX Appliance Repair" src="/logo.png" />
+              <Image width={90} height={90} alt="mperium Appliance" src="/logo.png" />
             </a>
             <nav {...scopeAttr} className="nav-desktop ">
               {navigationItems.map((item) => (
@@ -126,7 +126,7 @@ export function SiteHeader() {
       <div {...scopeAttr} className="mobile-menu">
         <div {...scopeAttr} className="mobile-menu-logo">
           <a href="/">
-            <Image width={90} height={90} alt="RAFIX Appliance Repair" src="/logo.png" />
+            <Image width={90} height={90} alt="mperium Appliance" src="/logo.png" />
           </a>
         </div>
         <div {...scopeAttr} className="mobile-menu-content">
