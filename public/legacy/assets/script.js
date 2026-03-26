@@ -252,21 +252,150 @@ function initRafixScripts() {
   }
 
   // ========================================
-  // Contact Form - Real form submit (server-side via Razor)
-  // Show loading state on submit but let the form POST naturally
+  // Toast Notification System
   // ========================================
-  const contactForm = document.querySelector('.contact-form form');
+  function getToastContainer() {
+    var container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+    return container;
+  }
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', function() {
-      const submitBtn = this.querySelector('.submit-btn');
-      if (submitBtn) {
-        submitBtn.innerHTML = 'Sending...';
-        submitBtn.disabled = true;
+  function showToast(message, type) {
+    var container = getToastContainer();
+    var toast = document.createElement('div');
+    toast.className = 'toast toast-' + (type || 'success');
+
+    var iconSvg = type === 'error'
+      ? '<svg fill="none" height="20" width="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+      : '<svg fill="none" height="20" width="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    toast.innerHTML = '<span class="toast-icon">' + iconSvg + '</span><span class="toast-message">' + message + '</span>';
+    container.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(function () {
+      toast.classList.add('toast-visible');
+    });
+
+    // Auto-remove after 4s
+    setTimeout(function () {
+      toast.classList.remove('toast-visible');
+      toast.classList.add('toast-hiding');
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 400);
+    }, 4000);
+  }
+
+  window.showToast = showToast;
+
+  // ========================================
+  // Contact Form submit + Book another repair
+  // ========================================
+  function bindServiceRequestForms(root) {
+    var forms = root.querySelectorAll('.contact-form form');
+
+    forms.forEach(function(form) {
+      if (form.dataset.boundServiceRequest === 'true') return;
+      form.dataset.boundServiceRequest = 'true';
+
+      var defaultSubmitBtn = form.querySelector('.submit-btn');
+      if (defaultSubmitBtn && !defaultSubmitBtn.dataset.defaultHtml) {
+        defaultSubmitBtn.dataset.defaultHtml = defaultSubmitBtn.innerHTML;
       }
-      // Let the form submit naturally to the server
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var submitBtn = form.querySelector('.submit-btn');
+        if (submitBtn) {
+          submitBtn.innerHTML = 'Sending...';
+          submitBtn.disabled = true;
+        }
+
+        var formData = new FormData(form);
+
+        // Add human-readable labels for selects
+        var serviceSelect = form.querySelector('select[name="ServiceId"]');
+        if (serviceSelect && serviceSelect.selectedIndex >= 0) {
+          formData.set('ServiceLabel', serviceSelect.options[serviceSelect.selectedIndex].text);
+        }
+        var brandSelect = form.querySelector('select[name="BrandId"]');
+        if (brandSelect && brandSelect.selectedIndex >= 0) {
+          formData.set('BrandLabel', brandSelect.options[brandSelect.selectedIndex].text);
+        }
+
+        fetch('/api/service-request', {
+          method: 'POST',
+          body: formData
+        })
+        .then(function(response) {
+          return response.json().then(function(data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function(result) {
+          if (result.ok && result.data.success) {
+            showToast('Your service request has been sent successfully!', 'success');
+            var contactFormDiv = form.closest('.contact-form');
+            if (contactFormDiv) {
+              var formSuccess = contactFormDiv.querySelector('.form-success');
+              if (formSuccess) {
+                form.style.display = 'none';
+                formSuccess.style.display = 'block';
+              }
+            }
+          } else {
+            var errMsg = (result.data && result.data.error) ? result.data.error : 'Something went wrong. Please try again.';
+            showToast(errMsg, 'error');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = submitBtn.dataset.defaultHtml || 'Submit';
+            }
+          }
+        })
+        .catch(function() {
+          showToast('Network error. Please check your connection and try again.', 'error');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = submitBtn.dataset.defaultHtml || 'Submit';
+          }
+        });
+      });
+    });
+
+    var retryButtons = root.querySelectorAll('.contact-form .book-another');
+    retryButtons.forEach(function(btn) {
+      if (btn.dataset.boundBookAnother === 'true') return;
+      btn.dataset.boundBookAnother = 'true';
+
+      btn.addEventListener('click', function() {
+        var contactForm = btn.closest('.contact-form');
+        if (!contactForm) return;
+
+        var form = contactForm.querySelector('form');
+        var formSuccess = contactForm.querySelector('.form-success');
+        if (!form) return;
+
+        form.reset();
+        form.style.display = 'block';
+        if (formSuccess) formSuccess.style.display = 'none';
+
+        var submitBtn = form.querySelector('.submit-btn');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = submitBtn.dataset.defaultHtml || submitBtn.innerHTML;
+        }
+      });
     });
   }
+
+  bindServiceRequestForms(document);
 
   // ========================================
   // Service Areas Sliders (multiple independent, with autoplay)
@@ -482,7 +611,13 @@ function initRafixScripts() {
         clone.removeAttribute('data-aos');
         clone.removeAttribute('data-aos-delay');
         clone.removeAttribute('data-aos-duration');
+        var cloneForm = clone.querySelector('form');
+        if (cloneForm) {
+          cloneForm.removeAttribute('data-bound-service-request');
+          delete cloneForm.dataset.boundServiceRequest;
+        }
         formModalBody.appendChild(clone);
+        bindServiceRequestForms(formModalBody);
         modalReady = true;
       }
     }

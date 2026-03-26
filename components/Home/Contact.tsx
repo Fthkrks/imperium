@@ -45,7 +45,7 @@ function Contact() {
                 </div>
               </div>
               <div className="contact-form">
-                <form action="/ServiceRequest" method="post">
+                <form>
                   <div className="form-header">
                     <h3>Request Service</h3>
                     <div className="discount-tag">
@@ -123,7 +123,7 @@ function Contact() {
                     <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><line x1={5} x2={19} y1={12} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
                   </button>
                   <p className="form-note">No payment required until job is done. Discount applied at checkout.</p>
-                  <input name="__RequestVerificationToken" type="hidden" defaultValue="CfDJ8I3l3Ze97DZKnBJVFjgjvPDKP5YhbufuSZwwsn84zXVnVs7Rcuy-Bx3N5DfsG3kFKWzY4ImllNzxaUWnSfYFkcrxY8NUp1EdYOP2WL0Q7NwnR1fMcx-5i_XzWlBdzEXHrVqArvJKW0pk9NnYxGChVM0" /></form>
+                  </form>
                 <div className="form-success">
                   <div className="success-icon">
                     <svg fill="none" height={32} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={32} xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" /></svg>
