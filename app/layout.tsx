@@ -22,6 +22,9 @@ export async function generateMetadata(): Promise<Metadata> {
       title: metadataJson.title || "mperium Appliance",
       description: metadataJson.description || "Professional appliance repair services.",
       keywords: metadataJson.keywords || "",
+      icons: {
+        icon: "/favicon.ico",
+      },
     };
   } catch {
     return {
