@@ -26,8 +26,6 @@ function Home() {
     <Testimonials/>
     <Areas/>
     <Blog/>
-    <Gallery/>
-    <Videos/>
     <Faq/>
     <Brands/>
     <Contact/>

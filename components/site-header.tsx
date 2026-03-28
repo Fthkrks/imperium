@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useSiteData } from "@/components/SiteDataContext";
+import { useEffect, useState } from "react";
+
 const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 
 const navigationItems = [
@@ -14,12 +16,23 @@ const navigationItems = [
   { href: "/#blog", label: "Blog" },
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
   const { contact: contactData } = useSiteData();
+  const [scrolled, setScrolled] = useState(false);
+  const effectiveScrolled = forceSolid || scrolled;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <div {...scopeAttr} className="sticky-top">
-        <div {...scopeAttr} className="discount-banner">
+<div {...scopeAttr} className="sticky-top">
+        <div {...scopeAttr} className="discount-banner" data-scrolled={effectiveScrolled}>
           <div {...scopeAttr} className="container">
             <div {...scopeAttr} className="banner-content">
               <svg
@@ -49,7 +62,11 @@ export function SiteHeader() {
             </div>
           </div>
         </div>
-        <header {...scopeAttr} className="header">
+        <header
+          {...scopeAttr}
+          className={`header${forceSolid ? " header-solid" : ""}`}
+          data-scrolled={effectiveScrolled}
+        >
           <div {...scopeAttr} className="container header-container">
             <a className="" href="/">
               <Image width={90} height={90} alt="mperium Appliance" src="/logo.png" />

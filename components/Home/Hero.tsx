@@ -2,12 +2,14 @@ import React from 'react'
 import { useSiteData } from '../SiteDataContext';
 
 function Hero() {
-  const { contact: contactData, brands: brandsDataJson } = useSiteData();
+  const { contact: contactData } = useSiteData();
 
   return (
     <>
       <section className="hero" id="hero">
         <div className="hero-bg">
+          <img alt="Professional Appliance Repair Technician" className="hero-bg-photo" src="https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg" />
+          <div className="hero-bg-overlay" />
           <div className="grid-pattern" />
           <div className="diagonal-blue" />
           <div className="diagonal-orange" />
@@ -60,30 +62,6 @@ function Hero() {
                     <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" /></svg>
                   </div>
                   <span>Licensed Experts</span>
-                </div>
-              </div>
-            </div>
-            <div className="hero-visual">
-              <div className="card-bg" />
-              <div className="card-main">
-                <div className="card-content">
-                  <img alt="Professional Appliance Repair Technician" className="hero-photo" src="/legacy/assets/rafixhero3.png" />
-                  <div className="gradient-overlay" />
-                  <div className="rating-card">
-                    <div className="rating-icon">
-                      <img alt="Google" height={28} src="/legacy/assets/google-icon.png" width={28} />
-                    </div>
-                    <div className="rating-info">
-                      <div className="rating-stars">
-                        <svg height={14} viewBox="0 0 24 24" width={14} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                        <svg height={14} viewBox="0 0 24 24" width={14} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                        <svg height={14} viewBox="0 0 24 24" width={14} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                        <svg height={14} viewBox="0 0 24 24" width={14} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                        <svg height={14} viewBox="0 0 24 24" width={14} xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                      </div>
-                      <p className="rating-text"><span className="rating-number">4.9</span> <span className="rating-divider">|</span> <span className="rating-reviews">217 reviews</span></p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

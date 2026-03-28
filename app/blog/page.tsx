@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
   const posts = (await getSiteData("blog.json")) as BlogPost[] || [];
   return (
-    <SiteShell>
+    <SiteShell forceSolidHeader>
       {/* Hero Section */}
       <section className="relative w-full  py-24 lg:py-32 flex flex-col items-center justify-center overflow-hidden">
 

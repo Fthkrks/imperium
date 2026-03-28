@@ -16,8 +16,8 @@ export function generateMetadata(): Metadata {
 
 export default function ServicesPage() {
   return (
-    <SiteShell>
-      <section className="services" id="services" style={{ paddingTop: "2rem" }}>
+    <SiteShell forceSolidHeader>
+      <section className="services services-page" id="services" style={{ paddingTop: "2rem" }}>
         <div className="container">
           <div className="section-header">
             <span className="label">Our Services</span>

@@ -4,13 +4,14 @@ import { SiteHeader } from "@/components/site-header";
 
 type SiteShellProps = {
   children: ReactNode;
+  forceSolidHeader?: boolean;
 };
 
-export function SiteShell({ children }: SiteShellProps) {
+export function SiteShell({ children, forceSolidHeader = false }: SiteShellProps) {
   return (
     <>
-      <SiteHeader />
-      <main>{children}</main>
+      <SiteHeader forceSolid={forceSolidHeader} />
+      <main className={forceSolidHeader ? "main-solid-header" : undefined}>{children}</main>
       <SiteFooter />
     </>
   );

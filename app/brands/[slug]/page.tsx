@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
 import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
-import Resential from "@/components/Services/Resential";
+import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
 import Contact from "@/components/Home/Contact";
 
@@ -141,7 +141,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
       </section>
       <TrustLogos />
       <div className="container">
-        <Resential />
+        <Residential />
         <Commercial />
       </div>
 

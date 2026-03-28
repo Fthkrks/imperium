@@ -69,6 +69,38 @@ function Faq() {
 					background: linear-gradient(180deg, #f9fbfd 0%, #ffffff 100%);
 				}
 
+				.section-header {
+					text-align: center;
+					max-width: 900px;
+					margin: 0 auto;
+				}
+
+				.section-header .label {
+					display: inline-block;
+					color: #70b5ed;
+					font-weight: 700;
+					letter-spacing: 0.08em;
+					text-transform: uppercase;
+					font-size: 0.82rem;
+					margin-bottom: 0.6rem;
+				}
+
+				.section-header h2 {
+					margin: 0;
+					color: #0f4c8a;
+					font-size: 2.2rem;
+					font-weight: 800;
+					line-height: 1.2;
+				}
+
+				.section-header p {
+					margin: 0.85rem auto 0;
+					max-width: 760px;
+					color: #6b7280;
+					font-size: 1rem;
+					line-height: 1.6;
+				}
+
 				.faq-list {
 					max-width: 960px;
 					margin: 2rem auto 0;
@@ -140,6 +172,14 @@ function Faq() {
 				@media (max-width: 767px) {
 					.faq {
 						padding: 4.5rem 0;
+					}
+
+					.section-header h2 {
+						font-size: 1.8rem;
+					}
+
+					.section-header p {
+						font-size: 0.92rem;
 					}
 
 					.faq-question {

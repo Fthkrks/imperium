@@ -8,15 +8,21 @@ function initRafixScripts() {
   // ========================================
   const header = document.querySelector('.header');
 
-  window.addEventListener('scroll', function() {
-    if (header) {
-      if (window.scrollY > 20) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+  function syncHeaderState() {
+    if (!header) return;
+
+    if (window.scrollY > 20) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
     }
+  }
+
+  window.addEventListener('scroll', function() {
+    syncHeaderState();
   });
+
+  syncHeaderState();
 
   // ========================================
   // Mobile Menu Toggle

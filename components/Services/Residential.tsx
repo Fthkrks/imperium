@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React from 'react'
 import { useSiteData } from "@/components/SiteDataContext";
 
 function isInlineSvg(icon: unknown): icon is string {
@@ -36,10 +36,10 @@ function ServiceIcon({ icon, title }: { icon: unknown; title: string }) {
   return <img alt={title} className="service-icon" src={normalizeIconSrc(icon)} />;
 }
 
-function Commercial() {
-  const { servicesCommercial } = useSiteData();
+function Residential() {
+  const { servicesResidential } = useSiteData();
   return (
-    <section className="commercial-section my-10!">
+    <section className="services-section">
       <div className="services-category">
         <h3 className="services-category-title">
           <svg
@@ -53,13 +53,13 @@ function Commercial() {
             width={22}
             xmlns="http://www.w3.org/2000/svg"
           >
-            <rect height={14} rx={2} ry={2} width={20} x={2} y={7} />
-            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
-          Commercial
+          Residential
         </h3>
         <div className="services-grid">
-          {(servicesCommercial || []).map((service: any, index: number) => (
+          {(servicesResidential || []).map((service: any, index: number) => (
             <a
               key={`${service?.title || "service"}-${index}`}
               className="service-card"
@@ -79,4 +79,4 @@ function Commercial() {
   )
 }
 
-export default Commercial
+export default Residential
