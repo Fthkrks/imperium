@@ -9,7 +9,7 @@ const scopeAttr = { "b-1dp2rcxk9n": "" } as const;
 const navigationItems = [
   { href: "/#residential", label: "Residential" },
   { href: "/#commercial", label: "Commercial" },
-  { href: "/#brands", label: "Brands" },
+  { href: "/#BrandsWeRepair", label: "Brands" },
   { href: "/#why-us", label: "Why Us" },
   { href: "/#reviews", label: "Reviews" },
   { href: "/#faq", label: "FAQ" },

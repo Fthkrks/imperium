@@ -29,7 +29,7 @@ const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/#residential", label: "Residential" },
   { href: "/#commercial", label: "Commercial" },
-  { href: "/#brands", label: "Brands" },
+  { href: "/#BrandsWeRepair", label: "Brands" },
   { href: "/#why-us", label: "Why Us" },
   { href: "/#reviews", label: "Reviews" },
   { href: "/#faq", label: "FAQ" },
@@ -47,6 +47,10 @@ function getBrandLabel(slug: string, title?: string) {
   return title
     .replace(" Appliance Repair - mperium Appliance", "")
     .replace(" - mperium Appliance", "")
+    .replace(" Appliance Repair - Rafix Appliance", "")
+    .replace(" - Rafix Appliance", "")
+    .replace("Rafix ", "")
+    .replace("rafix ", "")
     .trim();
 }
 

@@ -40,7 +40,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 	if (!post) notFound();
 
 	return (
-		<SiteShell>
+		<SiteShell forceSolidHeader={true}>
 			<BlogPostClient post={post} />
 		</SiteShell>
 	);

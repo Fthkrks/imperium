@@ -75,7 +75,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
     .trim();
 
   return (
-    <SiteShell>
+    <SiteShell forceSolidHeader>
       <section className="detail-hero">
         <div className="detail-hero-bg-pattern" />
         <div className="detail-hero-glow detail-hero-glow-1" />
