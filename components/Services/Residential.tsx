@@ -39,7 +39,7 @@ function ServiceIcon({ icon, title }: { icon: unknown; title: string }) {
 function Residential() {
   const { servicesResidential } = useSiteData();
   return (
-    <section className="services-section">
+    <section className="services-section" style={{ marginTop: "3rem", marginBottom: "3rem" }}>
       <div className="services-category">
         <h3 className="services-category-title">
           <svg

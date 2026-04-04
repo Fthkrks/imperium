@@ -64,7 +64,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     rawContact && typeof rawContact === "object" && !Array.isArray(rawContact)
       ? (rawContact as ContactData)
       : {};
-  
+
 
   if (!detail) notFound();
 
@@ -134,14 +134,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
         <div className="hero-bottom-clip" />
       </section>
-      <TrustLogos/>
+      <TrustLogos />
       <div className="container">
-        <Residential/>
-      <Commercial/>
+        <Residential />
       </div>
 
-      <Brands/>
-      <Contact/>
+      <Brands />
+      <Contact />
     </SiteShell>
   );
 }
