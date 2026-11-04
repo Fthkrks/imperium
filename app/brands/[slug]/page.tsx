@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { getSiteData } from "@/lib/redis-fetch";
+import { getServiceAreas, getSiteData } from "@/lib/redis-fetch";
+import { BrandSeo } from "@/components/SeoBlocks";
 import { BUSINESS } from "@/lib/business";
 import { BRAND_ROUTES, BRANDS_WITHOUT_LOGO } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
@@ -87,6 +88,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   const brandName = getBrandName(detail.title);
+  const areas = await getServiceAreas();
 
   return (
     <SiteShell forceSolidHeader>
@@ -153,6 +155,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      <BrandSeo brandName={brandName} slug={slug} areas={areas} />
       <div className="container">
         <Residential />
         <Commercial />

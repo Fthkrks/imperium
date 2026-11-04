@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
+import { ServicesIndexSeo } from "@/components/SeoBlocks";
+import { getServiceAreas } from "@/lib/redis-fetch";
 
 const pageMeta = {
   title: "Appliance Repair Services in Houston, TX | Imperium Appliance Repair",
@@ -15,7 +17,8 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const areas = await getServiceAreas();
   return (
     <SiteShell forceSolidHeader>
       <section className="services services-page" id="services" style={{ paddingTop: "2rem" }}>
@@ -192,6 +195,7 @@ export default function ServicesPage() {
 
         </div>
       </section>
+      <ServicesIndexSeo areas={areas} />
     </SiteShell>
   );
 }

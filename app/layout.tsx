@@ -62,11 +62,35 @@ export default async function RootLayout({
     console.error('Failed to load site data from Supabase:', error);
   }
 
+  // Client components do not need article bodies or location details, so keep pages light.
+  const clientData = {
+    ...siteData,
+    locations: {},
+    blog: ((siteData.blog ?? []) as Array<Record<string, unknown>>).map((post) => ({ ...post, content: "" })),
+    brands: Object.fromEntries(
+      Object.entries((siteData.brands ?? {}) as Record<string, { title?: string; premium?: boolean }>).map(([slug, brand]) => [
+        slug,
+        { title: brand?.title, premium: brand?.premium },
+      ]),
+    ),
+  };
+
   const contact = siteData.contact as { phone?: string; email?: string };
   const locations = (siteData.locations ?? {}) as Record<string, { name?: string }>;
   const businessSchema = {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
+    "@id": `${SITE_URL}/#business`,
+    address: { "@type": "PostalAddress", addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "20:00",
+      },
+      { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "08:00", closes: "17:00" },
+    ],
     name: BUSINESS.name,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
@@ -84,7 +108,7 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href="/legacy/assets/css2" />
+        <link rel="stylesheet" href="/legacy/assets/fonts.css" />
         <link rel="stylesheet" href="/legacy/assets/swiper-bundle.min.css" />
         <link rel="stylesheet" href="/legacy/assets/aos.css" />
         <link rel="stylesheet" href="/legacy/assets/styles.css" />
@@ -97,7 +121,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema).replace(/</g, "\\u003c") }}
         />
-        <SiteDataProvider data={siteData}>
+        <SiteDataProvider data={clientData}>
           {children}
           <Script src="/legacy/assets/swiper-bundle.min.js" strategy="afterInteractive" />
           <Script src="/legacy/assets/aos.js" strategy="afterInteractive" />

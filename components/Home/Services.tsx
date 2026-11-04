@@ -49,7 +49,7 @@ function Services() {
       <section className="services" id="services">
         <div className="container">
           <div className="top">
-            <h2>Our Appliance Repair Services</h2>
+            <h2>Our Appliance Repair Services in Houston</h2>
             <span>
               We repair and service all major appliances. Our technicians are
               ready to help with same-day assistance and expert repairs. Explore

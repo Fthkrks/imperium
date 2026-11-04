@@ -4,6 +4,8 @@ import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
 import { type BlogPost } from "@/components/BlogCard";
 import { BlogPostClient } from "./BlogPostClient";
+import { BlogPostSeo } from "@/components/SeoBlocks";
+import { BLOG_SERVICE } from "@/lib/seo-content";
 
 type PageProps = {
 	params: Promise<{ slug: string }>;
@@ -43,6 +45,14 @@ export default async function BlogDetailPage({ params }: PageProps) {
 	return (
 		<SiteShell forceSolidHeader={true}>
 			<BlogPostClient post={post} />
+			<BlogPostSeo
+				title={post.title}
+				description={post.excerpt}
+				slug={post.slug}
+				image={post.image}
+				publishedAt={post.publishedAt}
+				serviceKey={BLOG_SERVICE[post.slug]}
+			/>
 		</SiteShell>
 	);
 }
