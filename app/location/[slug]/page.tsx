@@ -171,8 +171,8 @@ export default async function LocationDetailPage({ params }: PageProps) {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               <div>
-                <span className="loc-stat-number">90 Days</span>
-                <span className="loc-stat-label">Warranty</span>
+                <span className="loc-stat-number">90 / 30 Days</span>
+                <span className="loc-stat-label">Parts / Labor Warranty</span>
               </div>
             </div>
             <div className="loc-stat-divider" />
@@ -234,8 +234,8 @@ export default async function LocationDetailPage({ params }: PageProps) {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <h3>90-Day Warranty</h3>
-              <p>Every repair in {location.name} comes with our 90-day parts and labor warranty, giving you complete peace of mind.</p>
+              <h3>Parts &amp; Labor Warranty</h3>
+              <p>Every repair in {location.name} comes with a 90-day warranty on parts and a 30-day warranty on labor, giving you peace of mind.</p>
             </div>
           </div>
         </div>

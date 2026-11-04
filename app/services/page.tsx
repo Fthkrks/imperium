@@ -23,7 +23,7 @@ export default function ServicesPage() {
           <div className="section-header">
             <span className="label">Our Services</span>
             <h1>Appliances We Repair</h1>
-            <p>Expert repairs for all your home and business appliances, backed by our 90-day warranty</p>
+            <p>Expert repairs for all your home and business appliances, backed by our warranty: 90 days on parts and 30 days on labor</p>
           </div>
           <div className="services-category">
             <h3 className="services-category-title">
