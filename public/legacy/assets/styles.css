@@ -3394,3 +3394,87 @@ textarea {
   max-width: 680px;
   padding-top: 0;
 }
+
+/* Online booking offer */
+.discount-banner,
+.discount-banner[data-scrolled="true"] {
+  padding: 0.5rem 0;
+  background: linear-gradient(90deg, #0E3C66 0%, #2B5A9B 55%, #0E3C66 100%);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(14, 60, 102, 0.3);
+}
+
+.discount-banner .banner-content {
+  flex-wrap: wrap;
+  gap: 0.25rem 0.625rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.discount-banner .banner-content .offer-badge {
+  padding: 0.2rem 0.625rem;
+  background: #FF8A3D;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.discount-banner .banner-content .offer-text {
+  font-weight: 700;
+}
+
+.discount-banner .banner-content .offer-price {
+  font-size: 1.125rem;
+  white-space: nowrap;
+}
+
+.discount-banner .banner-content .offer-price s {
+  opacity: 0.8;
+}
+
+.discount-banner .banner-content .offer-price strong {
+  color: #FFD166;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.discount-banner .banner-content .offer-button {
+  padding: 0.3rem 0.875rem;
+  background: #fff;
+  border-radius: 999px;
+  color: #0E3C66;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .discount-banner .banner-content {
+    font-size: 1.25rem;
+  }
+
+  .main-solid-header {
+    padding-top: 138px;
+  }
+
+  .hero .hero-content {
+    padding-top: 10rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-solid-header {
+    padding-top: 136px;
+  }
+
+  .hero {
+    padding-top: 11rem;
+  }
+
+  .loc-hero {
+    padding-top: 11rem !important;
+  }
+}

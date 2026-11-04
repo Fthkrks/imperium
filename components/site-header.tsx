@@ -38,27 +38,14 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
         <div {...scopeAttr} className="discount-banner" data-scrolled={effectiveScrolled}>
           <div {...scopeAttr} className="container">
             <div {...scopeAttr} className="banner-content">
-              <svg
-                {...scopeAttr}
-                fill="none"
-                height="16"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  {...scopeAttr}
-                  d="M12 3l1.912 5.813a2 2 0 001.276 1.276L21 12l-5.813 1.912a2 2 0 00-1.276 1.276L12 21l-1.912-5.813a2 2 0 00-1.276-1.276L3 12l5.813-1.912a2 2 0 001.276-1.276L12 3z"
-                />
-              </svg>
-              <span {...scopeAttr}>
-                Book online and save 40% on the service fee: <strong>$51</strong> <s>$85</s>
+              <span {...scopeAttr} className="offer-badge">40% OFF</span>
+              <span {...scopeAttr} className="offer-text">
+                Book Online &amp; Save on Your Service Fee
               </span>
-              <a {...scopeAttr} className="underline open-form-trigger text-[#70B5ED]!" href="#">
+              <span {...scopeAttr} className="offer-price">
+                <s {...scopeAttr}>$85</s> <strong {...scopeAttr}>$51</strong>
+              </span>
+              <a {...scopeAttr} className="offer-button open-form-trigger" href="#">
                 Book Now →
               </a>
             </div>
