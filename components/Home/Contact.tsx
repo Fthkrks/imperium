@@ -44,7 +44,7 @@ function Contact() {
                     </div>
                     <div className="form-group">
                       <label>Zip Code</label>
-                      <input maxLength={10} name="ZipCode" placeholder="97204" type="text" />
+                      <input maxLength={10} name="ZipCode" placeholder="77002" type="text" />
                     </div>
                   </div>
                   <div className="form-row">
@@ -88,6 +88,10 @@ function Contact() {
                     <label>How Can We Help You?</label>
                     <textarea name="Description" placeholder="Please describe the issue with your appliance..." rows={3} defaultValue={""} />
                   </div>
+                  <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
+                    <label>Website</label>
+                    <input autoComplete="off" name="Website" tabIndex={-1} type="text" />
+                  </div>
                   <button className="submit-btn" type="submit">
                     Submit
                   </button>
@@ -111,7 +115,7 @@ function Contact() {
                   </div>
                   <div>
                     <h4>Phone</h4>
-                    <a href={`tel:${contactData?.phoneHref}`}>{contactData?.phone}</a>
+                    <a href={contactData?.phoneHref}>{contactData?.phone}</a>
                   </div>
                 </div>
 

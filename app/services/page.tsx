@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 
 const pageMeta = {
-  title: "Our Services - mperium Appliance",
+  title: "Our Services - Imperium Appliance Repair",
   description:
     "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
 } as const;

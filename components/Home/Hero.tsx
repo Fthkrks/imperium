@@ -40,7 +40,7 @@ function Hero() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </a>
-                <a className="btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                <a className="btn-secondary" href={contactData?.phoneHref}>
                   Call {contactData?.phone}
                 </a>
               </div>

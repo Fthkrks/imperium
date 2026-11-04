@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
-import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
@@ -44,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!detail) {
     return {
-      title: "Service Not Found - mperium Appliance",
+      title: "Service Not Found - Imperium Appliance Repair",
       description: "Requested service could not be found.",
     };
   }
@@ -69,7 +68,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   const serviceName = detail.title
-    .replace(" - mperium Appliance", "")
+    .replace(" - Imperium Appliance Repair", "")
     .replace(" Services", "")
     .trim();
 
@@ -105,7 +104,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </a>
-                <a className="btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                <a className="btn-secondary" href={contactData?.phoneHref}>
                   Call {contactData?.phone}
                 </a>
               </div>
@@ -134,7 +133,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
         <div className="hero-bottom-clip" />
       </section>
-      <TrustLogos />
       <div className="container">
         <Residential />
       </div>

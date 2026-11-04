@@ -9,6 +9,13 @@ import {
 } from '@/lib/site-data-config';
 import { isSupabaseConfigured } from '@/lib/supabase-client';
 import { readSiteDataFromSupabase, writeSiteDataToSupabase } from '@/lib/site-data-store';
+import { cookies } from 'next/headers';
+import { ADMIN_COOKIE, isValidAdminSessionToken } from '@/lib/admin-auth';
+
+async function isAuthorized(): Promise<boolean> {
+  const cookieStore = await cookies();
+  return isValidAdminSessionToken(cookieStore.get(ADMIN_COOKIE)?.value);
+}
 
 function slugifyAreaName(name: string): string {
   return name
@@ -61,6 +68,10 @@ function parseTableParam(url: string): AllowedTable | null {
 
 export async function GET(request: Request) {
   try {
+    if (!(await isAuthorized())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     if (!isSupabaseConfigured()) {
       return NextResponse.json({ error: 'Supabase is not configured' }, { status: 500 });
     }
@@ -80,12 +91,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ data: `${JSON.stringify(supabaseData, null, 2)}\n` });
   } catch (error) {
     console.error('GET Error in /api/admin/data:', error);
-    return NextResponse.json({ error: 'Failed to read table data', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to read table data' }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
+    if (!(await isAuthorized())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     if (!isSupabaseConfigured()) {
       return NextResponse.json({ error: 'Supabase is not configured' }, { status: 500 });
     }
@@ -157,6 +172,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, locationsAdded, locationsRemoved });
   } catch (error) {
     console.error('POST Error in /api/admin/data:', error);
-    return NextResponse.json({ error: 'Failed to save table data', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to save table data' }, { status: 500 });
   }
 }

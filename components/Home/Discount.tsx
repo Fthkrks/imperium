@@ -65,7 +65,7 @@ function Discount() {
                 </div>
                 <span className="title">First-Time Customers</span>
                 <span className="description">
-                  Welcome to FixCenter! Get <strong>15% OFF</strong> your first repair with us.
+                  Welcome to Imperium Appliance Repair! Get <strong>15% OFF</strong> your first repair with us.
                 </span>
                 <a href="#" className="open-form-trigger">Book Repair Service Now</a>
               </div>

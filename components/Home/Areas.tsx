@@ -84,7 +84,7 @@ function AreaSlider({ pages }: { pages: React.ReactNode[][] }) {
 }
 
 function Areas() {
-  const { areas: areasData } = useSiteData();
+  const { areas: areasData, contact: contactData } = useSiteData();
   
   const houstonPages = (areasData?.houston || []).map((page: any, pageIdx: number) => 
     page.map((area: string, idx: number) => <AreaItem key={`h-${pageIdx}-${idx}`} name={area} />)
@@ -101,7 +101,7 @@ function Areas() {
           <div className="section-header">
             <span className="label">Service Areas</span>
             <h2>Serving the Greater Houston &amp; Austin Areas</h2>
-            <p>When you need expert appliance repair service, mperium Appliance is the right choice. We proudly provide same-day and next-day appliance repair service across Houston and Austin areas.</p>
+            <p>When you need expert appliance repair service, Imperium Appliance Repair is the right choice. We proudly provide same-day and next-day appliance repair service across Houston and Austin areas.</p>
           </div>
           <div className="areas-maps-grid">
             <div className="areas-map-card">
@@ -132,7 +132,7 @@ function Areas() {
             <div className="areas-callout-text">
               <strong>Don't See Your Area?</strong>
               <p>We may still be able to help! Give us a call to check if we service your location.</p>
-              <a href="tel:3468920910">Call (346) 892-0910</a>
+              <a href={contactData?.phoneHref}>Call {contactData?.phone}</a>
             </div>
           </div>
         </div>

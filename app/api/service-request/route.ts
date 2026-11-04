@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { BUSINESS } from "@/lib/business";
+import { getClientIp, isRateLimited } from "@/lib/rate-limit";
+
+const MAX_LENGTHS = {
+  short: 120,
+  email: 254,
+  address: 300,
+  description: 3000,
+} as const;
 
 type ServiceRequestPayload = {
   name: string;
@@ -8,9 +17,7 @@ type ServiceRequestPayload = {
   address: string;
   zipCode: string;
   appliance: string;
-  applianceLabel: string;
   brand: string;
-  brandLabel: string;
   description: string;
 };
 
@@ -23,40 +30,72 @@ function getRequiredEnv(name: string) {
   return normalized;
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildPayload(formData: FormData): ServiceRequestPayload {
-  const toString = (key: string) => String(formData.get(key) || "").trim();
+  const read = (key: string, maxLength: number = MAX_LENGTHS.short) =>
+    String(formData.get(key) || "").trim().slice(0, maxLength);
 
   return {
-    name: toString("Name"),
-    phone: toString("Phone"),
-    email: toString("Email"),
-    address: toString("Address"),
-    zipCode: toString("ZipCode"),
-    appliance: toString("ServiceId"),
-    applianceLabel: toString("ServiceLabel"),
-    brand: toString("BrandId"),
-    brandLabel: toString("BrandLabel"),
-    description: toString("Description"),
+    name: read("Name"),
+    phone: read("Phone"),
+    email: read("Email", MAX_LENGTHS.email),
+    address: read("Address", MAX_LENGTHS.address),
+    zipCode: read("ZipCode"),
+    appliance: read("ServiceLabel") || read("ServiceId"),
+    brand: read("BrandLabel") || read("BrandId"),
+    description: read("Description", MAX_LENGTHS.description),
   };
+}
+
+function validate(payload: ServiceRequestPayload): string | null {
+  if (!payload.name || !payload.phone || !payload.email || !payload.address) {
+    return "Missing required form fields.";
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    return "Please enter a valid email address.";
+  }
+  const phoneDigits = payload.phone.replace(/\D/g, "").length;
+  if (phoneDigits < 10 || phoneDigits > 15) {
+    return "Please enter a valid phone number.";
+  }
+  return null;
 }
 
 export async function POST(request: Request) {
   try {
-    const formData = await request.formData();
-    const payload = buildPayload(formData);
-
-    if (!payload.name || !payload.phone || !payload.email || !payload.address) {
+    if (isRateLimited(`service-request:${getClientIp(request)}`, 5, 10 * 60 * 1000)) {
       return NextResponse.json(
-        { success: false, error: "Missing required form fields." },
-        { status: 400 },
+        { success: false, error: "Too many requests. Please call us instead." },
+        { status: 429 },
       );
+    }
+
+    const formData = await request.formData();
+
+    // Hidden field that only bots fill in: report success and send nothing.
+    if (String(formData.get("Website") || "").trim()) {
+      return NextResponse.json({ success: true });
+    }
+
+    const payload = buildPayload(formData);
+    const validationError = validate(payload);
+    if (validationError) {
+      return NextResponse.json({ success: false, error: validationError }, { status: 400 });
     }
 
     const emailPass = getRequiredEnv("EMAIL_PASS");
     const emailUser = getRequiredEnv("EMAIL_USER");
     const emailAuthUser = process.env.EMAIL_AUTH_USER?.trim() || emailUser;
-    const mailFrom = emailUser;
-    const adminInbox = emailUser;
+    const leadInbox = process.env.LEAD_INBOX?.trim() || BUSINESS.email;
+    const mailFrom = { name: BUSINESS.name, address: emailUser };
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -66,39 +105,46 @@ export async function POST(request: Request) {
       },
     });
 
+    const safe = Object.fromEntries(
+      Object.entries(payload).map(([key, value]) => [key, escapeHtml(value)]),
+    ) as ServiceRequestPayload;
+
     const adminHtml = `
       <h2>New Service Request</h2>
-      <p><strong>Name:</strong> ${payload.name}</p>
-      <p><strong>Phone:</strong> ${payload.phone}</p>
-      <p><strong>Email:</strong> ${payload.email}</p>
-      <p><strong>Address:</strong> ${payload.address}</p>
-      <p><strong>Zip Code:</strong> ${payload.zipCode || "-"}</p>
-      <p><strong>Appliance:</strong> ${payload.applianceLabel || payload.appliance || "-"}</p>
-      <p><strong>Brand:</strong> ${payload.brandLabel || payload.brand || "-"}</p>
-      <p><strong>Description:</strong><br/>${(payload.description || "-").replace(/\n/g, "<br/>")}</p>
-    `;
-
-    const customerHtml = `
-      <h2>Your request has been received</h2>
-      <p>Hello ${payload.name}, we have received your service request. Our team will contact you as soon as possible.</p>
-      <p><strong>Request summary:</strong></p>
-      <p>Phone: ${payload.phone}</p>
-      <p>Address: ${payload.address}</p>
+      <p><strong>Name:</strong> ${safe.name}</p>
+      <p><strong>Phone:</strong> ${safe.phone}</p>
+      <p><strong>Email:</strong> ${safe.email}</p>
+      <p><strong>Address:</strong> ${safe.address}</p>
+      <p><strong>Zip Code:</strong> ${safe.zipCode || "-"}</p>
+      <p><strong>Appliance:</strong> ${safe.appliance || "-"}</p>
+      <p><strong>Brand:</strong> ${safe.brand || "-"}</p>
+      <p><strong>Description:</strong><br/>${(safe.description || "-").replace(/\n/g, "<br/>")}</p>
     `;
 
     await transporter.sendMail({
       from: mailFrom,
-      to: adminInbox,
-      subject: `New Service Request - ${payload.name}`,
+      to: leadInbox,
+      replyTo: payload.email,
+      subject: `New Service Request - ${payload.name.replace(/[\r\n]+/g, " ")}`,
       html: adminHtml,
     });
 
-    await transporter.sendMail({
-      from: mailFrom,
-      to: payload.email,
-      subject: "Your service request has been received",
-      html: customerHtml,
-    });
+    // Contains no submitted text, so the form cannot be used to send custom
+    // messages to third parties. A failure here must not lose the lead above.
+    try {
+      await transporter.sendMail({
+        from: mailFrom,
+        to: payload.email,
+        subject: "Your service request has been received",
+        html: `
+          <h2>Your request has been received</h2>
+          <p>Thank you for contacting ${BUSINESS.name}. Our team will contact you as soon as possible.</p>
+          <p>Need help sooner? Call us at ${BUSINESS.phone}.</p>
+        `,
+      });
+    } catch (error) {
+      console.error("Service request confirmation mail error:", error);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

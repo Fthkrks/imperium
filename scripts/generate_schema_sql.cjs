@@ -34,7 +34,7 @@ const areas = readJson('areas.json');
 
 const lines = [];
 
-lines.push('-- Supabase Schema for mperium Appliance');
+lines.push('-- Supabase Schema for Imperium Appliance Repair');
 lines.push('-- Auto-generated from data/*.json');
 lines.push('');
 lines.push('-- 1) blog.json -> blog');

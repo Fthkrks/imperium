@@ -45,12 +45,8 @@ function getBrandLabel(slug: string, title?: string) {
   }
 
   return title
-    .replace(" Appliance Repair - mperium Appliance", "")
-    .replace(" - mperium Appliance", "")
-    .replace(" Appliance Repair - Rafix Appliance", "")
-    .replace(" - Rafix Appliance", "")
-    .replace("Rafix ", "")
-    .replace("rafix ", "")
+    .replace(" Appliance Repair - Imperium Appliance Repair", "")
+    .replace(" - Imperium Appliance Repair", "")
     .trim();
 }
 
@@ -67,7 +63,11 @@ function RatingStars() {
 }
 
 export function SiteFooter() {
-  const { contact: contactData, brands: brandsDataJson } = useSiteData();
+  const { contact: contactData, brands: brandsDataJson, testimonials } = useSiteData();
+  const hasReviews = Boolean(contactData?.reviews?.average && contactData?.reviews?.count);
+  const visibleQuickLinks = quickLinks.filter(
+    (item) => item.href !== "/#reviews" || (Array.isArray(testimonials) && testimonials.length > 0),
+  );
   const brandsData = (brandsDataJson || {}) as Record<string, BrandData>;
 
   const premiumBrands = Object.entries(brandsData)
@@ -84,7 +84,7 @@ export function SiteFooter() {
           <div {...scopeAttr} className="footer-grid">
             <div {...scopeAttr} className="footer-brand flex flex-col">
               <a className="footer-logo " href="/">
-                <img alt="mperium Appliance" src="/logo.png" />
+                <img alt="Imperium Appliance Repair" src="/logo.png" />
               </a>
               <p {...scopeAttr} className="p-0 m-0">
                 Professional appliance repair services you can count on. Licensed, insured, and ready
@@ -101,7 +101,7 @@ export function SiteFooter() {
             <div {...scopeAttr} className="footer-links">
               <h3 {...scopeAttr}>Quick Links</h3>
               <ul {...scopeAttr}>
-                {quickLinks.map((item) => (
+                {visibleQuickLinks.map((item) => (
                   <li {...scopeAttr} key={item.label}>
                     <a href={item.href}>{item.label}</a>
                   </li>
@@ -174,7 +174,7 @@ export function SiteFooter() {
             </div>
           </div>
           <div {...scopeAttr} className="footer-bottom">
-            <p {...scopeAttr}>© 2026 mperium Appliance. All rights reserved.</p>
+            <p {...scopeAttr}>© 2026 Imperium Appliance Repair. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -189,25 +189,27 @@ export function SiteFooter() {
           <div {...scopeAttr} className="form-modal-body" />
         </div>
       </div>
-      <div {...scopeAttr} className="fixed-rating-card">
-        <div {...scopeAttr} className="fixed-rating-icon">
-          <img alt="Google" height="28" src="/legacy/assets/google-icon.png" width="28" />
-        </div>
-        <div {...scopeAttr} className="fixed-rating-info">
-          <div {...scopeAttr} className="fixed-rating-stars">
-            <RatingStars />
+      {hasReviews && (
+        <div {...scopeAttr} className="fixed-rating-card">
+          <div {...scopeAttr} className="fixed-rating-icon">
+            <img alt="Google" height="28" src="/legacy/assets/google-icon.png" width="28" />
           </div>
-          <p {...scopeAttr} className="fixed-rating-text">
-            <span {...scopeAttr} className="fixed-rating-number">
-              {contactData?.reviews?.average}
-            </span>{" "}
-            <span {...scopeAttr} className="fixed-rating-divider">|</span>{" "}
-            <span {...scopeAttr} className="fixed-rating-reviews">
-              {contactData?.reviews?.count} reviews
-            </span>
-          </p>
+          <div {...scopeAttr} className="fixed-rating-info">
+            <div {...scopeAttr} className="fixed-rating-stars">
+              <RatingStars />
+            </div>
+            <p {...scopeAttr} className="fixed-rating-text">
+              <span {...scopeAttr} className="fixed-rating-number">
+                {contactData?.reviews?.average}
+              </span>{" "}
+              <span {...scopeAttr} className="fixed-rating-divider">|</span>{" "}
+              <span {...scopeAttr} className="fixed-rating-reviews">
+                {contactData?.reviews?.count} reviews
+              </span>
+            </p>
+          </div>
         </div>
-      </div>
+      )}
       <a aria-label="Call Now" {...scopeAttr} className="mobile-fixed-call" href={contactData?.phoneHref}>
         <svg {...scopeAttr} fill="none" height="22" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
           <path {...scopeAttr} d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />

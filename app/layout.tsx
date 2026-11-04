@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { getAllSiteData, getSiteData } from '@/lib/redis-fetch';
 import { SiteDataProvider } from '@/components/SiteDataContext';
+import { normalizeContact } from '@/lib/business';
 
 type SiteMetadata = {
   title?: string;
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
         : {};
 
     return {
-      title: metadataJson.title || "mperium Appliance",
+      title: metadataJson.title || "Imperium Appliance Repair",
       description: metadataJson.description || "Professional appliance repair services.",
       keywords: metadataJson.keywords || "",
       icons: {
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   } catch {
     return {
-      title: "mperium Appliance",
+      title: "Imperium Appliance Repair",
       description: "Professional appliance repair services.",
     };
   }
@@ -40,7 +41,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let siteData: Record<string, unknown> = {
-    contact: {},
+    contact: normalizeContact(null),
     blog: [],
     servicesResidential: [],
     servicesCommercial: [],

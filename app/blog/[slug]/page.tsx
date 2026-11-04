@@ -21,13 +21,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 	if (!post) {
 		return {
-			title: "Post Not Found - mperium Appliance",
+			title: "Post Not Found - Imperium Appliance Repair",
 			description: "Requested blog article could not be found.",
 		};
 	}
 
 	return {
-		title: `${post.title} - mperium Appliance`,
+		title: `${post.title} - Imperium Appliance Repair`,
 		description: post.excerpt,
 	};
 }

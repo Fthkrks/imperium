@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
-import TrustLogos from "@/components/Home/TrusthLogo";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
@@ -46,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!detail) {
     return {
-      title: "Brand Not Found - mperium Appliance",
+      title: "Brand Not Found - Imperium Appliance Repair",
       description: "Requested brand could not be found.",
     };
   }
@@ -70,8 +69,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   const brandName = detail.title
-    .replace(" Appliance Repair - mperium Appliance", "")
-    .replace(" - mperium Appliance", "")
+    .replace(" Appliance Repair - Imperium Appliance Repair", "")
+    .replace(" - Imperium Appliance Repair", "")
     .trim();
 
   return (
@@ -92,7 +91,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
                 <a className="dhero-btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Schedule Repair
                 </a>
-                <a className="dhero-btn-secondary" href={`tel:${contactData?.phoneHref}`}>
+                <a className="dhero-btn-secondary" href={contactData?.phoneHref}>
                   Call {contactData?.phone}
                 </a>
               </div>
@@ -139,7 +138,6 @@ export default async function BrandDetailPage({ params }: PageProps) {
           </div>
         </div>
       </section>
-      <TrustLogos />
       <div className="container">
         <Residential />
         <Commercial />
