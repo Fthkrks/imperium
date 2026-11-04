@@ -17,7 +17,7 @@ a.area-item-link:hover {
 .loc-hero {
   position: relative;
   background: linear-gradient(135deg, #0b2a4a 0%, #143d6b 40%, #1a508c 100%);
-  padding: 5rem 0 4rem;
+  padding: 10rem 0 4rem;
   overflow: hidden;
   min-height: 340px;
 }
@@ -320,7 +320,7 @@ a.area-item-link:hover {
 
 @media (max-width: 680px) {
   .loc-hero {
-    padding: 3rem 0 2.5rem;
+    padding: 8rem 0 2.5rem;
   }
   .loc-hero h1 {
     font-size: 1.75rem;

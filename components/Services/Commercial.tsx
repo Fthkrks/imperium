@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useSiteData } from "@/components/SiteDataContext";
+import { toServiceHref } from "@/lib/routes";
 
 function isInlineSvg(icon: unknown): icon is string {
   if (typeof icon !== "string") return false;
@@ -63,7 +64,7 @@ function Commercial() {
             <a
               key={`${service?.title || "service"}-${index}`}
               className="service-card"
-              href={service?.href || "#"}
+              href={toServiceHref(service?.href)}
             >
               <div className="svg-div">
                 <ServiceIcon icon={service?.icon} title={service?.title || "Service"} />

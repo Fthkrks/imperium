@@ -56,10 +56,10 @@ function buildPayload(formData: FormData): ServiceRequestPayload {
 }
 
 function validate(payload: ServiceRequestPayload): string | null {
-  if (!payload.name || !payload.phone || !payload.email || !payload.address) {
+  if (!payload.name || !payload.phone || !payload.address) {
     return "Missing required form fields.";
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+  if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
     return "Please enter a valid email address.";
   }
   const phoneDigits = payload.phone.replace(/\D/g, "").length;
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
       <h2>New Service Request</h2>
       <p><strong>Name:</strong> ${safe.name}</p>
       <p><strong>Phone:</strong> ${safe.phone}</p>
-      <p><strong>Email:</strong> ${safe.email}</p>
+      <p><strong>Email:</strong> ${safe.email || "-"}</p>
       <p><strong>Address:</strong> ${safe.address}</p>
       <p><strong>Zip Code:</strong> ${safe.zipCode || "-"}</p>
       <p><strong>Appliance:</strong> ${safe.appliance || "-"}</p>
@@ -124,26 +124,28 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: mailFrom,
       to: leadInbox,
-      replyTo: payload.email,
+      ...(payload.email ? { replyTo: payload.email } : {}),
       subject: `New Service Request - ${payload.name.replace(/[\r\n]+/g, " ")}`,
       html: adminHtml,
     });
 
-    // Contains no submitted text, so the form cannot be used to send custom
-    // messages to third parties. A failure here must not lose the lead above.
-    try {
-      await transporter.sendMail({
-        from: mailFrom,
-        to: payload.email,
-        subject: "Your service request has been received",
-        html: `
-          <h2>Your request has been received</h2>
-          <p>Thank you for contacting ${BUSINESS.name}. Our team will contact you as soon as possible.</p>
-          <p>Need help sooner? Call us at ${BUSINESS.phone}.</p>
-        `,
-      });
-    } catch (error) {
-      console.error("Service request confirmation mail error:", error);
+    if (payload.email) {
+      // Contains no submitted text, so the form cannot be used to send custom
+      // messages to third parties. A failure here must not lose the lead above.
+      try {
+        await transporter.sendMail({
+          from: mailFrom,
+          to: payload.email,
+          subject: "Your service request has been received",
+          html: `
+            <h2>Your request has been received</h2>
+            <p>Thank you for contacting ${BUSINESS.name}. Our team will contact you as soon as possible.</p>
+            <p>Need help sooner? Call us at ${BUSINESS.phone}.</p>
+          `,
+        });
+      } catch (error) {
+        console.error("Service request confirmation mail error:", error);
+      }
     }
 
     return NextResponse.json({ success: true });

@@ -8,7 +8,7 @@ function Hero() {
     <>
       <section className="hero" id="hero">
         <div className="hero-bg">
-          <img alt="Professional Appliance Repair Technician" className="hero-bg-photo" src="https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg" />
+          <img alt="Professional Appliance Repair Technician" className="hero-bg-photo" src="https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg?auto=compress&cs=tinysrgb&w=1600" fetchPriority="high" />
           <div className="hero-bg-overlay" />
           <div className="grid-pattern" />
           <div className="diagonal-blue" />

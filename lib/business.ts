@@ -1,3 +1,5 @@
+export const SITE_URL = "https://www.imperiumappliance.com";
+
 export const BUSINESS = {
   name: "Imperium Appliance Repair",
   phone: "(346) 673-5111",

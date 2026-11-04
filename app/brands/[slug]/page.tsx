@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
+import { BUSINESS } from "@/lib/business";
+import { BRAND_ROUTES } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
@@ -35,13 +37,16 @@ async function getBrandDetailsMap(): Promise<Record<string, DetailEntry>> {
 
 export async function generateStaticParams() {
   const brandDetails = await getBrandDetailsMap();
-  return Object.keys(brandDetails).map((slug) => ({ slug }));
+  return [
+    ...Object.keys(BRAND_ROUTES),
+    ...Object.keys(brandDetails).filter((slug) => !/^\d+$/.test(slug)),
+  ].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const brandDetails = await getBrandDetailsMap();
   const { slug } = await params;
-  const detail = brandDetails[slug];
+  const detail = brandDetails[BRAND_ROUTES[slug] ?? slug];
 
   if (!detail) {
     return {
@@ -50,10 +55,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const brandName = getBrandName(detail.title);
   return {
-    title: detail.title,
-    description: detail.description,
+    title: { absolute: `${brandName} Appliance Repair in Houston, TX | ${BUSINESS.name}` },
+    description: describeBrand(brandName),
+    alternates: { canonical: `/brands/${slug}` },
   };
+}
+
+function getBrandName(title: string) {
+  return title
+    .replace(" Appliance Repair - Imperium Appliance Repair", "")
+    .replace(" - Imperium Appliance Repair", "")
+    .trim();
+}
+
+function describeBrand(brandName: string) {
+  return `${brandName} appliance repair across the greater Houston area from ${BUSINESS.name}. Book online or call ${BUSINESS.phone} to schedule service.`;
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
@@ -64,14 +82,11 @@ export default async function BrandDetailPage({ params }: PageProps) {
         : {};
   const brandDetails = await getBrandDetailsMap();
   const { slug } = await params;
-  const detail = brandDetails[slug];
+  const detail = brandDetails[BRAND_ROUTES[slug] ?? slug];
 
   if (!detail) notFound();
 
-  const brandName = detail.title
-    .replace(" Appliance Repair - Imperium Appliance Repair", "")
-    .replace(" - Imperium Appliance Repair", "")
-    .trim();
+  const brandName = getBrandName(detail.title);
 
   return (
     <SiteShell forceSolidHeader>
@@ -86,7 +101,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
                 {brandName}
                 <span className="text-orange"> Service</span>
               </h1>
-              <p className="detail-hero-description">{detail.description}</p>
+              <p className="detail-hero-description">{describeBrand(brandName)}</p>
               <div className="detail-hero-actions">
                 <a className="dhero-btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Schedule Repair

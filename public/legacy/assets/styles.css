@@ -249,6 +249,10 @@ textarea {
 .header-container img {
   width: 50px;
   height: 50px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 3px;
+  object-fit: contain;
 }
 
 @media (min-width: 768px) {
@@ -590,7 +594,7 @@ textarea {
 }
 
 .hero h1 .text-blue {
-  color: var(--brand-blue);
+  color: #70B5ED;
 }
 
 .hero-description {
@@ -3279,4 +3283,26 @@ textarea {
   .mobile-fixed-call svg {
     stroke: white;
   }
+}
+.footer-logo img {
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px;
+}
+
+@media (min-width: 768px) {
+  .hero .hero-content {
+    padding-top: 9rem;
+  }
+}
+
+#services .service-card .name-div span {
+  font-size: 1rem;
+}
+
+.services .appliance-services .services-category-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0E3C66;
+  margin-bottom: 1rem;
 }

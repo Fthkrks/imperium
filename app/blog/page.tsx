@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Blog - Imperium Appliance Repair",
   description:
     "Read practical maintenance tips and appliance repair insights from Imperium Appliance Repair technicians.",
+  alternates: { canonical: "/blog" },
 };
 
 export default async function BlogPage() {
@@ -15,7 +16,7 @@ export default async function BlogPage() {
   return (
     <SiteShell forceSolidHeader>
       {/* Hero Section */}
-      <section className="relative w-full  py-24 lg:py-32 flex flex-col items-center justify-center overflow-hidden">
+      <section style={{ paddingTop: "9rem" }} className="relative w-full pb-16 flex flex-col items-center justify-center overflow-hidden">
 
         <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
           <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full border border-[#7BC7FF]/30 bg-[#7BC7FF]/10 text-[#7BC7FF] text-xs md:text-sm font-bold uppercase tracking-widest backdrop-blur-sm mb-6 shadow-sm">
@@ -28,7 +29,7 @@ export default async function BlogPage() {
           </h1>
 
           <p className="text-lg md:text-xl text-[#0E3C66]  font-light leading-relaxed m-0 p-0 max-w-2xl">
-            Helpful guides from our certified technicians to troubleshoot common issues,
+            Helpful guides from our technicians to troubleshoot common issues,
             maintain efficiency, and extend the lifespan of your home appliances.
           </p>
         </div>

@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Appliance Repair in ${location.name}, TX - Imperium Appliance Repair`,
     description: location.description,
+    alternates: { canonical: `/location/${slug}` },
   };
 }
 

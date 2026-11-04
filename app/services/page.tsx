@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 
 const pageMeta = {
-  title: "Our Services - Imperium Appliance Repair",
+  title: "Appliance Repair Services in Houston, TX | Imperium Appliance Repair",
   description:
-    "Professional appliance repair services. Same-day service, 90-day warranty, licensed technicians.",
+    "Residential and commercial appliance repair across the greater Houston area, including refrigerators, washers, dryers, ovens and more.",
 } as const;
 
 export function generateMetadata(): Metadata {
   return {
     title: pageMeta.title,
     description: pageMeta.description,
+    alternates: { canonical: "/services" },
   };
 }
 
@@ -21,7 +22,7 @@ export default function ServicesPage() {
         <div className="container">
           <div className="section-header">
             <span className="label">Our Services</span>
-            <h2>Appliances We Repair</h2>
+            <h1>Appliances We Repair</h1>
             <p>Expert repairs for all your home and business appliances, backed by our 90-day warranty</p>
           </div>
           <div className="services-category">
@@ -43,7 +44,7 @@ export default function ServicesPage() {
               Residential
             </h3>
             <div className="services-grid">
-              <a className="service-card" href="/services/2">
+              <a className="service-card" href="/services/refrigerator-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -54,7 +55,7 @@ export default function ServicesPage() {
                 <h3>Refrigerator</h3>
                 <p>Cooling issues, leaks &amp; compressor repairs</p>
               </a>
-              <a className="service-card" href="/services/3">
+              <a className="service-card" href="/services/washer-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -65,7 +66,7 @@ export default function ServicesPage() {
                 <h3>Washer</h3>
                 <p>Won't spin, drain issues &amp; excessive vibration</p>
               </a>
-              <a className="service-card" href="/services/4">
+              <a className="service-card" href="/services/ice-machine-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -76,7 +77,7 @@ export default function ServicesPage() {
                 <h3>Ice Machine</h3>
                 <p>Low ice production, leaks &amp; freezing malfunctions</p>
               </a>
-              <a className="service-card" href="/services/5">
+              <a className="service-card" href="/services/dryer-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -87,7 +88,7 @@ export default function ServicesPage() {
                 <h3>Dryer</h3>
                 <p>No heat, long drying times &amp; unusual noises</p>
               </a>
-              <a className="service-card" href="/services/6">
+              <a className="service-card" href="/services/dishwasher-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -98,7 +99,7 @@ export default function ServicesPage() {
                 <h3>Dishwasher</h3>
                 <p>Not cleaning properly, water leaks &amp; drainage problems</p>
               </a>
-              <a className="service-card" href="/services/7">
+              <a className="service-card" href="/services/oven-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -109,7 +110,7 @@ export default function ServicesPage() {
                 <h3>Oven</h3>
                 <p>Uneven heating, temperature fluctuations &amp; ignition failures</p>
               </a>
-              <a className="service-card" href="/services/8">
+              <a className="service-card" href="/services/cooktop-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -120,7 +121,7 @@ export default function ServicesPage() {
                 <h3>Cooktop</h3>
                 <p>Burners not lighting, inconsistent flame &amp; cracked surfaces</p>
               </a>
-              <a className="service-card" href="/services/9">
+              <a className="service-card" href="/services/microwave-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -131,7 +132,7 @@ export default function ServicesPage() {
                 <h3>Microwave</h3>
                 <p>Not heating, sparking &amp; turntable malfunctions</p>
               </a>
-              <a className="service-card" href="/services/10">
+              <a className="service-card" href="/services/wine-cooler-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -142,7 +143,7 @@ export default function ServicesPage() {
                 <h3>Wine Cooler</h3>
                 <p>Temperature inconsistencies, compressor noise &amp; condensation buildup</p>
               </a>
-              <a className="service-card" href="/services/11">
+              <a className="service-card" href="/services/freezer-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -153,7 +154,7 @@ export default function ServicesPage() {
                 <h3>Freezer</h3>
                 <p>Not freezing, frost buildup &amp; unusual noises</p>
               </a>
-              <a className="service-card" href="/services/12">
+              <a className="service-card" href="/services/garbage-disposal-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -164,7 +165,7 @@ export default function ServicesPage() {
                 <h3>Garbage Disposal</h3>
                 <p>Jammed blades, leaks &amp; motor humming without grinding</p>
               </a>
-              <a className="service-card" href="/services/13">
+              <a className="service-card" href="/services/stove-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
@@ -175,7 +176,7 @@ export default function ServicesPage() {
                 <h3>Stove</h3>
                 <p>Burners not heating, gas smell &amp; faulty temperature control</p>
               </a>
-              <a className="service-card" href="/services/14">
+              <a className="service-card" href="/services/range-repair">
                 <div className="icon-wrapper">
                   <img
                     alt=""
