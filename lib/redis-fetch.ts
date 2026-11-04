@@ -3,6 +3,20 @@ import { isSupabaseConfigured } from '@/lib/supabase-client';
 import { readSiteDataFromSupabase } from '@/lib/site-data-store';
 import { normalizeContact } from '@/lib/business';
 import { fixWarrantyCopy } from '@/lib/site-copy';
+import { BLOG_ARTICLES } from '@/lib/seo-content';
+
+export type Area = { slug: string; name: string };
+
+// Stored posts shorter than this are the original short versions.
+const SHORT_POST_LENGTH = 1500;
+
+function withFullArticles(posts: unknown) {
+  if (!Array.isArray(posts)) return posts;
+  return posts.map((post) => {
+    const article = BLOG_ARTICLES[post?.slug];
+    return article && String(post?.content ?? '').length < SHORT_POST_LENGTH ? { ...post, content: article } : post;
+  });
+}
 
 export async function getSiteData(file: string) {
   if (!isSupabaseConfigured()) {
@@ -18,7 +32,7 @@ export async function getSiteData(file: string) {
     if (file === 'contact.json') {
       return normalizeContact(supabaseData as Record<string, unknown> | null);
     }
-    return fixWarrantyCopy(supabaseData);
+    return fixWarrantyCopy(file === 'blog.json' ? withFullArticles(supabaseData) : supabaseData);
   } catch (error) {
     console.error(`Supabase read Error for ${file}:`, error);
     return file === 'contact.json' ? normalizeContact(null) : null;
@@ -56,4 +70,12 @@ export async function getAllSiteData() {
     brands: brands || {},
     metadata: metadata || {}
   };
+}
+
+export async function getServiceAreas(): Promise<Area[]> {
+  const locations = (await getSiteData('locations.json')) as Record<string, { name?: string }> | null;
+  return Object.entries(locations ?? {}).map(([slug, location]) => ({
+    slug,
+    name: slug === 'woodlands' ? 'The Woodlands' : location?.name || slug,
+  }));
 }

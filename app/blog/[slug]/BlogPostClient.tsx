@@ -57,6 +57,10 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 				{/* Content */}
 				<div className="content">
 					{contentBlocks.map((block, index) => {
+						if (block.startsWith("## ")) {
+							return <h2 key={index}>{block.slice(3)}</h2>;
+						}
+
 						if (isQuoteBlock(block)) {
 							return <blockquote key={index}>{block.replace(/^"|"$/g, "")}</blockquote>;
 						}
@@ -209,6 +213,14 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 					font-family: Georgia, serif;
 					font-size: 20px;
 					line-height: 1.75;
+				}
+
+				.content h2 {
+					margin: 32px 0 12px;
+					color: #0e3c66;
+					font-size: 24px;
+					font-weight: 700;
+					line-height: 1.3;
 				}
 
 				.content p {

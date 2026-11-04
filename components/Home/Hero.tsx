@@ -27,7 +27,7 @@ function Hero() {
               <h1>
                 Fast, Reliable <br />
                 <span className="text-blue">Appliance Repair</span> <br />
-                You Can Trust
+                in Houston, TX
               </h1>
               <p className="hero-description">
                 Imperium Appliance Repair is your trusted choice for high-quality appliance repair services. We focus on fast, accurate diagnostics and dependable repairs for all major appliances, with professional technicians, same-day service, and honest pricing you can rely on.

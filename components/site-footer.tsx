@@ -36,6 +36,14 @@ const quickLinks = [
   { href: "/#service-areas", label: "Service Areas" },
 ] as const;
 
+const popularServices = [
+  { href: "/services/refrigerator-repair", label: "Refrigerator Repair" },
+  { href: "/services/washer-repair", label: "Washer Repair" },
+  { href: "/services/dryer-repair", label: "Dryer Repair" },
+  { href: "/services/dishwasher-repair", label: "Dishwasher Repair" },
+  { href: "/services/oven-repair", label: "Oven Repair" },
+] as const;
+
 function getBrandLabel(slug: string, title?: string) {
   if (!title) {
     return slug
@@ -111,6 +119,11 @@ export function SiteFooter() {
             <div {...scopeAttr} className="footer-links">
               <h3 {...scopeAttr}>Services</h3>
               <ul {...scopeAttr}>
+                {popularServices.map((item) => (
+                  <li {...scopeAttr} key={item.href}>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))}
                 <li {...scopeAttr}>
                   <a href="/services">All Services</a>
                 </li>

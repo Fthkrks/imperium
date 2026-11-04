@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { getSiteData } from "@/lib/redis-fetch";
+import { getServiceAreas, getSiteData } from "@/lib/redis-fetch";
+import { getApplianceFromSlug } from "@/lib/seo-content";
+import { ServiceSeo } from "@/components/SeoBlocks";
 import { BUSINESS } from "@/lib/business";
 import { SERVICE_ROUTES, findService } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
@@ -59,6 +61,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   if (!service) notFound();
 
   const serviceName = service.name;
+  const appliance = getApplianceFromSlug(slug);
+  const areas = await getServiceAreas();
 
   return (
     <SiteShell>
@@ -121,6 +125,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
         <div className="hero-bottom-clip" />
       </section>
+      {appliance ? (
+        <ServiceSeo
+          name={serviceName}
+          slug={slug}
+          appliance={appliance}
+          isCommercial={appliance.isCommercial}
+          areas={areas}
+        />
+      ) : null}
       <div className="container">
         <Residential />
       </div>

@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { getSiteData } from "@/lib/redis-fetch";
+import { getServiceAreas, getSiteData } from "@/lib/redis-fetch";
+import { LocationSeo } from "@/components/SeoBlocks";
 import { normalizeContact } from "@/lib/business";
 import Contact from "@/components/Home/Contact";
 
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `Appliance Repair in ${location.name}, TX - Imperium Appliance Repair`,
+    title: { absolute: `Appliance Repair in ${location.name}, TX | Imperium Appliance Repair` },
     description: location.description,
     alternates: { canonical: `/location/${slug}` },
   };
@@ -59,6 +60,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
 
   const contact = normalizeContact((await getSiteData("contact.json")) as Record<string, unknown> | null);
 
+  const areas = await getServiceAreas();
   const hasMapEmbed = Boolean(location.mapEmbedUrl?.trim());
 
   return (
@@ -241,6 +243,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
         </div>
       </section>
 
+      <LocationSeo name={areas.find((area) => area.slug === slug)?.name ?? location.name} slug={slug} subAreas={location.subAreas} areas={areas} />
       <Contact />
     </SiteShell>
   );
