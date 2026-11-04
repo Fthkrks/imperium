@@ -81,6 +81,8 @@ function Testimonials() {
 
   const offset = currentIndex * (cardWidth + CARD_GAP);
 
+  if (TESTIMONIALS.length === 0) return null;
+
   return (
     <>
       <section className="testimonials" id="reviews">
@@ -93,9 +95,7 @@ function Testimonials() {
               </div>
               <h2>What Our Clients Say</h2>
               <p>
-                Thousands trust Unitech for critical property services. Browse authentic
-                <a href="/#reviews"> customer reviews</a> showcasing our service excellence.
-                Our integrated approach delivers consistent quality.
+                See what customers say about working with Imperium Appliance Repair.
               </p>
             </div>
             <div 

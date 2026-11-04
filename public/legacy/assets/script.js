@@ -1,8 +1,8 @@
 /* ========================================
-   mperium Appliance - JavaScript
+   Imperium Appliance Repair - JavaScript
    ======================================== */
 
-function initRafixScripts() {
+function initSiteScripts() {
   // ========================================
   // Header Scroll Effect
   // ========================================
@@ -680,7 +680,7 @@ function initRafixScripts() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initRafixScripts, { once: true });
+  document.addEventListener('DOMContentLoaded', initSiteScripts, { once: true });
 } else {
-  initRafixScripts();
+  initSiteScripts();
 }

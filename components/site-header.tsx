@@ -17,7 +17,10 @@ const navigationItems = [
 ] as const;
 
 export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
-  const { contact: contactData } = useSiteData();
+  const { contact: contactData, testimonials } = useSiteData();
+  const visibleNavigationItems = navigationItems.filter(
+    (item) => item.href !== "/#reviews" || (Array.isArray(testimonials) && testimonials.length > 0),
+  );
   const [scrolled, setScrolled] = useState(false);
   const effectiveScrolled = forceSolid || scrolled;
 
@@ -53,9 +56,9 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
                 />
               </svg>
               <span {...scopeAttr} className="bold text-[#70B5ED]! ">
-                LIMITED OFFER:
+                DISCOUNT:
               </span>
-              <span {...scopeAttr}>Get $25 OFF your first repair!</span>
+              <span {...scopeAttr}>10% OFF seniors &amp; army members</span>
               <a {...scopeAttr} className="underline open-form-trigger text-[#70B5ED]!" href="#">
                 Book Now →
               </a>
@@ -69,10 +72,10 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
         >
           <div {...scopeAttr} className="container header-container">
             <a className="" href="/">
-              <Image width={90} height={90} alt="mperium Appliance" src="/logo.png" />
+              <Image width={90} height={90} alt="Imperium Appliance Repair" src="/logo.png" />
             </a>
             <nav {...scopeAttr} className="nav-desktop ">
-              {navigationItems.map((item) => (
+              {visibleNavigationItems.map((item) => (
                 <a key={item.label} href={item.href}>
                   {item.label}
                 </a>
@@ -143,11 +146,11 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
       <div {...scopeAttr} className="mobile-menu">
         <div {...scopeAttr} className="mobile-menu-logo">
           <a href="/">
-            <Image width={90} height={90} alt="mperium Appliance" src="/logo.png" />
+            <Image width={90} height={90} alt="Imperium Appliance Repair" src="/logo.png" />
           </a>
         </div>
         <div {...scopeAttr} className="mobile-menu-content">
-          {navigationItems.map((item) => (
+          {visibleNavigationItems.map((item) => (
             <a key={item.label} href={item.href}>
               {item.label}
             </a>

@@ -41,7 +41,7 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 					<div className="avatar"></div>
 					<div>
 						<div className="author-top">
-							<span className="name">mperium Appliance Team</span>
+							<span className="name">Imperium Appliance Repair Team</span>
 						</div>
 						<div className="meta">
 							{post.readTime} · {formatDate(post.publishedAt)}

@@ -10,7 +10,10 @@ npm install
 
 `.env.example` dosyasını temel alıp `.env.local` oluşturun ve değerleri girin:
 
-- `ADMIN_PASSWORD`
+- `ADMIN_PASSWORD` (zorunlu; tanımlı değilse admin girişi kapalı kalır)
+- `ADMIN_SESSION_SECRET` (isteğe bağlı; admin oturumlarını imzalar)
+- `EMAIL_USER`, `EMAIL_PASS`, `EMAIL_AUTH_USER` (form e-postalarını gönderen Gmail hesabı)
+- `LEAD_INBOX` (isteğe bağlı; form taleplerinin gideceği adres, varsayılan `info@imperiumappliance.com`)
 - `ADMIN_SEED_SECRET`
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
