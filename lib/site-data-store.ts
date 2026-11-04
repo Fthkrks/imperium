@@ -31,10 +31,15 @@ export async function readSiteDataFromSupabase(file: AllowedFile): Promise<unkno
   if (file === "blog.json") {
     const { data, error } = await supabase
       .from("blog")
-      .select("id,slug,title,excerpt,category,readTime,publishedAt,image,content")
+      // Keep legacy reads working before the SEO columns have been migrated.
+      .select("*")
       .order("id", { ascending: true });
     if (error) throw new Error(`Failed to read ${file} from Supabase: ${error.message}`);
-    return data ?? [];
+    return (data ?? []).map((row) => ({
+      ...row,
+      status: row.status ?? "publish",
+      json_ld: asArray(row.json_ld),
+    }));
   }
 
   if (file === "locations.json") {
@@ -227,7 +232,15 @@ export async function writeSiteDataToSupabase(file: AllowedFile, value: unknown)
       publishedAt: item.publishedAt ?? null,
       image: item.image ?? null,
       content: item.content ?? null,
+      status: item.status ?? "publish",
+      json_ld: asArray(item.json_ld),
     }));
+    if (rows.some((row) => row.status !== "draft" && row.status !== "publish")) {
+      throw new Error('Blog status must be "draft" or "publish".');
+    }
+    // Fail before the destructive replacement if the migration is missing.
+    const { error: schemaError } = await supabase.from("blog").select("status,json_ld").limit(0);
+    if (schemaError) throw new Error(`Blog SEO schema is unavailable; run the SEO migration before saving: ${schemaError.message}`);
     await clearTable("blog");
     if (!rows.length) return;
     const { error } = await supabase.from("blog").insert(rows);

@@ -11,7 +11,19 @@ create table if not exists public.blog (
   "readTime" text,
   "publishedAt" text,
   image text,
-  content text
+  content text,
+  status text not null default 'publish' check (status in ('draft', 'publish')),
+  json_ld jsonb not null default '[]'::jsonb
+);
+
+alter table public.blog
+  add column if not exists status text not null default 'publish' check (status in ('draft', 'publish')),
+  add column if not exists json_ld jsonb not null default '[]'::jsonb;
+
+create table if not exists public.site_files (
+  path text primary key,
+  content text not null,
+  updated_at timestamptz not null default now()
 );
 
 -- 2) locations.json -> locations
@@ -298,6 +310,7 @@ declare
   table_names text[] := array[
     'contact',
     'blog',
+    'site_files',
     'services_residential',
     'services_commercial',
     'testimonials',
@@ -329,3 +342,7 @@ begin
   end loop;
 end
 $$;
+
+-- Keep drafts private even through the anonymous Supabase REST API.
+drop policy if exists public_read on public.blog;
+create policy public_read on public.blog for select using (status = 'publish');

@@ -10,6 +10,8 @@ export type BlogPost = {
   publishedAt: string;
   image: string;
   content: string;
+  status: "draft" | "publish";
+  json_ld: Record<string, unknown>[];
 };
 
 function formatDate(input: string) {
