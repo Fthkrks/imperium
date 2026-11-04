@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { getAllSiteData, getSiteData } from '@/lib/redis-fetch';
 import { SiteDataProvider } from '@/components/SiteDataContext';
-import { normalizeContact } from '@/lib/business';
+import { BUSINESS, SITE_URL, normalizeContact } from '@/lib/business';
 
 type SiteMetadata = {
   title?: string;
@@ -20,6 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
         : {};
 
     return {
+      metadataBase: new URL(SITE_URL),
+      openGraph: { siteName: BUSINESS.name, type: "website", url: SITE_URL, images: ["/logo.png"] },
       title: metadataJson.title || "Imperium Appliance Repair",
       description: metadataJson.description || "Professional appliance repair services.",
       keywords: metadataJson.keywords || "",
@@ -60,6 +62,23 @@ export default async function RootLayout({
     console.error('Failed to load site data from Supabase:', error);
   }
 
+  const contact = siteData.contact as { phone?: string; email?: string };
+  const locations = (siteData.locations ?? {}) as Record<string, { name?: string }>;
+  const businessSchema = {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: BUSINESS.name,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/logo.png`,
+    telephone: contact.phone || BUSINESS.phone,
+    email: contact.email || BUSINESS.email,
+    areaServed: Object.values(locations)
+      .map((location) => location?.name)
+      .filter(Boolean)
+      .map((name) => ({ "@type": "City", name: `${name}, TX` })),
+  };
+
   return (
     <html lang="en">
       <head>
@@ -74,6 +93,10 @@ export default async function RootLayout({
         <link rel="stylesheet" href="/legacy/assets/location.css" />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema).replace(/</g, "\\u003c") }}
+        />
         <SiteDataProvider data={siteData}>
           {children}
           <Script src="/legacy/assets/swiper-bundle.min.js" strategy="afterInteractive" />

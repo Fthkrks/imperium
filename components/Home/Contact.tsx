@@ -34,8 +34,8 @@ function Contact() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Email</label>
-                    <input name="Email" placeholder="john@example.com" required type="email" />
+                    <label>Email (optional)</label>
+                    <input name="Email" placeholder="john@example.com" type="email" />
                   </div>
                   <div className="form-row">
                     <div className="form-group">
@@ -50,7 +50,7 @@ function Contact() {
                   <div className="form-row">
                     <div className="form-group">
                       <label>Appliance</label>
-                      <select name="ServiceId">
+                      <select defaultValue="" name="ServiceId" required>
                         <option disabled value="">Select Appliance</option>
                         <option value={1}>Refrigerator</option>
                         <option value={3}>Washer</option>
@@ -66,11 +66,12 @@ function Contact() {
                         <option value={13}>Stove</option>
                         <option value={14}>Range</option>
                         <option value={26}>Vent Hood</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                     <div className="form-group">
                       <label>Brand</label>
-                      <select name="BrandId">
+                      <select defaultValue="" name="BrandId">
                         <option disabled value="">Select Brand</option>
                         <option value={1}>Bosch</option>
                         <option value={2}>Whirlpool</option>
@@ -81,6 +82,11 @@ function Contact() {
                         <option value={7}>Miele</option>
                         <option value={8}>Samsung</option>
                         <option value={9}>Viking</option>
+                        <option value="Sub-Zero">Sub-Zero</option>
+                        <option value="Thermador">Thermador</option>
+                        <option value="Wolf">Wolf</option>
+                        <option value="Monogram">Monogram</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>

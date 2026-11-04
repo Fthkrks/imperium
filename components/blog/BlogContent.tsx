@@ -30,7 +30,7 @@ export function BlogContent({ posts }: { posts: BlogPost[] }) {
         {/* Search Input */}
         <div className="flex flex-col flex-1">
           <label className="text-sm font-medium text-[#0E3C66] mb-2 pl-1">
-            Keyword (only one)
+            Search articles
           </label>
           <div className="flex items-center w-full border border-gray-200 rounded-xl bg-white shadow-sm focus-within:ring-2 focus-within:ring-[#7BC7FF] focus-within:border-transparent transition-all duration-300 px-3">
             <svg className="w-5 h-5 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

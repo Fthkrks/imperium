@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useSiteData } from "@/components/SiteDataContext";
+import { toServiceHref } from "@/lib/routes";
 
 function isInlineSvg(icon: unknown): icon is string {
   if (typeof icon !== "string") return false;
@@ -38,13 +39,15 @@ function ServiceIcon({ icon, title }: { icon: unknown; title: string }) {
 
 function Services() {
   const { servicesResidential = [], servicesCommercial = [] } = useSiteData();
-  const allServices = [...servicesResidential, ...servicesCommercial];
+  const groups = [
+    { id: "residential", title: "Residential", services: servicesResidential },
+    { id: "commercial", title: "Commercial", services: servicesCommercial },
+  ];
 
   return (
     <>
       <section className="services" id="services">
         <div className="container">
-          <div id="residential" className="services-anchor" />
           <div className="top">
             <h2>Our Appliance Repair Services</h2>
             <span>
@@ -54,26 +57,29 @@ function Services() {
             </span>
           </div>
           <div className="bottom">
-            <div className="appliance-services">
-            <div className="services-grid">
-              {allServices.map((service: any, index: number) => (
-                <a
-                  key={`${service?.title || "service"}-${index}`}
-                  className="service-card"
-                  href={service?.href || "#"}
-                >
-                  <div className="svg-div">
-                    <ServiceIcon icon={service?.icon} title={service?.title || "Service"} />
-                  </div>
-                  <div className="name-div">
-                    <span>{service?.title}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-            </div>
+            {groups.map((group) => (
+              <div className="appliance-services" key={group.id} style={{ marginBottom: "2.5rem" }}>
+                <div id={group.id} className="services-anchor" />
+                <h3 className="services-category-title">{group.title}</h3>
+                <div className="services-grid">
+                  {group.services.map((service: any, index: number) => (
+                    <a
+                      key={`${service?.title || "service"}-${index}`}
+                      className="service-card"
+                      href={toServiceHref(service?.href)}
+                    >
+                      <div className="svg-div">
+                        <ServiceIcon icon={service?.icon} title={service?.title || "Service"} />
+                      </div>
+                      <div className="name-div">
+                        <span>{service?.title}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-          <div id="commercial" className="services-anchor" />
         </div>
       </section>
     </>

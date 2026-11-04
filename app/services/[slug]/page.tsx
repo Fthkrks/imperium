@@ -2,15 +2,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
+import { BUSINESS } from "@/lib/business";
+import { SERVICE_ROUTES, findService } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
 import Contact from "@/components/Home/Contact";
-
-type DetailEntry = {
-  title: string;
-  description: string;
-};
 
 type ContactData = {
   phone?: string;
@@ -23,25 +20,15 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-async function getServiceDetailsMap(): Promise<Record<string, DetailEntry>> {
-  const data = await getSiteData("service-details.json");
-  if (!data || typeof data !== "object" || Array.isArray(data)) {
-    return {};
-  }
-  return data as Record<string, DetailEntry>;
-}
-
 export async function generateStaticParams() {
-  const serviceDetails = await getServiceDetailsMap();
-  return Object.keys(serviceDetails).map((slug) => ({ slug }));
+  return SERVICE_ROUTES.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const serviceDetails = await getServiceDetailsMap();
   const { slug } = await params;
-  const detail = serviceDetails[slug];
+  const service = findService(slug);
 
-  if (!detail) {
+  if (!service) {
     return {
       title: "Service Not Found - Imperium Appliance Repair",
       description: "Requested service could not be found.",
@@ -49,15 +36,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: detail.title,
-    description: detail.description,
+    title: { absolute: `${service.name} in Houston, TX | ${BUSINESS.name}` },
+    description: describeService(service.name),
+    alternates: { canonical: `/services/${slug}` },
   };
 }
 
+function describeService(name: string) {
+  return `Expert ${name.toLowerCase()} across the greater Houston area from ${BUSINESS.name}. Book online or call ${BUSINESS.phone} to schedule service.`;
+}
+
 export default async function ServiceDetailPage({ params }: PageProps) {
-  const serviceDetails = await getServiceDetailsMap();
   const { slug } = await params;
-  const detail = serviceDetails[slug];
+  const service = findService(slug);
   const rawContact = await getSiteData("contact.json");
   const contactData: ContactData =
     rawContact && typeof rawContact === "object" && !Array.isArray(rawContact)
@@ -65,18 +56,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       : {};
 
 
-  if (!detail) notFound();
+  if (!service) notFound();
 
-  const serviceName = detail.title
-    .replace(" - Imperium Appliance Repair", "")
-    .replace(" Services", "")
-    .trim();
+  const serviceName = service.name;
 
   return (
     <SiteShell>
       <section className="hero" id="hero">
         <div className="hero-bg">
-          <img alt={`${serviceName} technician`} className="hero-bg-photo" src="https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg" />
+          <img alt={`${serviceName} technician`} className="hero-bg-photo" src="https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg?auto=compress&cs=tinysrgb&w=1600" fetchPriority="high" />
           <div className="hero-bg-overlay" />
           <div className="grid-pattern" />
           <div className="diagonal-blue" />
@@ -95,7 +83,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               <h1>
                 {serviceName} <span className="text-blue">Service</span>
               </h1>
-              <p className="hero-description">{detail.description}</p>
+              <p className="hero-description">{describeService(serviceName)}</p>
               <div className="hero-buttons">
                 <a className="btn-primary hover:bg-[#11528E]! open-form-trigger" href="#">
                   Book Repair
