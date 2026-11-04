@@ -64,7 +64,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     <SiteShell>
       <section className="hero" id="hero">
         <div className="hero-bg">
-          <img alt={`${serviceName} technician`} className="hero-bg-photo" src="https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg?auto=compress&cs=tinysrgb&w=1600" fetchPriority="high" />
+          <img alt={`${serviceName} technician`} className="hero-bg-photo" src="https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg?auto=compress&cs=tinysrgb&w=1600" fetchPriority="high" />
           <div className="hero-bg-overlay" />
           <div className="grid-pattern" />
           <div className="diagonal-blue" />

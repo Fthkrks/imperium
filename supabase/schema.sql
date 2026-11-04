@@ -123,42 +123,42 @@ create unique index if not exists areas_city_page_name_uidx on public.areas (cit
 truncate table public.blog, public.locations, public.brands, public.contact, public.faq, public.metadata, public.service_details, public.services_commercial, public.services_residential, public.testimonials, public.why, public.areas restart identity;
 
 insert into public.blog (id, slug, title, excerpt, category, "readTime", "publishedAt", image, content) values
-  (1, 'why-refrigerator-not-cooling', 'Why Is My Refrigerator Not Cooling Properly?', 'Learn the most common causes behind warm fridge sections and what you can safely check before calling a technician.', 'Refrigerator', '4 min read', '2026-03-08', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'A warm refrigerator is one of the most stressful kitchen emergencies. But before you panic and call a repair service, there are several things you can check yourself.
+  (1, 'why-refrigerator-not-cooling', 'Why Is My Refrigerator Not Cooling Properly?', 'Learn the most common causes behind warm fridge sections and what you can safely check before calling a technician.', 'Refrigerator', '4 min read', '2026-03-08', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'A warm refrigerator is one of the most stressful kitchen emergencies. But before you panic and call a repair service, there are several things you can check yourself.
 
 First, verify the thermostat settings. It sounds simple, but dials often get bumped. Next, check the condenser coils at the back or bottom of the fridge. If they are covered in dust, the refrigerator can''t cool efficiently.
 
 "Regular maintenance is key to a long-lasting appliance."
 
 If the coils are clean and the settings are correct, listen for the evaporator fan. If you don''t hear it running, or if it''s making a strange noise, it might be time to call a professional technician.'),
-  (2, 'dryer-taking-too-long', 'Dryer Taking Too Long? 6 Fast Things to Inspect', 'From clogged vents to overloaded drums, these checks can improve drying performance and reduce energy bills.', 'Dryer', '5 min read', '2026-03-04', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'Waiting hours for a single load of laundry to dry is frustrating and wastes energy. A slow dryer is almost always a sign of restricted airflow.
+  (2, 'dryer-taking-too-long', 'Dryer Taking Too Long? 6 Fast Things to Inspect', 'From clogged vents to overloaded drums, these checks can improve drying performance and reduce energy bills.', 'Dryer', '5 min read', '2026-03-04', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'Waiting hours for a single load of laundry to dry is frustrating and wastes energy. A slow dryer is almost always a sign of restricted airflow.
 
 Start by cleaning the lint screen thoroughly. Then, inspect the exterior vent hood to ensure it opens freely when the dryer is running. You should also check the flexible transition hose behind the dryer for kinks or heavy lint buildup.
 
 "A clogged dryer vent is not just inefficient; it''s a serious fire hazard."
 
 If the airflow is clear, the issue might be a faulty heating element or a cycling thermostat. In those cases, a certified technician can quickly diagnose and replace the broken parts.'),
-  (3, 'dishwasher-not-cleaning', 'Dishwasher Not Cleaning Dishes? Start Here', 'A practical checklist for spray arms, filters, detergent use, and water temperature to fix poor cleaning results.', 'Dishwasher', '4 min read', '2026-02-27', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'Opening your dishwasher to find dirty, cloudy dishes defeats the purpose of having this appliance. Most cleaning issues stem from simple maintenance oversights.
+  (3, 'dishwasher-not-cleaning', 'Dishwasher Not Cleaning Dishes? Start Here', 'A practical checklist for spray arms, filters, detergent use, and water temperature to fix poor cleaning results.', 'Dishwasher', '4 min read', '2026-02-27', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'Opening your dishwasher to find dirty, cloudy dishes defeats the purpose of having this appliance. Most cleaning issues stem from simple maintenance oversights.
 
 The most common culprit is a clogged filter. Check the bottom of your tub and clean the filter assembly. Next, inspect the spray arms. Food particles can clog the small holes, preventing water from reaching your dishes.
 
 "Hard water can cause mineral buildup, reducing your dishwasher''s effectiveness."
 
 Ensure your water is hot enough (at least 120°F) and you''re using a high-quality detergent. If the problem persists, the circulation pump or an inlet valve might be failing.'),
-  (4, 'washer-vibration-fix', 'How to Stop Washer Vibration and Noise', 'Simple leveling and load balancing tips that prevent excessive shaking and protect your machine from damage.', 'Washer', '3 min read', '2026-02-18', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'A washing machine that sounds like it''s taking off can be alarming and can damage both the machine and your floors.
+  (4, 'washer-vibration-fix', 'How to Stop Washer Vibration and Noise', 'Simple leveling and load balancing tips that prevent excessive shaking and protect your machine from damage.', 'Washer', '3 min read', '2026-02-18', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'A washing machine that sounds like it''s taking off can be alarming and can damage both the machine and your floors.
 
 The first step is checking if the machine is level. Use a bubble level and adjust the feet accordingly. Also, ensure you are not overloading the drum or washing a single heavy item without balancing the load.
 
 "A balanced washer runs quieter and lasts significantly longer."
 
 If the machine is level but still vibrates violently, the shock absorbers or suspension springs might be worn out. These parts degrade over time and require professional replacement to restore smooth operation.'),
-  (5, 'oven-not-heating-evenly', 'Oven Not Heating Evenly? Common Causes', 'Find out when uneven cooking is caused by sensors, heating elements, or airflow and when professional repair is needed.', 'Oven', '6 min read', '2026-02-10', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'Uneven baking can ruin your favorite recipes. When half your cookies are burnt and the other half are raw, your oven needs attention.
+  (5, 'oven-not-heating-evenly', 'Oven Not Heating Evenly? Common Causes', 'Find out when uneven cooking is caused by sensors, heating elements, or airflow and when professional repair is needed.', 'Oven', '6 min read', '2026-02-10', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'Uneven baking can ruin your favorite recipes. When half your cookies are burnt and the other half are raw, your oven needs attention.
 
 If you have an electric oven, visibly inspect the bake element at the bottom. It should glow red evenly. If there are dark spots, it''s likely failing. For gas ovens, check the igniter; a weak igniter won''t open the gas valve correctly.
 
 "Proper airflow is crucial for even heat distribution."
 
 Oven temperature sensors can also drift over time. You can recalibrate the thermostat using an oven thermometer, but if the sensor is faulty, a replacement is the only way to ensure accurate cooking temperatures.'),
-  (6, 'ice-machine-low-output', 'Ice Machine Producing Too Little Ice?', 'Check water supply, filters, condenser cleanliness, and temperature settings to restore ice production speed.', 'Ice Machine', '4 min read', '2026-02-03', 'https://images.pexels.com/photos/34734504/pexels-photo-34734504.jpeg', 'A slow ice maker can put a damper on your summer parties. Ice production relies on steady water flow and freezing temperatures.
+  (6, 'ice-machine-low-output', 'Ice Machine Producing Too Little Ice?', 'Check water supply, filters, condenser cleanliness, and temperature settings to restore ice production speed.', 'Ice Machine', '4 min read', '2026-02-03', 'https://images.pexels.com/photos/31718639/pexels-photo-31718639.jpeg', 'A slow ice maker can put a damper on your summer parties. Ice production relies on steady water flow and freezing temperatures.
 
 Verify that your freezer is set to 0°F (-18°C) or colder. If the freezer is too warm, ice production slows down drastically. Next, check the water filter. A clogged filter reduces water flow to the ice maker.
 
