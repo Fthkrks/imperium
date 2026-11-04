@@ -5,6 +5,7 @@ const WARRANTY_FIXES: Array<[RegExp, string]> = [
   [/We stand behind our parts and labor\./g, "90 days on parts and 30 days on labor."],
   [/^90-Day Warranty$/g, "Parts & Labor Warranty"],
   [/90-day warranty/g, "90-day parts and 30-day labor warranty"],
+  [/We provide a free service call with completed repair\./g, "The service call fee is $85, or $51 when you book online. It is free with a completed repair."],
   // This stock photo shows Russian text and a uniform logo.
   [/photos\/34734504\/pexels-photo-34734504/g, "photos/31718639/pexels-photo-31718639"],
 ];

@@ -142,7 +142,7 @@ function Contact() {
                   <div>
                     <h4>Business Hours</h4>
                     <p>Mon-Fri: 8AM - 8PM</p>
-                    <p>Saturday: 8AM - 5PM</p>
+                    <p>Sat-Sun: 8AM - 8PM</p>
                   </div>
                 </div>
               </div>

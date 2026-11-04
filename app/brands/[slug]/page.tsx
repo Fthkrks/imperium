@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const brandName = getBrandName(detail.title);
   return {
-    title: { absolute: `${brandName} Appliance Repair in Houston, TX | ${BUSINESS.name}` },
+    title: { absolute: `${BUSINESS.name} | ${brandName} Appliance Service in Houston, TX` },
     description: describeBrand(brandName),
     alternates: { canonical: `/brands/${slug}` },
   };
@@ -71,7 +71,7 @@ function getBrandName(title: string) {
 }
 
 function describeBrand(brandName: string) {
-  return `${brandName} appliance repair across the greater Houston area from ${BUSINESS.name}. Book online or call ${BUSINESS.phone} to schedule service.`;
+  return `${BUSINESS.name} repairs ${brandName} appliances across the greater Houston area. Book online or call ${BUSINESS.phone} to schedule service.`;
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
@@ -98,8 +98,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
           <div className="detail-hero-grid">
             <div className="detail-hero-text">
               <h1>
-                {brandName}
-                <span className="text-orange"> Service</span>
+                We Repair {brandName}
+                <span className="text-orange"> Appliances</span>
               </h1>
               <p className="detail-hero-description">{describeBrand(brandName)}</p>
               <div className="detail-hero-actions">
@@ -114,7 +114,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
             <div className="detail-hero-visual">
               <div className="dhero-image-frame">
                 <img
-                  alt={`${brandName} technician`}
+                  alt={`${brandName} logo`}
                   className="dhero-photo"
                   src={detail.image || "/default-brand.jpg"}
                 />

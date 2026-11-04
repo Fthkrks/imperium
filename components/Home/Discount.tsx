@@ -6,7 +6,7 @@ function Discount() {
       <section id="Savemore">
         <div className="container">
           <div className="top">
-            <h2>Save More with Imperium Appliance</h2>
+            <h2>Save More with Imperium Appliance Repair</h2>
             <span>
               At Imperium Appliance Repair, we're proud to serve our community with honesty and care. We offer
               exclusive discounts to show our appreciation for those who make a difference every day.
