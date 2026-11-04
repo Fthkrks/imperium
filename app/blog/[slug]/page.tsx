@@ -44,6 +44,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
 	return (
 		<SiteShell forceSolidHeader={true}>
+			{post.json_ld.length > 0 && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(post.json_ld).replace(/</g, "\\u003c") }}
+				/>
+			)}
 			<BlogPostClient post={post} />
 			<BlogPostSeo
 				title={post.title}

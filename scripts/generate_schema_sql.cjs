@@ -47,7 +47,19 @@ lines.push('  category text,');
 lines.push('  "readTime" text,');
 lines.push('  "publishedAt" text,');
 lines.push('  image text,');
-lines.push('  content text');
+lines.push('  content text,');
+lines.push("  status text not null default 'publish' check (status in ('draft', 'publish')),");
+lines.push("  json_ld jsonb not null default '[]'::jsonb");
+lines.push(');');
+lines.push('');
+lines.push('alter table public.blog');
+lines.push("  add column if not exists status text not null default 'publish' check (status in ('draft', 'publish')),");
+lines.push("  add column if not exists json_ld jsonb not null default '[]'::jsonb;");
+lines.push('');
+lines.push('create table if not exists public.site_files (');
+lines.push('  path text primary key,');
+lines.push('  content text not null,');
+lines.push('  updated_at timestamptz not null default now()');
 lines.push(');');
 lines.push('');
 lines.push('-- 2) locations.json -> locations');
@@ -155,8 +167,8 @@ lines.push('truncate table public.blog, public.locations, public.brands, public.
 lines.push('');
 
 if (blog.length) {
-  lines.push('insert into public.blog (id, slug, title, excerpt, category, "readTime", "publishedAt", image, content) values');
-  lines.push(blog.map(item => `  (${Number(item.id)}, ${sqlString(item.slug)}, ${sqlString(item.title)}, ${sqlString(item.excerpt)}, ${sqlString(item.category)}, ${sqlString(item.readTime)}, ${sqlString(item.publishedAt)}, ${sqlString(item.image)}, ${sqlString(item.content)})`).join(',\n') + ';');
+  lines.push('insert into public.blog (id, slug, title, excerpt, category, "readTime", "publishedAt", image, content, status, json_ld) values');
+  lines.push(blog.map(item => `  (${Number(item.id)}, ${sqlString(item.slug)}, ${sqlString(item.title)}, ${sqlString(item.excerpt)}, ${sqlString(item.category)}, ${sqlString(item.readTime)}, ${sqlString(item.publishedAt)}, ${sqlString(item.image)}, ${sqlString(item.content)}, ${sqlString(item.status ?? 'publish')}, ${sqlJson(item.json_ld ?? [])})`).join(',\n') + ';');
   lines.push('');
 }
 
@@ -237,6 +249,7 @@ lines.push('  table_name text;');
 lines.push('  table_names text[] := array[');
 lines.push("    'contact',");
 lines.push("    'blog',");
+lines.push("    'site_files',");
 lines.push("    'services_residential',");
 lines.push("    'services_commercial',");
 lines.push("    'testimonials',");
@@ -268,6 +281,10 @@ lines.push('    end if;');
 lines.push('  end loop;');
 lines.push('end');
 lines.push('$$;');
+lines.push('');
+lines.push('-- Keep drafts private even through the anonymous Supabase REST API.');
+lines.push('drop policy if exists public_read on public.blog;');
+lines.push("create policy public_read on public.blog for select using (status = 'publish');");
 
 fs.writeFileSync(outFile, lines.join('\n') + '\n', 'utf8');
 console.log('Generated', outFile);

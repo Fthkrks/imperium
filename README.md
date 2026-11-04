@@ -66,3 +66,16 @@ Admin: `http://localhost:3000/admin`
 - Supabase JSON<->row dönüşümü: `lib/site-data-store.ts`
 
 Admin panelden yapılan değişiklikler ilgili Supabase tablosuna yazılır ve revalidate ile siteye yansır.
+
+## SEO publishing (seo-mcp)
+
+1. Supabase SQL Editor'da `supabase/migrations/20261104_seo_publishing.sql` dosyasını çalıştırın. Mevcut sitede seed içeren `schema.sql` dosyasını tekrar çalıştırmayın.
+2. Vercel'de `SEO_PUBLISH_TOKEN` ayarlayın; seo-mcp aynı token ile `Authorization: Bearer <token>` kullanarak `POST /api/seo/publish` adresine `{ "page": Page }` gönderir. Yeni ortam değişkenlerini uygulamak için yeniden deploy edin.
+3. Varsayılan olarak blog gönderileri taslak kaydedilir. Onaylamak için admin → **Blog Posts** → `status` alanını `publish` yapın → **Save**.
+4. Doğrudan canlı yayın için Vercel'de `SEO_ALLOW_LIVE_PUBLISH=1` ve istekte `status: "publish"` birlikte gereklidir. Bu izin olmadan mevcut canlı yazılar değiştirilemez; `/llms.txt` ve `/llms-full.txt` yazımı da 409 döner (dosyaların taslak durumu yoktur).
+
+Desteklenen adresler aynı site host'undaki `/blog/<slug>`, `/llms.txt` ve `/llms-full.txt` yollarıdır. Blog oluştururken `title` ve `content_md`, dosya yazarken `content_md` gerekir. `json_ld`, `internal_links`, `unique_facts` ve `sources` dizileri doğrulanır; içerik ve JSON-LD saklanır, diğer kalite/atıf bilgileri seo-mcp tarafından içerik/JSON-LD içinde sunulmalıdır.
+
+Migration öncesinde mevcut blog sayfaları okunmaya devam eder; eksik SEO sütunları yayınlanmış durum ve boş JSON-LD olarak okunur. Blog kaydı sütun kontrolünden önce hiçbir satır silmez; migration yapılana kadar admin blog kaydı ve SEO yazımı kapalı kalır. Henüz bulunmayan llms dosyaları 404 döner. `robots.txt` ve sitemap değişmedi: bu metin dosyaları sitemap sayfaları değildir ve standart bir robots yönergesi gerektirmez.
+
+Yerel kontrol: `npx -y tsx --test lib/seo-publish.test.ts`.

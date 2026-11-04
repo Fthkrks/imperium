@@ -1,6 +1,7 @@
 "use client";
 
 import { type BlogPost } from "@/components/BlogCard";
+import { renderBlogMarkdown } from "@/lib/blog-markdown";
 
 function formatDate(input: string) {
 	const date = new Date(input);
@@ -11,20 +12,7 @@ function formatDate(input: string) {
 	}).format(date);
 }
 
-function parseContentBlocks(content: string) {
-	return content
-		.split(/\n\s*\n/)
-		.map((block) => block.trim())
-		.filter(Boolean);
-}
-
-function isQuoteBlock(block: string) {
-	return block.startsWith('"') && block.endsWith('"');
-}
-
 export function BlogPostClient({ post }: { post: BlogPost }) {
-	const contentBlocks = parseContentBlocks(post.content);
-
 	return (
 		<article className="blog">
 			<div className="container">
@@ -55,23 +43,7 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 				</figure>
 
 				{/* Content */}
-				<div className="content">
-					{contentBlocks.map((block, index) => {
-						if (block.startsWith("## ")) {
-							return <h2 key={index}>{block.slice(3)}</h2>;
-						}
-
-						if (isQuoteBlock(block)) {
-							return <blockquote key={index}>{block.replace(/^"|"$/g, "")}</blockquote>;
-						}
-
-						return (
-							<p key={index} className={index === 0 ? "first" : undefined}>
-								{block}
-							</p>
-						);
-					})}
-				</div>
+				<div className="content" dangerouslySetInnerHTML={{ __html: renderBlogMarkdown(post.content) }} />
 			</div>
 
 			<style jsx>{`
@@ -215,19 +187,11 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 					line-height: 1.75;
 				}
 
-				.content h2 {
-					margin: 32px 0 12px;
-					color: #0e3c66;
-					font-size: 24px;
-					font-weight: 700;
-					line-height: 1.3;
-				}
-
-				.content p {
+				.content :global(p) {
 					margin-bottom: 24px;
 				}
 
-				.content .first::first-letter {
+				.content :global(> p:first-child)::first-letter {
 					font-size: 60px;
 					font-weight: bold;
 					float: left;
@@ -235,13 +199,38 @@ export function BlogPostClient({ post }: { post: BlogPost }) {
 					line-height: 1;
 				}
 
-				blockquote {
+				.content :global(blockquote) {
 					border-left: 4px solid black;
 					padding-left: 16px;
 					font-size: 24px;
 					font-style: italic;
 					margin: 40px 0;
 				}
+
+				.content :global(h1), .content :global(h2), .content :global(h3),
+				.content :global(h4), .content :global(h5), .content :global(h6) {
+					font-weight: bold;
+					line-height: 1.3;
+					margin: 32px 0 16px;
+				}
+
+				.content :global(h1) { font-size: 32px; }
+				.content :global(h2) {
+					margin: 32px 0 12px;
+					color: #0e3c66;
+					font-size: 24px;
+					font-weight: 700;
+					line-height: 1.3;
+				}
+				.content :global(h3) { font-size: 24px; }
+				.content :global(a) { color: #11528E; text-decoration: underline; }
+				.content :global(ul), .content :global(ol) { padding-left: 28px; margin-bottom: 24px; }
+				.content :global(ul) { list-style: disc; }
+				.content :global(ol) { list-style: decimal; }
+				.content :global(table) { display: block; overflow-x: auto; border-collapse: collapse; margin-bottom: 24px; }
+				.content :global(th), .content :global(td) { border: 1px solid #ddd; padding: 8px 12px; }
+				.content :global(pre) { overflow-x: auto; background: #f2f2f2; padding: 16px; margin-bottom: 24px; }
+				.content :global(img) { max-width: 100%; }
 			`}</style>
 		</article>
 	);

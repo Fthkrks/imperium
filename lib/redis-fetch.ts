@@ -32,7 +32,11 @@ export async function getSiteData(file: string) {
     if (file === 'contact.json') {
       return normalizeContact(supabaseData as Record<string, unknown> | null);
     }
-    return fixWarrantyCopy(file === 'blog.json' ? withFullArticles(supabaseData) : supabaseData);
+    if (file === 'blog.json') {
+      const posts = Array.isArray(supabaseData) ? supabaseData.filter((post) => post.status === 'publish') : [];
+      return fixWarrantyCopy(withFullArticles(posts));
+    }
+    return fixWarrantyCopy(supabaseData);
   } catch (error) {
     console.error(`Supabase read Error for ${file}:`, error);
     return file === 'contact.json' ? normalizeContact(null) : null;
