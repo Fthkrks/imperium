@@ -52,7 +52,7 @@ function Discount() {
             </div>
           </div>
           <div className="savemore-note">
-            <span>Please note: Discounts apply toward repair costs, not the initial service call fee.</span>
+            <span>Please note: These discounts apply toward repair costs, not the initial service call fee.</span>
           </div>
         </div>
       </section>

@@ -3306,3 +3306,13 @@ textarea {
   color: #0E3C66;
   margin-bottom: 1rem;
 }
+
+.discount-banner .banner-content .underline {
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-top: 9.5rem;
+  }
+}

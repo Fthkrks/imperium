@@ -55,10 +55,9 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
                   d="M12 3l1.912 5.813a2 2 0 001.276 1.276L21 12l-5.813 1.912a2 2 0 00-1.276 1.276L12 21l-1.912-5.813a2 2 0 00-1.276-1.276L3 12l5.813-1.912a2 2 0 001.276-1.276L12 3z"
                 />
               </svg>
-              <span {...scopeAttr} className="bold text-[#70B5ED]! ">
-                DISCOUNT:
+              <span {...scopeAttr}>
+                Book online and save 40% on the service fee: <strong>$51</strong> <s>$85</s>
               </span>
-              <span {...scopeAttr}>10% OFF seniors &amp; army members</span>
               <a {...scopeAttr} className="underline open-form-trigger text-[#70B5ED]!" href="#">
                 Book Now →
               </a>
