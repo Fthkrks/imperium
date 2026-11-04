@@ -35,6 +35,9 @@ export const BRAND_ROUTES: Record<string, string> = {
   samsung: "8",
 };
 
+/** These brand pages had another brand's logo stored, so they show the name as text. */
+export const BRANDS_WITHOUT_LOGO = ["sub-zero", "thermador", "wolf", "monogram"];
+
 export function findService(slug: string) {
   return SERVICE_ROUTES.find((route) => route.slug === slug);
 }

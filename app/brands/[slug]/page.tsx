@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
 import { BUSINESS } from "@/lib/business";
-import { BRAND_ROUTES } from "@/lib/routes";
+import { BRAND_ROUTES, BRANDS_WITHOUT_LOGO } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
@@ -113,11 +113,11 @@ export default async function BrandDetailPage({ params }: PageProps) {
             </div>
             <div className="detail-hero-visual">
               <div className="dhero-image-frame">
-                <img
-                  alt={`${brandName} logo`}
-                  className="dhero-photo"
-                  src={detail.image || "/default-brand.jpg"}
-                />
+                {BRANDS_WITHOUT_LOGO.includes(slug) || !detail.image ? (
+                  <div className="dhero-brand-name">{brandName}</div>
+                ) : (
+                  <img alt={`${brandName} logo`} className="dhero-photo" src={detail.image} />
+                )}
               </div>
             </div>
           </div>
