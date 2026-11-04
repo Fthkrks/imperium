@@ -90,20 +90,16 @@ function Areas() {
     page.map((area: string, idx: number) => <AreaItem key={`h-${pageIdx}-${idx}`} name={area} />)
   );
 
-  const austinPages = (areasData?.austin || []).map((page: any, pageIdx: number) => 
-    page.map((area: string, idx: number) => <AreaItem key={`a-${pageIdx}-${idx}`} name={area} />)
-  );
-
   return (
     <>
           <section className="service-areas" id="service-areas">
         <div className="container">
           <div className="section-header">
             <span className="label">Service Areas</span>
-            <h2>Serving the Greater Houston &amp; Austin Areas</h2>
-            <p>When you need expert appliance repair service, Imperium Appliance Repair is the right choice. We proudly provide same-day and next-day appliance repair service across Houston and Austin areas.</p>
+            <h2>Serving the Greater Houston Area</h2>
+            <p>When you need expert appliance repair service, Imperium Appliance Repair is the right choice. We proudly provide same-day and next-day appliance repair service across the greater Houston area.</p>
           </div>
-          <div className="areas-maps-grid">
+          <div className="areas-maps-grid" style={{ gridTemplateColumns: "minmax(0, 1fr)", maxWidth: "720px", marginInline: "auto" }}>
             <div className="areas-map-card">
               <div className="areas-map-wrapper">
                 <iframe allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d443088.1302985258!2d-95.6834015!3d29.8168824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" />
@@ -113,16 +109,6 @@ function Areas() {
                 <span>Houston, TX</span>
               </div>
               <AreaSlider pages={houstonPages} />
-            </div>
-            <div className="areas-map-card">
-              <div className="areas-map-wrapper">
-                <iframe allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d441400.7551391056!2d-97.9222068!3d30.3074624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b599a0cc032f%3A0x5d9b464bd469d57a!2sAustin%2C%20TX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" />
-              </div>
-              <div className="areas-map-label">
-                <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx={12} cy={10} r={3} /></svg>
-                <span>Austin, TX</span>
-              </div>
-              <AreaSlider pages={austinPages} />
             </div>
           </div>
           <div className="areas-callout">

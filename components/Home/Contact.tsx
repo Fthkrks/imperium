@@ -5,7 +5,7 @@ import { useSiteData } from '../SiteDataContext';
 
 function Contact() {
   const { contact: contactData } = useSiteData();
-  const mapQuery = encodeURIComponent(contactData?.location || "Austin TX");
+  const mapQuery = encodeURIComponent(contactData?.location || "Houston TX");
   return (
     <>
       <section className="contact" id="contact">
