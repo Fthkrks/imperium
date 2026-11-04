@@ -151,7 +151,7 @@ export function SiteFooter() {
                       {contactData?.phone}
                     </p>
                     <p {...scopeAttr} className="hours">Mon-Fri: 8am - 8pm</p>
-                    <p {...scopeAttr} className="hours">Sat-Sun: 8am - 8pm</p>
+                    <p {...scopeAttr} className="hours">Saturday: 8am - 5pm</p>
                   </div>
                 </li>
                 <li {...scopeAttr}>

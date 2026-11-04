@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteData } from "@/lib/redis-fetch";
 import { BUSINESS } from "@/lib/business";
-import { BRAND_ROUTES } from "@/lib/routes";
+import { BRAND_ROUTES, BRANDS_WITHOUT_LOGO } from "@/lib/routes";
 import Brands from "@/components/Home/Brands";
 import Residential from "@/components/Services/Residential";
 import Commercial from "@/components/Services/Commercial";
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const brandName = getBrandName(detail.title);
   return {
-    title: { absolute: `${brandName} Appliance Repair in Houston, TX | ${BUSINESS.name}` },
+    title: { absolute: `${BUSINESS.name} | ${brandName} Appliance Service in Houston, TX` },
     description: describeBrand(brandName),
     alternates: { canonical: `/brands/${slug}` },
   };
@@ -71,7 +71,7 @@ function getBrandName(title: string) {
 }
 
 function describeBrand(brandName: string) {
-  return `${brandName} appliance repair across the greater Houston area from ${BUSINESS.name}. Book online or call ${BUSINESS.phone} to schedule service.`;
+  return `${BUSINESS.name} repairs ${brandName} appliances across the greater Houston area. Book online or call ${BUSINESS.phone} to schedule service.`;
 }
 
 export default async function BrandDetailPage({ params }: PageProps) {
@@ -98,8 +98,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
           <div className="detail-hero-grid">
             <div className="detail-hero-text">
               <h1>
-                {brandName}
-                <span className="text-orange"> Service</span>
+                We Repair {brandName}
+                <span className="text-orange"> Appliances</span>
               </h1>
               <p className="detail-hero-description">{describeBrand(brandName)}</p>
               <div className="detail-hero-actions">
@@ -113,11 +113,11 @@ export default async function BrandDetailPage({ params }: PageProps) {
             </div>
             <div className="detail-hero-visual">
               <div className="dhero-image-frame">
-                <img
-                  alt={`${brandName} technician`}
-                  className="dhero-photo"
-                  src={detail.image || "/default-brand.jpg"}
-                />
+                {BRANDS_WITHOUT_LOGO.includes(slug) || !detail.image ? (
+                  <div className="dhero-brand-name">{brandName}</div>
+                ) : (
+                  <img alt={`${brandName} logo`} className="dhero-photo" src={detail.image} />
+                )}
               </div>
             </div>
           </div>

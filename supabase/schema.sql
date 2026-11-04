@@ -201,7 +201,7 @@ insert into public.contact (phone, "phoneHref", email, location, "socialMedia", 
 
 insert into public.faq (question, answer) values
   ('Do you offer same-day appliance repair?', 'Yes. We offer same-day appointments when slots are available. Call early for the fastest scheduling.'),
-  ('Is there a service call fee?', 'We provide a free service call with completed repair. Our technician will diagnose the issue first and explain all costs before starting work.'),
+  ('Is there a service call fee?', 'The service call fee is $85, or $51 when you book online. It is free with a completed repair. Our technician will diagnose the issue first and explain all costs before starting work.'),
   ('What brands and appliances do you repair?', 'We repair most major household and commercial appliances, including refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, and more.'),
   ('Do your repairs come with a warranty?', 'Yes. All qualifying repairs are backed by our warranty: 90 days on parts and 30 days on labor.'),
   ('How long does a typical repair take?', 'Many issues are fixed on the first visit. If a special part is needed, we order it quickly and return as soon as it arrives.'),
