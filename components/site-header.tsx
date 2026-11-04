@@ -56,9 +56,9 @@ export function SiteHeader({ forceSolid = false }: { forceSolid?: boolean }) {
                 />
               </svg>
               <span {...scopeAttr} className="bold text-[#70B5ED]! ">
-                LIMITED OFFER:
+                DISCOUNT:
               </span>
-              <span {...scopeAttr}>Get $25 OFF your first repair!</span>
+              <span {...scopeAttr}>10% OFF seniors &amp; army members</span>
               <a {...scopeAttr} className="underline open-form-trigger text-[#70B5ED]!" href="#">
                 Book Now →
               </a>
