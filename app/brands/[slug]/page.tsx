@@ -132,8 +132,8 @@ export default async function BrandDetailPage({ params }: PageProps) {
             <div className="dhero-stat-divider" />
             <div className="dhero-stat">
               <div>
-                <span className="dhero-stat-number">90 Days</span>
-                <span className="dhero-stat-label">Warranty</span>
+                <span className="dhero-stat-number">90 / 30 Days</span>
+                <span className="dhero-stat-label">Parts / Labor Warranty</span>
               </div>
             </div>
             <div className="dhero-stat-divider" />

@@ -2,6 +2,7 @@ import { isAllowedFile } from '@/lib/site-data-config';
 import { isSupabaseConfigured } from '@/lib/supabase-client';
 import { readSiteDataFromSupabase } from '@/lib/site-data-store';
 import { normalizeContact } from '@/lib/business';
+import { fixWarrantyCopy } from '@/lib/site-copy';
 
 export async function getSiteData(file: string) {
   if (!isSupabaseConfigured()) {
@@ -17,7 +18,7 @@ export async function getSiteData(file: string) {
     if (file === 'contact.json') {
       return normalizeContact(supabaseData as Record<string, unknown> | null);
     }
-    return supabaseData;
+    return fixWarrantyCopy(supabaseData);
   } catch (error) {
     console.error(`Supabase read Error for ${file}:`, error);
     return file === 'contact.json' ? normalizeContact(null) : null;

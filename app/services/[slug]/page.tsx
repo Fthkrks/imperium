@@ -107,7 +107,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   <div className="icon">
                     <svg fill="none" height={20} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={20} xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                   </div>
-                  <span>90-Day Warranty</span>
+                  <span>90-Day Parts / 30-Day Labor</span>
                 </div>
                 <div className="trust-badge">
                   <div className="icon">
